@@ -1,73 +1,77 @@
 package org.mackas.model;
 
+import java.sql.Date;
 
-import java.util.ArrayList;
-import java.util.List;
+public class Alumno extends Usuario {
 
-public class Alumno
-        extends Usuario{
-   String nombre;
-   String apellido;
-   Carrera carrera_profesional;
-   Calificacion calificacion=new Calificacion("13","14","16","18");
-    List<Seccion> secciones;
-    public String getNombre() {
-        return nombre;
+    private int idAlumno;
+    private int idCarrera;
+    private String codigo; // Código institucional del alumno (Ej: ALU2026001)
+    private Date fechaNacimiento;
+
+    // Constructor vacío
+    public Alumno() {
+        super();
     }
 
-    public String getApellido() {
-        return apellido;
+    // Constructor completo
+    public Alumno(int idUsuario, String username, String passwordHash, String rol, boolean estado,
+                  int idAlumno, int idCarrera, String codigo, String nombres, String apellidos, 
+                  String dni, String email, String telefono, Date fechaNacimiento) {
+        super(idUsuario, username, passwordHash, rol, estado);
+        this.idAlumno = idAlumno;
+        this.idCarrera = idCarrera;
+        this.codigo = codigo;
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.dni = dni;
+        this.email = email;
+        this.telefono = telefono;
+        this.fechaNacimiento = fechaNacimiento;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    // Getters y Setters específicos de Alumno
+    public int getIdAlumno() {
+        return idAlumno;
     }
 
-    public Carrera getCarrera_profesional() {
-        return carrera_profesional;
+    public void setIdAlumno(int idAlumno) {
+        this.idAlumno = idAlumno;
     }
 
-    public void setCarrera_profesional(Carrera carrera_profesional) {
-        this.carrera_profesional = carrera_profesional;
+    public int getIdCarrera() {
+        return idCarrera;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setIdCarrera(int idCarrera) {
+        this.idCarrera = idCarrera;
     }
 
-    public Calificacion getCalificacion() {
-        return calificacion;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setCalificacion(Calificacion calificacion) {
-        this.calificacion = calificacion;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
-    public List<Seccion> getSecciones() {
-        return secciones;
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
     }
 
-    public void setSecciones(List<Seccion> secciones) {
-        this.secciones = secciones;
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
-    public Alumno(String telefono,
-                  String correo_institucional,
-                  String dni,
-                  String codigo,
-                  String password,
-                  String nombre,
-                  String apellido,
-                  Carrera carrera_profesional
-    ) {
-        super(telefono, correo_institucional, dni, codigo, password);
-        this.apellido=apellido;
-        this.nombre=nombre;
-        this.carrera_profesional=carrera_profesional;
-        this.secciones= new ArrayList<>();
-    }
-
-    public void addSeccion(Seccion seccion){
-        secciones.add(seccion);
+    @Override
+    public String toString() {
+        return "Alumno{" +
+                "idAlumno=" + idAlumno +
+                ", idUsuario=" + idUsuario +
+                ", idCarrera=" + idCarrera +
+                ", codigo='" + codigo + '\'' +
+                ", nombres='" + nombres + '\'' +
+                ", apellidos='" + apellidos + '\'' +
+                '}';
     }
 }

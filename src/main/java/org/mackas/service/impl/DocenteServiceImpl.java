@@ -1,6 +1,5 @@
 package org.mackas.service.impl;
 
-import org.mackas.config.Data;
 import org.mackas.model.Docente;
 import org.mackas.repository.interf.DocenteRepository;
 
@@ -9,11 +8,11 @@ import java.util.List;
 public class DocenteServiceImpl
 implements DocenteRepository
 {
-    private Data datos= new Data();
+  
     @Override
     public Docente findById(String codigo) {
-        datos.Init();
-        return datos.docente1;
+      
+        return null;
     }
 
     @Override

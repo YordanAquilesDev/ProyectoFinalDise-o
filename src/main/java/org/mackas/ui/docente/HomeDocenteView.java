@@ -5,7 +5,7 @@
 package org.mackas.ui.docente;
 
 import java.util.List;
-import org.mackas.config.Data;
+
 import org.mackas.model.Docente;
 import org.mackas.model.Seccion;
 
@@ -20,7 +20,7 @@ public class HomeDocenteView extends javax.swing.JFrame {
     /**
      * Creates new form HomeDocenteView
      */
-    Data datos = new Data();
+ 
     Docente docente;
     List<Seccion> secciones;
     Navegacion navegador;
@@ -29,7 +29,7 @@ public class HomeDocenteView extends javax.swing.JFrame {
     public HomeDocenteView(Docente docente) {
         initComponents();
         this.docente = docente;
-        secciones = docente.getSecciones();
+        secciones = null;
 
         // 1. Validar que existan secciones para evitar IndexOutOfBoundsException
         if (secciones != null && !secciones.isEmpty()) {

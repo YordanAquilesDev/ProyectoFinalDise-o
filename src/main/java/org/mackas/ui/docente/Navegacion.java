@@ -9,7 +9,7 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import org.mackas.config.Data;
+
 import org.mackas.model.Alumno;
 import org.mackas.model.Calificacion;
 import org.mackas.model.Curso;
@@ -23,13 +23,13 @@ import org.mackas.model.Seccion;
  */
 public class Navegacion extends javax.swing.JPanel {
 
-    Data datos = new Data();
+
     Docente docente;
     Seccion seccion;
 
     public Navegacion(Seccion seccion) {
         initComponents();
-        docente = datos.docente1;
+
         this.seccion = seccion;
     }
 
@@ -96,48 +96,7 @@ public class Navegacion extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        // TODO add your handling code here:
-        // 1. Limpiar el contenedor actual
-        contenedor.removeAll();
-
-        // 2. Crear y configurar el nuevo JPanel
-        JPanel perfil = new JPanel();
-        perfil.setLayout(new java.awt.GridLayout(0, 2, 10, 10)); // Layout para organizar etiquetas y valores
-
-        // Ejemplo de instancia (aquí usas tu objeto docente real)
-        // Docente docente = obtenerDocenteActual();
-        if (docente != null) {
-            perfil.add(new JLabel("Nombre:"));
-            perfil.add(new JLabel(docente.getNombre()));
-
-            perfil.add(new JLabel("Apellido:"));
-            perfil.add(new JLabel(docente.getApellido()));
-
-            perfil.add(new JLabel("DNI:"));
-            perfil.add(new JLabel(docente.getDni()));
-
-            perfil.add(new JLabel("Código:"));
-            perfil.add(new JLabel(docente.getCodigo()));
-
-            perfil.add(new JLabel("Correo Institucional:"));
-            perfil.add(new JLabel(docente.getCorreo_institucional()));
-
-            perfil.add(new JLabel("Teléfono:"));
-            perfil.add(new JLabel(docente.getTelefono()));
-
-            perfil.add(new JLabel("N° de Secciones:"));
-            perfil.add(new JLabel(String.valueOf(docente.getSecciones().size())));
-        } else {
-            perfil.add(new JLabel("No se encontraron datos del docente."));
-        }
-
-        // 3. Agregar el panel cargado al contenedor
-        contenedor.add(perfil);
-
-        // 4. Refrescar la interfaz gráfica (imprescindible en Swing al modificar componentes dinámicamente)
-        contenedor.revalidate();
-        contenedor.repaint();
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -231,33 +190,6 @@ public class Navegacion extends javax.swing.JPanel {
                 return false; // Hace que las celdas sean de solo lectura
             }
         };
-
-// 3. Llenar el modelo con los datos de los alumnos
-        if (alumnos != null) {
-            for (Alumno alumno : alumnos) {
-                // Obtener la calificación del alumno (se asume métodos getters en Calificacion)
-                Calificacion cal = alumno.getCalificacion();
-
-                String n1 = (cal != null) ? cal.getPC1() : "-"; // Ajusta los getters según tu clase Calificacion
-                String n2 = (cal != null) ? cal.getPC2() : "-";
-                String n3 = (cal != null) ? cal.getPA() : "-";
-                String n4 = (cal != null) ? cal.getEX() : "-";
-
-                String carrera = (alumno.getCarrera_profesional() != null)
-                        ? alumno.getCarrera_profesional().toString()
-                        : "Sin carrera";
-
-                Object[] fila = {
-                    alumno.getCodigo(),
-                    alumno.getNombre(),
-                    alumno.getApellido(),
-                    carrera,
-                    n1, n2, n3, n4
-                };
-
-                model.addRow(fila);
-            }
-        }
 
 // 4. Crear el JTable con el modelo
         JTable tablaAlumnos = new JTable(model);

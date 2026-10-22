@@ -1,5 +1,5 @@
 package org.mackas.config;
-
+/*
 import org.mackas.model.*;
 
 import java.util.List;
@@ -65,4 +65,4 @@ public class Data {
     public List<Docente> getDocentes() {
         return List.of(docente1, docente2);
     }
-}
+}*/

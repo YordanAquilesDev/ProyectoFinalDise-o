@@ -17,7 +17,7 @@ public class ConexionMySQL implements ConexionDataBase {
     @Override
     public  Connection getConexion() {
      
-        String url = "jdbc:mysql://localhost:3306/DB_universidad?useSSL=false&serverTimezone=UTC";
+        String url = "jdbc:mysql://localhost:3306/DB_universidadv2?useSSL=false&serverTimezone=UTC";
         String usuario = "root";
         String password = "root";
         try {
