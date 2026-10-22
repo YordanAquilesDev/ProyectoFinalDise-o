@@ -9,8 +9,8 @@ public class Alumno
    String nombre;
    String apellido;
    Carrera carrera_profesional;
-    Calificacion calificacion=new Calificacion("13","14","16","18");
-  List<Seccion> secciones;
+   Calificacion calificacion=new Calificacion("13","14","16","18");
+    List<Seccion> secciones;
     public String getNombre() {
         return nombre;
     }
