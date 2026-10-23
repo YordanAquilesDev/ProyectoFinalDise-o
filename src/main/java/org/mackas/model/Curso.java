@@ -1,7 +1,45 @@
 package org.mackas.model;
 
 public class Curso {
- String nombre_curso;
+    int id_curso;
+    int id_carrera;
+    String codigo_curso;
+    String nombre_curso;
+    int creditos;
+    int ciclo_nivel;
+
+    public Curso(int id_curso, int id_carrera, String codigo_curso, String nombre_curso, int creditos, int ciclo_nivel) {
+        this.id_curso = id_curso;
+        this.id_carrera = id_carrera;
+        this.codigo_curso = codigo_curso;
+        this.nombre_curso = nombre_curso;
+        this.creditos = creditos;
+        this.ciclo_nivel = ciclo_nivel;
+    }
+
+    public int getId_curso() {
+        return id_curso;
+    }
+
+    public void setId_curso(int id_curso) {
+        this.id_curso = id_curso;
+    }
+
+    public int getId_carrera() {
+        return id_carrera;
+    }
+
+    public void setId_carrera(int id_carrera) {
+        this.id_carrera = id_carrera;
+    }
+
+    public String getCodigo_curso() {
+        return codigo_curso;
+    }
+
+    public void setCodigo_curso(String codigo_curso) {
+        this.codigo_curso = codigo_curso;
+    }
 
     public String getNombre_curso() {
         return nombre_curso;
@@ -11,17 +49,24 @@ public class Curso {
         this.nombre_curso = nombre_curso;
     }
 
-    public Curso(String nombre_curso) {
-        this.nombre_curso = nombre_curso;
+    public int getCreditos() {
+        return creditos;
     }
 
-    public Calificacion getCalificacion() {
-        return calificacion;
+    public void setCreditos(int creditos) {
+        this.creditos = creditos;
     }
 
-    public void setCalificacion(Calificacion calificacion) {
-        this.calificacion = calificacion;
+    public int getCiclo_nivel() {
+        return ciclo_nivel;
     }
 
-    Calificacion calificacion=new Calificacion("13","14","16","18");
+    public void setCiclo_nivel(int ciclo_nivel) {
+        this.ciclo_nivel = ciclo_nivel;
+    }
+
+    
+   
+  
+ 
 }
