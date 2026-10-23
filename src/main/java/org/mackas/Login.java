@@ -120,13 +120,7 @@ public class Login extends javax.swing.JFrame {
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
        AlumnoUI alumniUI= new AlumnoUI(new Alumno());
        alumniUI.setVisible(true);
-        //  HomeAlumnoView homeAlumno= new HomeAlumnoView(new Alumno());
-        //   homeAlumno.setVisible(true);
-       /* Usuario u=user.login(txtCodigo.getText(), txtPass.getText());
-       if(u instanceof Alumno){
-           HomeAlumnoView homeAlumno= new HomeAlumnoView((Alumno)u);
-           homeAlumno.setVisible(true);
-       }*/
+      
         
     }//GEN-LAST:event_btnEntrarActionPerformed
 

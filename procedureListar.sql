@@ -80,3 +80,34 @@ BEGIN
 END //
 
 DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_listar_horarios_alumno(IN p_id_curso INT)
+BEGIN
+    SELECT 
+        h.id_horario,
+        h.id_seccion,
+        h.dia_semana,
+        h.hora_inicio,
+        h.hora_fin,
+        h.aula
+    FROM horario h
+    JOIN detalle_matricula dt ON c.id_detalle_matricula = dt.id_detalle_matricula
+    JOIN seccion sc ON dt.id_seccion = sc.id_seccion
+    JOIN curso cu ON sc.id_curso = cu.id_curso -- Corrección aquí (sc.id_curso en lugar de sc-id_curso)
+    WHERE cu.id_curso = p_id_curso;
+END //
+
+DELIMITER ;
+CREATE TABLE horario (
+    id_horario INT AUTO_INCREMENT PRIMARY KEY,
+    id_seccion INT NOT NULL,
+    dia_semana VARCHAR(15) NOT NULL, 
+    hora_inicio TIME NOT NULL,
+    hora_fin TIME NOT NULL,
+    aula VARCHAR(50),
+    CONSTRAINT fk_horario_seccion FOREIGN KEY (id_seccion) REFERENCES seccion(id_seccion) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+

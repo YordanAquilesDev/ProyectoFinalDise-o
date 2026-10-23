@@ -33,6 +33,7 @@ public class AlumnoUI extends javax.swing.JFrame {
 
     public AlumnoUI(Alumno a) {
         alumno = a;
+        this.setExtendedState(MAXIMIZED_BOTH); //
         initComponents();
         cursosAlumno = cursoService.findByIdAlumno(alumno.getIdAlumno());
 
