@@ -99,3 +99,29 @@ END //
 DELIMITER ;
 
 
+DELIMITER //
+CREATE PROCEDURE sp_matricular_alumno(
+    in p_id_alumno int,
+    in p_id_periodo int,
+    in p_monto_total int,
+)
+BEGIN
+    insert into matricula  id_alumno,id_periodo,fecha_matricula,monto_total,estado values
+    (p_id_alumno,p_id_periodo,now(),p_monto_total,'REGISTRADA');
+END //
+DELIMITER ;
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE sp_detalle_matricula_alumno(
+    in p_id_matricula int,
+    in p_id_seccion int,
+)
+BEGIN
+
+    insert into detalle_matricula id_matricula,id_seccion,promedio_final,estado_curso values
+    (p_id_matricula,p_id_seccion,null,'CURSANDO');
+END //
+DELIMITER ;
