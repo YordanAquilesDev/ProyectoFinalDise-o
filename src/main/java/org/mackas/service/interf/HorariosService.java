@@ -4,10 +4,14 @@
  */
 package org.mackas.service.interf;
 
+import java.util.List;
+import org.mackas.model.Horario;
+import org.mackas.util.CrudRepository;
+
 /**
  *
  * @author Administrador
  */
-public interface HorariosService {
-    
+public interface HorariosService extends CrudRepository<Horario,Integer> {
+    List<Horario>  findByIdAlumno(int idAlumno);
 }

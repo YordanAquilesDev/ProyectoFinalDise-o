@@ -9,7 +9,6 @@ import org.mackas.model.Usuario;
 import org.mackas.service.impl.UserServiceImpl;
 import org.mackas.service.interf.UserService;
 import org.mackas.ui.alumno.AlumnoUI;
-import org.mackas.ui.alumno.HomeAlumnoView;
 
 /**
  *
@@ -119,7 +118,9 @@ public class Login extends javax.swing.JFrame {
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
        AlumnoUI alumniUI= new AlumnoUI(new Alumno());
+        System.out.println(alumniUI);
        alumniUI.setVisible(true);
+       
       
         
     }//GEN-LAST:event_btnEntrarActionPerformed

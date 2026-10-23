@@ -4,6 +4,8 @@
  */
 package org.mackas.ui.alumno;
 
+import java.sql.Time;
+
 /**
  *
  * @author Administrador
@@ -13,10 +15,18 @@ public class Horarios extends javax.swing.JPanel {
     /**
      * Creates new form Horarios
      */
-    public Horarios() {
-        initComponents();
-    }
-
+   public Horarios(String aula, Time hora_fin, Time hora_inicio,
+           int id_horario, int id_seccion, String semana) {
+    initComponents();
+    
+    // Asignar los valores del constructor a los JLabel
+    txtAula.setText(aula);
+    txtHoraFin.setText(hora_fin != null ? hora_fin.toString() : "");
+    txtHoraInicio.setText(hora_inicio != null ? hora_inicio.toString() : "");
+    txtIdHorario.setText(String.valueOf(id_horario));
+    txtIdSeccion.setText(String.valueOf(id_seccion));
+    txtSemanaNr.setText(semana);
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,19 +36,72 @@ public class Horarios extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        txtIdHorario = new javax.swing.JLabel();
+        txtIdSeccion = new javax.swing.JLabel();
+        txtSemanaNr = new javax.swing.JLabel();
+        txtHoraInicio = new javax.swing.JLabel();
+        txtHoraFin = new javax.swing.JLabel();
+        txtAula = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(0, 153, 0));
+
+        txtIdHorario.setText("id_horario");
+
+        txtIdSeccion.setText("id_seccion");
+
+        txtSemanaNr.setText("Semana nro");
+
+        txtHoraInicio.setText("Hora incio");
+
+        txtHoraFin.setText("Hora fin");
+
+        txtAula.setText("Aula");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtIdHorario)
+                        .addGap(147, 147, 147)
+                        .addComponent(txtIdSeccion))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtSemanaNr)
+                        .addGap(88, 88, 88)
+                        .addComponent(txtHoraInicio)
+                        .addGap(72, 72, 72)
+                        .addComponent(txtHoraFin)
+                        .addGap(71, 71, 71)
+                        .addComponent(txtAula)))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtIdHorario)
+                    .addComponent(txtIdSeccion))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSemanaNr)
+                    .addComponent(txtHoraInicio)
+                    .addComponent(txtHoraFin)
+                    .addComponent(txtAula))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel txtAula;
+    private javax.swing.JLabel txtHoraFin;
+    private javax.swing.JLabel txtHoraInicio;
+    private javax.swing.JLabel txtIdHorario;
+    private javax.swing.JLabel txtIdSeccion;
+    private javax.swing.JLabel txtSemanaNr;
     // End of variables declaration//GEN-END:variables
 }

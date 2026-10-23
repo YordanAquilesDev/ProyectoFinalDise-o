@@ -10,9 +10,11 @@ import org.mackas.model.Alumno;
 import org.mackas.model.Calificacion;
 import org.mackas.model.Carrera;
 import org.mackas.model.Curso;
+import org.mackas.model.Horario;
 import org.mackas.service.impl.CalificacionServiceImpl;
 import org.mackas.service.impl.CarreraServiceImpl;
 import org.mackas.service.impl.CursoServiceImpl;
+import org.mackas.service.impl.HorarioServiceImpl;
 
 /**
  *
@@ -24,18 +26,21 @@ public class AlumnoUI extends javax.swing.JFrame {
     private CursoServiceImpl cursoService = new CursoServiceImpl();
     private CalificacionServiceImpl caliService = new CalificacionServiceImpl();
     private final Alumno alumno;
+    private HorarioServiceImpl horaService = new HorarioServiceImpl();
     private CarreraServiceImpl carrService = new CarreraServiceImpl();
 
     /**
      * Creates new form AlumnoUI
      */
     List<Curso> cursosAlumno;
+    List<Horario> horariosAlumno;
 
     public AlumnoUI(Alumno a) {
         alumno = a;
         this.setExtendedState(MAXIMIZED_BOTH); //
         initComponents();
         cursosAlumno = cursoService.findByIdAlumno(alumno.getIdAlumno());
+        horariosAlumno = horaService.findByIdAlumno(alumno.getIdAlumno());
 
     }
 
@@ -74,6 +79,11 @@ public class AlumnoUI extends javax.swing.JFrame {
         MenuPrincipal.add(mnNotas);
 
         mnHorarios.setText("Horarios");
+        mnHorarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mnHorariosMouseClicked(evt);
+            }
+        });
         MenuPrincipal.add(mnHorarios);
 
         mnPagos.setText("Pagos");
@@ -85,11 +95,11 @@ public class AlumnoUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jpContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jpContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
         );
 
         pack();
@@ -98,8 +108,6 @@ public class AlumnoUI extends javax.swing.JFrame {
     private void mnCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnCursosMouseClicked
         System.out.println("Mostrar Cursos en filas de 3 con GridLayout .....");
         jpContenedor.removeAll();
-
-// 0 filas automáticas, 3 columnas, con 15px de separación horizontal y vertical
         jpContenedor.setLayout(new java.awt.GridLayout(0, 3, 15, 15));
         jpContenedor.setOpaque(false);
 
@@ -153,6 +161,38 @@ public class AlumnoUI extends javax.swing.JFrame {
         jpContenedor.revalidate();
         jpContenedor.repaint();
     }//GEN-LAST:event_mnNotasMouseClicked
+
+    private void mnHorariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnHorariosMouseClicked
+        System.out.println("Mostrar notas por curos");
+        jpContenedor.removeAll();
+        jpContenedor.setLayout(new java.awt.GridLayout(0, 3, 15, 15));
+        jpContenedor.setOpaque(false);
+
+        horariosAlumno.forEach(h -> {
+            System.out.println(h);
+            Horarios cardHorario = new Horarios(
+                    h.getAula(),
+                    h.getHora_fin(),
+                    h.getHora_inicio(),
+                    h.getId_horario(),
+                    h.getId_seccion(),
+                    h.getDia_semana()
+            );
+
+            // 1. Crear un panel envolvente (wrapper) con FlowLayout
+            javax.swing.JPanel wrapper = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 0, 0));
+            wrapper.setOpaque(false); // Para que mantenga la transparencia de tu contenedor
+
+            // 2. Agregar la card dentro del wrapper
+            wrapper.add(cardHorario);
+
+            // 3. Agregar el wrapper al contenedor principal en lugar de la card directamente
+            jpContenedor.add(wrapper);
+        });
+
+        jpContenedor.revalidate();
+        jpContenedor.repaint();
+    }//GEN-LAST:event_mnHorariosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
