@@ -10,11 +10,29 @@ package org.mackas.ui.alumno;
  */
 public class Cursos extends javax.swing.JPanel {
 
-    /**
+   /**
      * Creates new form Cursos
+     * @param idCurso
+     * @param nombre
+     * @param creditos
+     * @param carrera
+     * @param modalidad
+     * @param ciclo
      */
-    public Cursos() {
+    public Cursos(int idCurso, String nombre, int creditos, String carrera, String modalidad, int ciclo) {
         initComponents();
+  // Ajusta el ancho y alto según tu diseño
+        txtIdCurso.setText(String.valueOf(idCurso));
+        txtNombre.setText(nombre);
+        txtCreditos.setText("Créditos: " + creditos); // Opcional: darle un formato más claro
+        txtCarrera.setText(carrera);
+        txtModalidad.setText("Modalidad: " + modalidad);
+        txtCiclo.setText("Ciclo: " + ciclo); // ¡Aquí actualizamos el ciclo!
+        // --- ESTO ES CLAVE PARA QUE NO SE ESTIRE NI SE DEFORME ---
+    java.awt.Dimension dimensionFija = new java.awt.Dimension(600, 90); // Ajusta el ancho y alto (ej. 90 píxeles de alto)
+    this.setPreferredSize(dimensionFija);
+    this.setMinimumSize(dimensionFija);
+    this.setMaximumSize(new java.awt.Dimension(Integer.MAX_VALUE, 90));
     }
 
     /**
@@ -26,27 +44,26 @@ public class Cursos extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        txtNombre = new javax.swing.JLabel();
+        txtModalidad = new javax.swing.JLabel();
+        txtIdCurso = new javax.swing.JLabel();
+        txtCreditos = new javax.swing.JLabel();
+        txtCiclo = new javax.swing.JLabel();
+        txtCarrera = new javax.swing.JLabel();
 
-        jLabel1.setText("Nombre del curso");
+        setBackground(new java.awt.Color(51, 204, 0));
 
-        jLabel2.setText("Modalidad");
+        txtNombre.setText("Nombre del curso");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "PC1", "PC2", "PC3", "EXF"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        txtModalidad.setText("Modalidad");
+
+        txtIdCurso.setText("idCurso");
+
+        txtCreditos.setText("Creditos");
+
+        txtCiclo.setText("Ciclo nivel");
+
+        txtCarrera.setText("Carrera");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -55,33 +72,48 @@ public class Cursos extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtIdCurso)
+                        .addGap(274, 274, 274)
+                        .addComponent(txtCarrera))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtModalidad))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtCiclo)
+                            .addComponent(txtCreditos))))
+                .addContainerGap(407, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2))
+                    .addComponent(txtIdCurso)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtCarrera)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNombre)
+                    .addComponent(txtCreditos))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtModalidad)
+                    .addComponent(txtCiclo))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel txtCarrera;
+    private javax.swing.JLabel txtCiclo;
+    private javax.swing.JLabel txtCreditos;
+    private javax.swing.JLabel txtIdCurso;
+    private javax.swing.JLabel txtModalidad;
+    private javax.swing.JLabel txtNombre;
     // End of variables declaration//GEN-END:variables
 }

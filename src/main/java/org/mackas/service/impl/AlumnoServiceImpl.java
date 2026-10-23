@@ -27,4 +27,9 @@ public class AlumnoServiceImpl
     public Alumno update(Alumno beans) {
         return null;
     }
+
+    @Override
+    public Alumno findById(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

@@ -59,3 +59,24 @@ BEGIN
 END //
 
 DELIMITER ;
+
+
+DELIMITER //
+
+CREATE PROCEDURE sp_listar_calificacion_curso(IN p_id_curso INT)
+BEGIN
+    SELECT 
+        c.id_calificacion,
+        c.id_detalle_matricula,
+        c.nombre_evaluacion,
+        c.ponderado,
+        c.nota,
+        c.fecha_registro
+    FROM calificacion c
+    JOIN detalle_matricula dt ON c.id_detalle_matricula = dt.id_detalle_matricula
+    JOIN seccion sc ON dt.id_seccion = sc.id_seccion
+    JOIN curso cu ON sc.id_curso = cu.id_curso -- Corrección aquí (sc.id_curso en lugar de sc-id_curso)
+    WHERE cu.id_curso = p_id_curso;
+END //
+
+DELIMITER ;

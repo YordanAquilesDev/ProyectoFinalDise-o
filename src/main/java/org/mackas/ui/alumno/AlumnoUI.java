@@ -4,19 +4,38 @@
  */
 package org.mackas.ui.alumno;
 
+import java.util.List;
+import javax.swing.JPanel;
+import org.mackas.model.Alumno;
+import org.mackas.model.Calificacion;
+import org.mackas.model.Carrera;
+import org.mackas.model.Curso;
+import org.mackas.service.impl.CalificacionServiceImpl;
+import org.mackas.service.impl.CarreraServiceImpl;
+import org.mackas.service.impl.CursoServiceImpl;
+
 /**
  *
  * @author Administrador
  */
 public class AlumnoUI extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AlumnoUI.class.getName());
+    private CursoServiceImpl cursoService = new CursoServiceImpl();
+    private CalificacionServiceImpl caliService = new CalificacionServiceImpl();
+    private final Alumno alumno;
+    private CarreraServiceImpl carrService = new CarreraServiceImpl();
 
     /**
      * Creates new form AlumnoUI
      */
-    public AlumnoUI() {
+    List<Curso> cursosAlumno;
+
+    public AlumnoUI(Alumno a) {
+        alumno = a;
         initComponents();
+        cursosAlumno = cursoService.findByIdAlumno(alumno.getIdAlumno());
+
     }
 
     /**
@@ -28,34 +47,14 @@ public class AlumnoUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuBar2 = new javax.swing.JMenuBar();
-        jMenu4 = new javax.swing.JMenu();
-        jMenu5 = new javax.swing.JMenu();
         jpContenedor = new javax.swing.JPanel();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        MenuPrincipal = new javax.swing.JMenuBar();
         mnCursos = new javax.swing.JMenu();
         mnNotas = new javax.swing.JMenu();
         mnHorarios = new javax.swing.JMenu();
         mnPagos = new javax.swing.JMenu();
 
-        jMenu4.setText("File");
-        jMenuBar2.add(jMenu4);
-
-        jMenu5.setText("Edit");
-        jMenuBar2.add(jMenu5);
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        javax.swing.GroupLayout jpContenedorLayout = new javax.swing.GroupLayout(jpContenedor);
-        jpContenedor.setLayout(jpContenedorLayout);
-        jpContenedorLayout.setHorizontalGroup(
-            jpContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 609, Short.MAX_VALUE)
-        );
-        jpContenedorLayout.setVerticalGroup(
-            jpContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 366, Short.MAX_VALUE)
-        );
 
         mnCursos.setText("Cursos");
         mnCursos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -63,18 +62,23 @@ public class AlumnoUI extends javax.swing.JFrame {
                 mnCursosMouseClicked(evt);
             }
         });
-        jMenuBar1.add(mnCursos);
+        MenuPrincipal.add(mnCursos);
 
         mnNotas.setText("Notas");
-        jMenuBar1.add(mnNotas);
+        mnNotas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mnNotasMouseClicked(evt);
+            }
+        });
+        MenuPrincipal.add(mnNotas);
 
         mnHorarios.setText("Horarios");
-        jMenuBar1.add(mnHorarios);
+        MenuPrincipal.add(mnHorarios);
 
         mnPagos.setText("Pagos");
-        jMenuBar1.add(mnPagos);
+        MenuPrincipal.add(mnPagos);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(MenuPrincipal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -91,40 +95,67 @@ public class AlumnoUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mnCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnCursosMouseClicked
-        // TODO add your handling code here:
-        
+        System.out.println("Mostrar Cursos en filas de 3 con GridLayout .....");
+        jpContenedor.removeAll();
+
+// 0 filas automáticas, 3 columnas, con 15px de separación horizontal y vertical
+        jpContenedor.setLayout(new java.awt.GridLayout(0, 3, 15, 15));
+        jpContenedor.setOpaque(false);
+
+        for (Curso c : cursosAlumno) {
+            Carrera carr = carrService.findById(c.getId_carrera());
+            String nombreCarrera = (carr != null) ? carr.getNombre_carrera() : "Sin Carrera";
+
+            // Agregamos la tarjeta directamente al contenedor principal
+            jpContenedor.add(new Cursos(
+                    c.getId_curso(),
+                    c.getNombre_curso(),
+                    c.getCreditos(),
+                    nombreCarrera,
+                    "Presencial",
+                    c.getCiclo_nivel()
+            ));
+        }
+
+        jpContenedor.revalidate();
+        jpContenedor.repaint();
+
     }//GEN-LAST:event_mnCursosMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void mnNotasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnNotasMouseClicked
+        System.out.println("Mostrar notas por curos");
+        jpContenedor.removeAll();
+        jpContenedor.setLayout(new java.awt.GridLayout(0, 3, 15, 15));
+        jpContenedor.setOpaque(false);
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new AlumnoUI().setVisible(true));
-    }
+        for (Curso c : cursosAlumno) {
+            List<Calificacion> calificacionPorCurso = caliService.findByIdCurso(c.getId_curso());
+
+            // Creamos la tarjeta de notas para este curso
+            Notas cardNotasCurso = new Notas();
+
+            // Opcional: Si tienes un método setter en Notas para el texto del curso
+            // cardNotasCurso.setNombreCurso("Curso: " + c.getNombre_curso());
+            // Limpiamos las filas nulas por defecto que pone NetBeans
+            cardNotasCurso.limpiarTabla();
+
+            // Añadimos cada calificación a la tabla de esta tarjeta
+            for (Calificacion ca : calificacionPorCurso) {
+                cardNotasCurso.addNota(ca);
+                System.out.println(ca);
+            }
+
+            // Añadimos la tarjeta completa al contenedor principal
+            jpContenedor.add(cardNotasCurso);
+        }
+
+        jpContenedor.revalidate();
+        jpContenedor.repaint();
+    }//GEN-LAST:event_mnNotasMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuBar MenuPrincipal;
     private javax.swing.JPanel jpContenedor;
     private javax.swing.JMenu mnCursos;
     private javax.swing.JMenu mnHorarios;

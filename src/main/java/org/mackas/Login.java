@@ -8,6 +8,7 @@ import org.mackas.model.Alumno;
 import org.mackas.model.Usuario;
 import org.mackas.service.impl.UserServiceImpl;
 import org.mackas.service.interf.UserService;
+import org.mackas.ui.alumno.AlumnoUI;
 import org.mackas.ui.alumno.HomeAlumnoView;
 
 /**
@@ -117,9 +118,10 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPassActionPerformed
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-       
-          HomeAlumnoView homeAlumno= new HomeAlumnoView(new Alumno());
-           homeAlumno.setVisible(true);
+       AlumnoUI alumniUI= new AlumnoUI(new Alumno());
+       alumniUI.setVisible(true);
+        //  HomeAlumnoView homeAlumno= new HomeAlumnoView(new Alumno());
+        //   homeAlumno.setVisible(true);
        /* Usuario u=user.login(txtCodigo.getText(), txtPass.getText());
        if(u instanceof Alumno){
            HomeAlumnoView homeAlumno= new HomeAlumnoView((Alumno)u);

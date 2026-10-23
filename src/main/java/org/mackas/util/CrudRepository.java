@@ -5,6 +5,7 @@ import java.util.List;
 public interface CrudRepository <T,ID>{
     T save(T beans);
     boolean delete(ID id);
+    T findById(ID id);
     List<T> findAll();
     T update(T beans);
 }

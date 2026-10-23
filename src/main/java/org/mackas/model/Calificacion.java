@@ -1,47 +1,62 @@
 package org.mackas.model;
 
+import java.sql.Date;
+
 public class Calificacion {
-    String PC1;
-    String PC2;
-    String PA;
-    String EX;
+    int id_calificacion;
+    int id_detalle_matricula;
+    String mombre_evaluacion;
+    double ponderado;
+    double nota;
+    Date fecha_registro;
 
-    public String getPC1() {
-        return PC1;
+    public int getId_calificacion() {
+        return id_calificacion;
     }
 
-    public Calificacion(String PC1, String PC2, String PA, String EX) {
-        this.PC1 = PC1;
-        this.PC2 = PC2;
-        this.PA = PA;
-        this.EX = EX;
+    public int getId_detalle_matricula() {
+        return id_detalle_matricula;
     }
 
-    public void setPC1(String PC1) {
-        this.PC1 = PC1;
+    public String getMombre_evaluacion() {
+        return mombre_evaluacion;
     }
 
-    public String getPC2() {
-        return PC2;
+    public double getPonderado() {
+        return ponderado;
     }
 
-    public void setPC2(String PC2) {
-        this.PC2 = PC2;
+    public double getNota() {
+        return nota;
     }
 
-    public String getPA() {
-        return PA;
+    public Date getFecha_registro() {
+        return fecha_registro;
     }
 
-    public void setPA(String PA) {
-        this.PA = PA;
+    public void setId_calificacion(int id_calificacion) {
+        this.id_calificacion = id_calificacion;
     }
 
-    public String getEX() {
-        return EX;
+    public void setId_detalle_matricula(int id_detalle_matricula) {
+        this.id_detalle_matricula = id_detalle_matricula;
     }
 
-    public void setEX(String EX) {
-        this.EX = EX;
+    public void setMombre_evaluacion(String mombre_evaluacion) {
+        this.mombre_evaluacion = mombre_evaluacion;
     }
+
+    public void setPonderado(double ponderado) {
+        this.ponderado = ponderado;
+    }
+
+    public void setNota(double nota) {
+        this.nota = nota;
+    }
+
+    public void setFecha_registro(Date fecha_registro) {
+        this.fecha_registro = fecha_registro;
+    }
+ 
+
 }
