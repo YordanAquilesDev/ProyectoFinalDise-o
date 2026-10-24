@@ -20,7 +20,7 @@ import org.mackas.util.ConexionMySQL;
  */
 public class CalificacionRepositoryImpl implements CalificacionRepository {
     private Connection mysql = ConexionMySQL.getInstance().getConexion();
-    
+
    @Override
 public List<Calificacion> findByIdCurso(int idCurso) {
     List<Calificacion> lista = new ArrayList<>();

@@ -4,29 +4,54 @@
  */
 package org.mackas.ui.alumno;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 import org.mackas.model.Alumno;
 import org.mackas.model.DetalleMatricula;
 import org.mackas.model.Matricula;
 import org.mackas.model.PeriodoAcademico;
 import org.mackas.model.Seccion;
 import org.mackas.service.impl.MatriculaServiceImpl;
+import org.mackas.service.impl.PeriodoAcademicoServiceImpl;
+import org.mackas.service.impl.SeccionServiceImpl;
 
 /**
  *
  * @author Administrador
  */
 public class Matriculas extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Matriculas.class.getName());
- private MatriculaServiceImpl matService= new MatriculaServiceImpl();
+    private MatriculaServiceImpl matService = new MatriculaServiceImpl();
+    private PeriodoAcademicoServiceImpl perAcService = new PeriodoAcademicoServiceImpl();
     /**
      * Creates new form Matricula
      */
+    private SeccionServiceImpl secService = new SeccionServiceImpl();
+    DefaultTableModel model; // Corregido el nombre de la clase
     Alumno alumno;
     Matricula mt1;
+    //  List<Seccion> seccionesPeriodo = new ArrayList<>();
+
     public Matriculas(Alumno a) {
         initComponents();
-        alumno=a;
+        // Obtenemos el modelo real de la JTable
+        model = (DefaultTableModel) tblSeccion.getModel();
+        alumno = a;
+        Init();
+
+    }
+
+    private void Init() {
+        // 1. Obtener la lista de tus periodos académicos
+        List<PeriodoAcademico> listaPeriodos = perAcService.findAll();
+        // 2. Crear un DefaultComboBoxModel pasándole los elementos de la lista en forma de arreglo
+        DefaultComboBoxModel<PeriodoAcademico> model = new DefaultComboBoxModel<>(listaPeriodos.toArray(new PeriodoAcademico[0]));
+
+        // 3. Asignar el modelo al ComboBox
+        cmbPeriodo.setModel(model);
     }
 
     /**
@@ -40,8 +65,8 @@ public class Matriculas extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        tblSeccion = new javax.swing.JTable();
+        cmbSeccion = new javax.swing.JComboBox<>();
         cmbPeriodo = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         btnAgregarSecc = new javax.swing.JButton();
@@ -54,20 +79,19 @@ public class Matriculas extends javax.swing.JFrame {
 
         jLabel1.setText("Matricula del Estudiante");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblSeccion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "id_matricula", "id_seccion", "promedio", "estado"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblSeccion);
 
-        jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
+        cmbSeccion.addActionListener(this::cmbSeccionActionPerformed);
+
+        cmbPeriodo.addActionListener(this::cmbPeriodoActionPerformed);
 
         jLabel2.setText("Periodo Academico");
 
@@ -93,99 +117,133 @@ public class Matriculas extends javax.swing.JFrame {
                 .addComponent(cmbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 103, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnAgregarSecc))
-                    .addComponent(jLabel1)))
+                        .addComponent(btnAgregarSecc))))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 687, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnQuitarSecc)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
                         .addComponent(btnMatricularse)
-                        .addGap(19, 19, 19))))
+                        .addGap(57, 57, 57))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(btnAgregarSecc)
+                    .addComponent(jLabel3))
+                .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addComponent(btnAgregarSecc)
-                            .addComponent(jLabel3))
-                        .addGap(44, 44, 44)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnQuitarSecc))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnQuitarSecc)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnMatricularse)
-                            .addComponent(jLabel4))
-                        .addGap(22, 22, 22))))
+                            .addComponent(jLabel4)
+                            .addComponent(btnMatricularse))
+                        .addGap(10, 10, 10))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void cmbSeccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSeccionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_cmbSeccionActionPerformed
 
     private void btnMatricularseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatricularseActionPerformed
         // TODO add your handling code here:
-        
-        
-        
+        System.out.println("Iniciando UI Alumno");
+        Matricula mt = matService.setMatricula(mt1);
+        AlumnoUI alumniUI = new AlumnoUI(new Alumno());
+        System.out.println(alumniUI);
+        alumniUI.setVisible(true);
+        // logica pata mostarc si es un exito o o
+
     }//GEN-LAST:event_btnMatricularseActionPerformed
 
     private void btnAgregarSeccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarSeccActionPerformed
-        // TODO add your handling code here:
-               DetalleMatricula dt= new DetalleMatricula();
-        
-  
-      PeriodoAcademico periodo=cmbPeriodo.getPrototypeDisplayValue();
-        Matricula mt= matService.setMatricula(
-                new Matricula(
-                        alumno.getIdAlumno(),
-                        periodo.getId_periodo(),
-                        850 
-                )
-        );
-        
- 
+
+        // 1. Obtener los elementos seleccionados de los ComboBox
+        // (Nota: Asegúrate de usar getSelectedItem() en lugar de getPrototypeDisplayValue())   
+        Seccion sec = (Seccion) cmbSeccion.getSelectedItem();
+
+        if (sec == null) {
+            // Validación opcional por si no hay selección
+            return;
+        }
+
+        // 2. Agregar el detalle a tu objeto Matricula
+        mt1.addSecction(new DetalleMatricula(
+                0, sec.getId_seccion()
+        ));
+
+        // 3. Definir los valores para mostrar en la tabla 
+        // Columnas ordenadas según tu diseño: "id_matricula", "id_seccion", "promedio", "estado"
+        int idMatriculaTemp = 0; // O el valor real que tenga mt1.getId_matricula()
+        int idSeccion = sec.getId_seccion();
+        double promedioInicial = 0.0;
+        String estadoInicial = "Registrado"; // O el estado por defecto que prefieras
+
+        // 4. Añadir la fila al JTable a través del DefaultTableModel
+        model.addRow(new Object[]{
+            idMatriculaTemp,
+            idSeccion,
+            promedioInicial,
+            estadoInicial
+        });
+
     }//GEN-LAST:event_btnAgregarSeccActionPerformed
 
- 
+    private void cmbPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPeriodoActionPerformed
+        // 1. Limpiar los elementos anteriores del ComboBox de secciones
+        cmbSeccion.removeAllItems();
+
+        // 2. Obtener el periodo seleccionado de manera segura
+        PeriodoAcademico periodo = (PeriodoAcademico) cmbPeriodo.getSelectedItem();
+
+        if (periodo != null) {
+            // 3. Llamar al servicio, recorrer la lista y agregarlas al JComboBox
+            secService.findByIdPeriodo(periodo.getId_periodo()).forEach(s -> {
+                cmbSeccion.addItem(s);
+            });
+            mt1 = new Matricula(alumno.getIdAlumno(), periodo.getId_periodo(), 0.0);
+        }
+
+    }//GEN-LAST:event_cmbPeriodoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarSecc;
     private javax.swing.JButton btnMatricularse;
     private javax.swing.JButton btnQuitarSecc;
-    private javax.swing.JComboBox<PeriodoAcademico> cmbPeriodo;
-    private javax.swing.JComboBox<Seccion> jComboBox1;
+    private javax.swing.JComboBox<org.mackas.model.PeriodoAcademico> cmbPeriodo;
+    private javax.swing.JComboBox<Seccion> cmbSeccion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblSeccion;
     // End of variables declaration//GEN-END:variables
 }

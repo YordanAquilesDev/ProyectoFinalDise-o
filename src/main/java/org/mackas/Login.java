@@ -9,6 +9,7 @@ import org.mackas.model.Usuario;
 import org.mackas.service.impl.UserServiceImpl;
 import org.mackas.service.interf.UserService;
 import org.mackas.ui.alumno.AlumnoUI;
+import org.mackas.ui.alumno.Matriculas;
 
 /**
  *
@@ -21,7 +22,7 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
-    UserService user= new UserServiceImpl();
+    UserService userService= new UserServiceImpl();
     public Login() {
         initComponents();
     }
@@ -117,9 +118,17 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPassActionPerformed
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-       AlumnoUI alumniUI= new AlumnoUI(new Alumno());
+           Matriculas mtc= new Matriculas((Alumno)
+                userService.login(
+                        txtCodigo.getText(),
+                        txtPass.getText()
+                )
+        );
+        mtc.setVisible(true);
+        /*
+        AlumnoUI alumniUI= new AlumnoUI(new Alumno());
         System.out.println(alumniUI);
-       alumniUI.setVisible(true);
+       alumniUI.setVisible(true);*/
        
       
         

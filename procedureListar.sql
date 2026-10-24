@@ -125,3 +125,22 @@ BEGIN
     (p_id_matricula,p_id_seccion,null,'CURSANDO');
 END //
 DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_listar_secciones_periodo(
+    in p_id_periodo int,
+)
+BEGIN
+    SELECT 
+        s.id_seccion,
+        s.id_curso,
+        s.codigo_seccion,
+        s.aula,
+        s.id_periodo,
+        s.cupo_maximo
+    FROM seccion s
+    WHERE s.id_periodo = p_id_periodo;
+END //
+DELIMITER ;
+
+
