@@ -58,39 +58,37 @@ public class SeccionRepositoryImpl implements SeccionRepository {
         return listaSecciones;
     }
 
-  @Override
+    @Override
     public List<Seccion> findByIdDocente(int idDocente) {
         List<Seccion> listaSecciones = new ArrayList<>();
         String sql = "{CALL sp_listar_secciones_docente(?)}";
 
-        try (PreparedStatement pstmt = mysql.prepareStatement(sql)) {
+        // Usamos CallableStatement en lugar de PreparedStatement
+        try (CallableStatement cstmt = mysql.prepareCall(sql)) {
             // Asignamos el parámetro de entrada (id_docente)
-            pstmt.setInt(1, idDocente);
+            cstmt.setInt(1, idDocente);
 
-            try (ResultSet rs = pstmt.executeQuery()) {
+            try (ResultSet rs = cstmt.executeQuery()) {
                 // Recorremos cada registro devuelto por el procedimiento
+                
                 while (rs.next()) {
+                    System.out.println(rs.getInt("id_seccion"));
                     Seccion seccion = new Seccion();
-                    
+
                     // Mapeamos los campos con los atributos de tu modelo Seccion
                     seccion.setId_seccion(rs.getInt("id_seccion"));
                     seccion.setId_curso(rs.getInt("id_curso"));
-                    
-                    // Nota: Si el id_docente viene implícito por el procedure, 
-                    // puedes asignarlo directamente o leerlo si lo incluyes en el SELECT
-                    seccion.setId_docente(idDocente); 
-                    
+                    seccion.setId_docente(idDocente);
                     seccion.setCodigo_seccion(rs.getString("codigo_seccion"));
                     seccion.setAula(rs.getString("aula"));
                     seccion.setId_periodo(rs.getInt("id_periodo"));
-                    
-                    // Ojo aquí: Mapeamos con el nombre que devuelve el SELECT de tu procedure
-                    seccion.setCupo_max(rs.getInt("cupo_maximo")); 
+                    seccion.setCupo_max(rs.getInt("cupo_maximo"));
 
                     listaSecciones.add(seccion);
                 }
             }
         } catch (SQLException e) {
+            System.out.println(e);
             e.printStackTrace();
         }
 

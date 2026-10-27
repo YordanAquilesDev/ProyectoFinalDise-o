@@ -62,6 +62,6 @@ public class SeccionServiceImpl implements SeccionService {
 
     @Override
     public List<Seccion> findByIdDocente(int idDocente) {
-    return repo.findByIdDocente(idDocente);
+       return repo.findByIdDocente(idDocente);
     }
 }

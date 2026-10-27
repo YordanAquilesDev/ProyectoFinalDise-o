@@ -22,8 +22,8 @@ public class DocenteUIF extends JFrame {
 
     private SeccionService secService = new SeccionServiceImpl();
     private AlumnoService aluService = new AlumnoServiceImpl();
-    
-    private final Docente docente;
+
+    private Docente docente;
     private List<Seccion> seccionDocente;
 
     private JPanel jpContenedor;
@@ -34,13 +34,13 @@ public class DocenteUIF extends JFrame {
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setTitle("Portal del Docente - " + (docente != null ? docente.getNombres() : ""));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+        docente.setIdDocente(1);
         if (docente != null) {
             this.seccionDocente = secService.findByIdDocente(docente.getIdDocente());
         }
 
         initComponentsPersonalizado();
-        
+
         // Al abrir la ventana, cargamos por defecto sus secciones
         listarSecciones();
     }
@@ -85,7 +85,7 @@ public class DocenteUIF extends JFrame {
         scrollPane = new JScrollPane(jpContenedor);
         scrollPane.setBorder(null);
         scrollPane.getViewport().setBackground(new Color(245, 247, 250));
-        
+
         add(scrollPane, BorderLayout.CENTER);
         pack();
     }
@@ -101,21 +101,23 @@ public class DocenteUIF extends JFrame {
 
     // Método para listar las secciones del docente en pantalla
     public void listarSecciones() {
+        System.out.println("Mostrando las secciones");
         jpContenedor.removeAll();
         jpContenedor.setLayout(new GridLayout(0, 2, 20, 20));
-
+        System.out.println(seccionDocente);
         if (seccionDocente != null) {
             for (Seccion sec : seccionDocente) {
+                System.out.println(sec);
                 // Instanciamos la tarjeta de sección y le pasamos el listener de clic
                 SeccionesF seccionCard = new SeccionesF(sec, clickedSeccion -> {
                     // Al hacer clic en una sección, mostramos los alumnos matriculados en ella
                     mostrarAlumnosPorSeccion(clickedSeccion.getId_seccion(), clickedSeccion.getCodigo_seccion());
                 });
-                
+
                 jpContenedor.add(seccionCard);
             }
         }
-        
+
         jpContenedor.revalidate();
         jpContenedor.repaint();
     }
@@ -123,7 +125,7 @@ public class DocenteUIF extends JFrame {
     // Método para que el docente vea los alumnos de una sección específica
     public void mostrarAlumnosPorSeccion(int idSeccion, String codigoSeccion) {
         List<Alumno> alumnosSeccion = aluService.findByIdSeccion(idSeccion);
-        
+
         jpContenedor.removeAll();
         jpContenedor.setLayout(new GridLayout(0, 2, 20, 20));
 
