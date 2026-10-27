@@ -170,7 +170,7 @@ public class AlumnoUI extends javax.swing.JFrame {
 
         horariosAlumno.forEach(h -> {
             System.out.println(h);
-            Horarios cardHorario = new Horarios(
+            HorariosF cardHorario = new HorariosF(
                     h.getAula(),
                     h.getHora_fin(),
                     h.getHora_inicio(),

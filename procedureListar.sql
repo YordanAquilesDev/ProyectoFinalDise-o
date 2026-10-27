@@ -134,4 +134,45 @@ BEGIN
 END //
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE sp_listar_alumnos_seccion(
+    in p_id_seccion int
+)
+BEGIN
+select 
+a.id_alumno, 
+a.id_carrera,
+a.nombres, 
+a.apellidos, 
+a.dni, 
+a.email, 
+a.telefono,
+a.fecha_nacimiento
+from alumno a
+join matricula m on a.id_alumno = m.id_alumno
+join detalle_matricula dm on m.id_matricula = dm.id_matricula
+where dm.id_seccion = p_id_seccion;
+end //
+DELIMITER ;
+call sp_listar_alumnos_seccion(1); -- funciona correctamente
+
+
+
+DELIMITER //
+create procedure sp_listar_secciones_docente(in p_id_docente int)
+BEGIN
+    SELECT 
+        s.id_seccion,
+        s.id_curso,
+        s.codigo_seccion,
+        s.aula,
+        s.id_periodo,
+        s.cupo_maximo
+    FROM seccion s
+    WHERE s.id_docente = p_id_docente;
+END //
+DELIMITER ;
+
+call sp_listar_secciones_docente(1);-- funciona correctamente
+
 

@@ -7,6 +7,8 @@ package org.mackas.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import org.mackas.model.Seccion;
+import org.mackas.repository.impl.SeccionRepositoryImpl;
+import org.mackas.repository.interf.SeccionRepository;
 import org.mackas.service.interf.SeccionService;
 
 /**
@@ -14,7 +16,7 @@ import org.mackas.service.interf.SeccionService;
  * @author Administrador
  */
 public class SeccionServiceImpl implements SeccionService {
-
+ private SeccionRepository repo= new SeccionRepositoryImpl();
     @Override
     public List<Seccion> findByIdPeriodo(int idPeriodo) {
         List<Seccion> listaSecciones = new ArrayList<>();
@@ -56,5 +58,10 @@ public class SeccionServiceImpl implements SeccionService {
 
         // Si el idPeriodo no tiene datos configurados, devolverá una lista vacía (sin errores)
         return listaSecciones;
+    }
+
+    @Override
+    public List<Seccion> findByIdDocente(int idDocente) {
+    return repo.findByIdDocente(idDocente);
     }
 }

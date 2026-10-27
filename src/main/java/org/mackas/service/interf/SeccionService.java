@@ -13,4 +13,6 @@ import org.mackas.model.Seccion;
  */
 public interface SeccionService {
     List<Seccion> findByIdPeriodo(int idPeriodo);
+    List<Seccion> findByIdDocente(int idDocente);
+    
 }

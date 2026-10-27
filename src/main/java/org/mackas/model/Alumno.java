@@ -29,6 +29,21 @@ public class Alumno extends Usuario {
         this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
     }
+        // Constructor para crear alumnos
+    public Alumno(
+                  int idAlumno, int idCarrera, String codigo, String nombres, String apellidos, 
+                  String dni, String email, String telefono, Date fechaNacimiento) {
+   
+        this.idAlumno = idAlumno;
+        this.idCarrera = idCarrera;
+        this.codigo = codigo;
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.dni = dni;
+        this.email = email;
+        this.telefono = telefono;
+        this.fechaNacimiento = fechaNacimiento;
+    }
 
     // Getters y Setters específicos de Alumno
     public int getIdAlumno() {
