@@ -5,6 +5,7 @@
 package org.mackas.service.impl;
 
 import org.mackas.model.Matricula;
+import org.mackas.repository.impl.MatriculaRepositoryImpl;
 import org.mackas.service.interf.MatriculaService;
 
 /**
@@ -12,7 +13,7 @@ import org.mackas.service.interf.MatriculaService;
  * @author Administrador
  */
 public class MatriculaServiceImpl implements MatriculaService{
-
+private MatriculaRepositoryImpl repo= new MatriculaRepositoryImpl();
     @Override
     public Matricula setMatricula(Matricula mt) {
         // much mas logicxa 
@@ -21,8 +22,8 @@ public class MatriculaServiceImpl implements MatriculaService{
 
     @Override
     public boolean isMatricula(int idAlumno) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        return repo.isMatricula(idAlumno);
+       }
     
     
     
