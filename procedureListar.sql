@@ -1,32 +1,6 @@
-USE DB_universidad;
 
--- Cambiar el delimitador para poder crear los procedimientos en MySQL
-DELIMITER //
-CREATE PROCEDURE sp_listar_alumnos()
-BEGIN
-    SELECT * FROM alumno;
-END //
-
-CREATE PROCEDURE sp_listar_secciones()
-BEGIN
-    SELECT * FROM seccion;
-END //
-
-CREATE PROCEDURE sp_listar_horarios()
-BEGIN
-    SELECT * FROM horario;
-END //
-
-CREATE PROCEDURE sp_listar_pensiones()
-BEGIN
-    SELECT * FROM pension;
-END //
-
--- Restaurar el delimitador por defecto
-DELIMITER ;
 
 DELIMITER //
-
 CREATE PROCEDURE sp_listar_cursos_alumno(IN p_id_alumno INT)
 BEGIN
     SELECT 
@@ -35,12 +9,8 @@ BEGIN
         c.codigo AS codigo_curso,
         c.nombre AS nombre_curso,
         c.creditos,
-        c.ciclo_nivel,
-       -- s.codigo_seccion,
-      --  s.aula,
-     --   p.nombre AS periodo,
-      --  dm.promedio_final,
-      --  dm.estado_curso
+        c.ciclo_nivel
+
     FROM curso c
     JOIN seccion s ON c.id_curso = s.id_curso
     JOIN detalle_matricula dm ON s.id_seccion = dm.id_seccion
@@ -84,7 +54,7 @@ BEGIN
         h.aula
     FROM horario h
     JOIN detalle_matricula dt ON h.id_seccion = dt.id_seccion
-    join Matricula m on dt.id_matricula= m.id_matricula;   
+    join Matricula m on dt.id_matricula= m.id_matricula   
     WHERE m.id_alumno=p_id_alumno;
 END //
 DELIMITER ;
@@ -94,10 +64,10 @@ DELIMITER //
 CREATE PROCEDURE sp_matricular_alumno(
     in p_id_alumno int,
     in p_id_periodo int,
-    in p_monto_total int,
+    in p_monto_total int
 )
 BEGIN
-    insert into matricula  id_alumno,id_periodo,fecha_matricula,monto_total,estado values
+    insert into matricula  (id_alumno,id_periodo,fecha_matricula,monto_total,estado) values
     (p_id_alumno,p_id_periodo,now(),p_monto_total,'REGISTRADA');
 END //
 DELIMITER ;
@@ -108,18 +78,18 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE sp_detalle_matricula_alumno(
     in p_id_matricula int,
-    in p_id_seccion int,
+    in p_id_seccion int
 )
 BEGIN
 
-    insert into detalle_matricula id_matricula,id_seccion,promedio_final,estado_curso values
+    insert into detalle_matricula (id_matricula,id_seccion,promedio_final,estado_curso) values
     (p_id_matricula,p_id_seccion,null,'CURSANDO');
 END //
 DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE sp_listar_secciones_periodo(
-    in p_id_periodo int,
+    in p_id_periodo int
 )
 BEGIN
     SELECT 
@@ -175,4 +145,54 @@ DELIMITER ;
 
 call sp_listar_secciones_docente(1);-- funciona correctamente
 
+DELIMITER //
+create procedure sp_alumno_usuario(in p_id_usuario int)
+BEGIN
+   select 
+a.id_alumno, 
+a.id_carrera,
+a.nombres, 
+a.apellidos, 
+a.dni, 
+a.email, 
+a.telefono,
+a.fecha_nacimiento
+from alumno a
+join usuario u on a.id_usuario=u.id_usuario
+where u.id_usuario=p_id_usuario;
+END //
+DELIMITER ;
+
+
+DELIMITER //
+
+CREATE PROCEDURE sp_login(
+    IN p_username VARCHAR(50),
+    IN p_password VARCHAR(255)
+)
+BEGIN
+    SELECT 
+        id_usuario,
+        username,
+        password_hash,
+        rol,
+        estado
+    FROM usuario
+    WHERE username = p_username 
+      AND password_hash = p_password 
+      AND estado = TRUE;
+END //
+DELIMITER ;
+
+DELIMITER //
+create procedure sp_docente_usuario(in p_id_usuario int)
+BEGIN
+   select 
+   d.*
+
+from docente a
+join usuario u on a.id_usuario=u.id_usuario
+where u.id_usuario=p_id_usuario;
+END //
+DELIMITER ;
 

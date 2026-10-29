@@ -4,15 +4,16 @@ import org.mackas.model.Docente;
 import org.mackas.repository.interf.DocenteRepository;
 
 import java.util.List;
+import org.mackas.repository.impl.DocenteRepositoryImpl;
 
 public class DocenteServiceImpl
 implements DocenteRepository
 {
+     private DocenteRepositoryImpl repo= new DocenteRepositoryImpl();
   
     @Override
-    public Docente findById(String codigo) {
-      
-        return null;
+    public Docente findByIdUser(int idUser) {
+      return repo.findByIdUser(idUser);
     }
 
     @Override

@@ -4,5 +4,5 @@ import org.mackas.model.Docente;
 import org.mackas.util.CrudRepository;
 
 public interface DocenteRepository  extends CrudRepository<Docente,Integer> {
-    Docente findById(String codigo);
+    Docente findByIdUser(int idUser);
 }

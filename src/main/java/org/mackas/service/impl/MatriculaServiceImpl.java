@@ -18,6 +18,11 @@ public class MatriculaServiceImpl implements MatriculaService{
         // much mas logicxa 
         return null;
      }
+
+    @Override
+    public boolean isMatricula(int idAlumno) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     
     

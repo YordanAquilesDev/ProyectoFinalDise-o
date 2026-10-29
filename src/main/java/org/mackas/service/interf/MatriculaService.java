@@ -12,4 +12,6 @@ import org.mackas.model.Matricula;
  */
 public interface MatriculaService {
     Matricula setMatricula(Matricula mt);
+     
+      boolean isMatricula(int idAlumno);
 }

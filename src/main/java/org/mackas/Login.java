@@ -4,10 +4,12 @@
  */
 package org.mackas;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.mackas.model.Alumno;
 import org.mackas.model.Docente;
 import org.mackas.model.Usuario;
+import org.mackas.service.impl.MatriculaServiceImpl;
 import org.mackas.service.impl.UserServiceImpl;
 import org.mackas.service.interf.UserService;
 import org.mackas.ui.alumno.AlumnoUI;
@@ -20,18 +22,19 @@ import org.mackas.ui.docente.DocenteUIF;
  * @author Administrador
  */
 public class Login extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
 
     /**
      * Creates new form Login
      */
-    UserService userService= new UserServiceImpl();
+    UserService userService = new UserServiceImpl();
+    private MatriculaServiceImpl matriculaService = new MatriculaServiceImpl();
+
     public Login() {
         initComponents();
     }
 
-  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -50,7 +53,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel1.setText("Iniciar sesion");
 
-        jLabel2.setText("Codigo usuario:");
+        jLabel2.setText("Codigo Usuario");
 
         jLabel3.setText("Contraseña:");
 
@@ -122,22 +125,56 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPassActionPerformed
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-          /*Matriculas mtc= new Matriculas((Alumno)
-                userService.login(
-                        txtCodigo.getText(),
-                        txtPass.getText()
-                )
-        );
-        mtc.setVisible(true);*/
-           
-     DocenteUIF docente=new DocenteUIF(new Docente()) ;
-     docente.setVisible(true);
-     
-      //  AlumnoUIF alumniUIF= new AlumnoUIF(new Alumno());
-      // alumniUIF.setVisible(true);
-       
-      
-        
+// 1. Obtener y limpiar los textos para evitar espacios en blanco accidentales
+        String codigo = txtCodigo.getText().trim();
+        String password = txtPass.getText().trim();
+
+        // 2. Validar campos vacíos
+        if (codigo.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Por favor, complete todos los campos.",
+                    "Campos Vacíos",
+                    JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
+        // 3. Intentar iniciar sesión
+        Usuario user = userService.login(codigo, password);
+
+        // 4. Validar si el usuario existe
+        if (user == null) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Código o contraseña incorrectos.",
+                    "Error de Autenticación",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        // 5. Redireccionar según el rol del usuario
+        if (user instanceof Alumno) {
+            Alumno alumno = (Alumno) user;
+
+            if (matriculaService.isMatricula(alumno.getIdAlumno())) {
+                Matriculas mtc = new Matriculas(alumno);
+                mtc.setVisible(true); // Asegúrate de hacerlo visible si es un JFrame
+            } else {
+                // Nota: Aquí pasas un nuevo Alumno() vacío, revisa si debías pasar el 'alumno' logueado
+                AlumnoUIF alumniUIF = new AlumnoUIF(alumno);
+                alumniUIF.setVisible(true);
+            }
+
+        } else if (user instanceof Docente) {
+            Docente docenteUser = (Docente) user;
+            DocenteUIF docenteUIF = new DocenteUIF(docenteUser);
+            docenteUIF.setVisible(true);
+        }
+
+        // Opcional: Cerrar la ventana de login actual
+        // this.dispose();
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     /**

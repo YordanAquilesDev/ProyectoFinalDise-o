@@ -7,4 +7,5 @@ import org.mackas.util.CrudRepository;
 public interface AlumnoService
         extends CrudRepository<Alumno,Integer> {
     List<Alumno> findByIdSeccion(int idSeccion);
+    Alumno findByIdUser(int idUser);
 }

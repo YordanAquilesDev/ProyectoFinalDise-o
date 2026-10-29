@@ -17,8 +17,31 @@ public class AlumnoRepositoryImpl implements AlumnoRepository {
     private Connection mysql = ConexionMySQL.getInstance().getConexion();
 
     @Override
-    public Alumno findByCodigo(String codigo) {
-        return null;
+    public Alumno findByIdUser(int  idUser) {
+       Alumno alumno = null;
+        String sql = "{CALL sp_alumno_usuario(?)}";
+
+        try (CallableStatement stmt = mysql.prepareCall(sql)) {
+            stmt.setInt(1, idUser);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    alumno = new Alumno();
+                    alumno.setIdAlumno(rs.getInt("id_alumno"));
+                    //  alumno.setIdUsuario(rs.getInt("id_usuario"));
+                    alumno.setIdCarrera(rs.getInt("id_carrera"));
+                    alumno.setCodigo(rs.getString("codigo"));
+                    alumno.setNombres(rs.getString("nombres"));
+                    alumno.setApellidos(rs.getString("apellidos"));
+                    alumno.setDni(rs.getString("dni"));
+                    alumno.setEmail(rs.getString("email"));
+                    alumno.setTelefono(rs.getString("telefono"));
+                    alumno.setFechaNacimiento(rs.getDate("fecha_nacimiento"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return alumno;
     }
 
     @Override

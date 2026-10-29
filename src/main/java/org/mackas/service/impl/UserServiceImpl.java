@@ -13,12 +13,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.mackas.model.Alumno;
 import org.mackas.model.Docente;
+import org.mackas.repository.impl.UserRepositoryImpl;
 
 public class UserServiceImpl implements UserService {
-
+ private UserRepositoryImpl repo= new UserRepositoryImpl();
     @Override
     public Usuario login(String codigo, String password) {
-        return new Alumno();
+        return repo.login(codigo, password);
     }
 
 }

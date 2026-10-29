@@ -12,6 +12,8 @@ import org.mackas.model.Alumno;
 import org.mackas.model.Docente;
 import org.mackas.model.Usuario;
 import org.mackas.repository.interf.UserRepository;
+import org.mackas.service.impl.AlumnoServiceImpl;
+import org.mackas.service.impl.DocenteServiceImpl;
 import org.mackas.util.ConexionMySQL;
 
 /**
@@ -21,6 +23,8 @@ import org.mackas.util.ConexionMySQL;
 public class UserRepositoryImpl implements UserRepository{
 
     private Connection mysql = ConexionMySQL.getInstance().getConexion();
+    private AlumnoServiceImpl aluService= new AlumnoServiceImpl();
+    private DocenteServiceImpl doceService= new DocenteServiceImpl();
 
     @Override
     public Usuario login(String codigo, String password) {
@@ -37,12 +41,13 @@ public class UserRepositoryImpl implements UserRepository{
                 if (rs.next()) {
                     int idUsuario = rs.getInt("id_usuario");
                     String rol = rs.getString("rol");
+                    System.out.println(rol);
 
                     // Dependiendo del rol, cargamos los datos específicos
                     if ("ALUMNO".equals(rol)) {
-                        usuarioLogueado =(Usuario) obtenerAlumnoPorIdUsuario(idUsuario);
+                        usuarioLogueado =(Usuario) aluService.findByIdUser(idUsuario);
                     } else if ("DOCENTE".equals(rol)) {
-                        usuarioLogueado = obtenerDocentePorIdUsuario(idUsuario);
+                        usuarioLogueado = doceService.findByIdUser(idUsuario);
                     }
                 }
             }

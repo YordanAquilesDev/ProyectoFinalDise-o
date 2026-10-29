@@ -9,4 +9,5 @@ import org.mackas.model.Matricula;
  */
 public interface MatriculaRepository {
       Matricula setMatricula(Matricula mt);
+      boolean isMatricula(int idAlumno);
 }

@@ -40,4 +40,9 @@ public class AlumnoServiceImpl
     public List<Alumno> findByIdSeccion(int idSeccion) {
         return repo.findByIdSeccion(idSeccion);
     }
+
+    @Override
+    public Alumno findByIdUser(int idUser) {
+        return repo.findByIdUser(idUser);
+    }
 }
