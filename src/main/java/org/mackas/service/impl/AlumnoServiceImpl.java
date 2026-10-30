@@ -26,10 +26,6 @@ public class AlumnoServiceImpl
         return List.of();
     }
 
-    @Override
-    public Alumno update(Alumno beans) {
-        return null;
-    }
 
     @Override
     public Alumno findById(Integer id) {

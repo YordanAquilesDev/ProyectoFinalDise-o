@@ -20,10 +20,13 @@ public class CursosF extends JPanel {
 
     public CursosF(int idCurso, String nombre, int creditos, String carrera, String modalidad, int ciclo) {
         initComponents();
-        
+
         txtIdCurso.setText("ID: " + idCurso);
         txtNombre.setText(nombre);
         txtCreditos.setText(creditos + " Créditos");
+        System.out.println(carrera);
+        System.out.println(carrera);
+        System.out.println(carrera);
         txtCarrera.setText(carrera);
         txtModalidad.setText("Modalidad: " + modalidad);
         txtCiclo.setText("Ciclo " + ciclo);
@@ -44,8 +47,8 @@ public class CursosF extends JPanel {
 
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(226, 232, 240), 1),
-            BorderFactory.createEmptyBorder(12, 15, 12, 15)
+                BorderFactory.createLineBorder(new Color(226, 232, 240), 1),
+                BorderFactory.createEmptyBorder(12, 15, 12, 15)
         ));
 
         txtNombre.setFont(new Font("Segoe UI", Font.BOLD, 15));
@@ -69,37 +72,37 @@ public class CursosF extends JPanel {
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtIdCurso)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtCarrera))
-                    .addComponent(txtNombre, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtModalidad)
-                        .addGap(30, 30, 30)
-                        .addComponent(txtCreditos)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtCiclo)))
-                .addContainerGap())
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(txtIdCurso)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(txtCarrera))
+                                        .addComponent(txtNombre, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(txtModalidad)
+                                                .addGap(30, 30, 30)
+                                                .addComponent(txtCreditos)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(txtCiclo)))
+                                .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtIdCurso)
-                    .addComponent(txtCarrera))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNombre)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtModalidad)
-                    .addComponent(txtCreditos)
-                    .addComponent(txtCiclo))
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txtIdCurso)
+                                        .addComponent(txtCarrera))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNombre)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txtModalidad)
+                                        .addComponent(txtCreditos)
+                                        .addComponent(txtCiclo))
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
 }

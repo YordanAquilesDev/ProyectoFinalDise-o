@@ -6,6 +6,7 @@ package org.mackas.service.impl;
 
 import java.util.List;
 import org.mackas.model.Carrera;
+import org.mackas.repository.impl.CarreraRepositoryImpl;
 import org.mackas.service.interf.CarreraService;
 
 /**
@@ -14,6 +15,7 @@ import org.mackas.service.interf.CarreraService;
  */
 public class CarreraServiceImpl implements CarreraService {
 
+    private CarreraRepositoryImpl repo= new CarreraRepositoryImpl();
     @Override
     public Carrera save(Carrera beans) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -29,14 +31,10 @@ public class CarreraServiceImpl implements CarreraService {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public Carrera update(Carrera beans) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
+   
     @Override
     public Carrera findById(Integer id) {
-        return new Carrera();
+        return repo.findById(id);
     }
     
 }

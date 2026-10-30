@@ -7,5 +7,5 @@ public interface CrudRepository <T,ID>{
     boolean delete(ID id);
     T findById(ID id);
     List<T> findAll();
-    T update(T beans);
+
 }

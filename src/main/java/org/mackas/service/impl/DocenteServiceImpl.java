@@ -31,10 +31,7 @@ implements DocenteRepository
         return List.of();
     }
 
-    @Override
-    public Docente update(Docente beans) {
-        return null;
-    }
+
 
     @Override
     public Docente findById(Integer id) {

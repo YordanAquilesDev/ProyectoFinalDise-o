@@ -17,7 +17,6 @@ public class CursoServiceImpl implements CursoService {
  private CursoRepositoryImpl repo= new CursoRepositoryImpl(); ;
     @Override
    public List<Curso> findByIdAlumno(int idAlumno) {
-  
      return repo.finByIdAlumno(idAlumno);
 }
 
@@ -36,11 +35,7 @@ public class CursoServiceImpl implements CursoService {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public Curso update(Curso beans) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
+   
     @Override
     public Curso findById(Integer id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

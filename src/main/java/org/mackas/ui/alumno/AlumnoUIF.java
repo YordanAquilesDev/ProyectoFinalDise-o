@@ -27,6 +27,7 @@ public class AlumnoUIF extends JFrame {
     private CalificacionServiceImpl caliService = new CalificacionServiceImpl();
     private HorarioServiceImpl horaService = new HorarioServiceImpl();
     private CarreraServiceImpl carrService = new CarreraServiceImpl();
+
     
     private final Alumno alumno;
     List<Curso> cursosAlumno;
@@ -63,6 +64,13 @@ public class AlumnoUIF extends JFrame {
         JMenu mnNotas = crearEstiloMenu("📊 Calificaciones");
         JMenu mnHorarios = crearEstiloMenu("🕒 Horarios");
         JMenu mnPagos = crearEstiloMenu("💳 Pagos");
+       JMenu mnPerfil= crearEstiloMenu("Perfil"); // este e
+       
+       mnPerfil.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mostrarPerfil();
+            }
+        });
 
         // Eventos de clic
         mnCursos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -111,6 +119,10 @@ public class AlumnoUIF extends JFrame {
         menu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menu.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
         return menu;
+    }
+    
+    private void mostrarPerfil(){
+        
     }
 
     private void mostrarCursos() {

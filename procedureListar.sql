@@ -260,7 +260,12 @@ END //
 
 DELIMITER ;
 
-
-
-
+DELIMITER //
+CREATE PROCEDURE sp_listar_periodo_academico()
+BEGIN
+    SELECT 
+      *
+      from periodo_academico;
+END //
+DELIMITER 
 
