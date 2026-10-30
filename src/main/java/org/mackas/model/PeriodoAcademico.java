@@ -32,4 +32,8 @@ public class PeriodoAcademico {
      public int getId_periodo() {
         return id_periodo;
     }
+     
+     public String toString(){
+         return "Periodo" + nombre;
+     }
 }

@@ -17,7 +17,8 @@ private MatriculaRepositoryImpl repo= new MatriculaRepositoryImpl();
     @Override
     public Matricula setMatricula(Matricula mt) {
         // much mas logicxa 
-        return null;
+        
+        return repo.setMatricula(mt);
      }
 
     @Override

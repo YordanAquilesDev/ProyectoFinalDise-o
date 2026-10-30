@@ -1,6 +1,7 @@
 
 package org.mackas.repository.interf;
 
+import org.mackas.model.DetalleMatricula;
 import org.mackas.model.Matricula;
 
 /**
@@ -10,4 +11,5 @@ import org.mackas.model.Matricula;
 public interface MatriculaRepository {
       Matricula setMatricula(Matricula mt);
       boolean isMatricula(int idAlumno);
+      DetalleMatricula search(int idSeccion, int idAlumno);
 }

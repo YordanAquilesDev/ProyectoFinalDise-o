@@ -131,7 +131,7 @@ public class DocenteUIF extends JFrame {
 
         if (alumnosSeccion != null && !alumnosSeccion.isEmpty()) {
             for (Alumno alu : alumnosSeccion) {
-                AlumnosF alumnoCard = new AlumnosF(alu);
+                AlumnosF alumnoCard = new AlumnosF(alu,idSeccion);
                 jpContenedor.add(alumnoCard);
             }
         } else {
@@ -141,4 +141,5 @@ public class DocenteUIF extends JFrame {
         jpContenedor.revalidate();
         jpContenedor.repaint();
     }
+    
 }

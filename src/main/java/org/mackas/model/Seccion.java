@@ -10,6 +10,9 @@ public class Seccion {
     String aula;
     int cupo_max;
 
+    public String toString(){
+        return "Seccion" + codigo_seccion;
+    }
     public int getId_seccion() {
         return id_seccion;
     }

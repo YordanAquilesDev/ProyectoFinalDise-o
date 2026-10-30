@@ -143,7 +143,7 @@ public class AlumnoUIF extends JFrame {
 
         if (cursosAlumno != null) {
             for (Curso c : cursosAlumno) {
-                List<Calificacion> calificacionPorCurso = caliService.findByIdCurso(c.getId_curso());
+                List<Calificacion> calificacionPorCurso = caliService.findByIdCursoAlumno(c.getId_curso(),alumno.getIdAlumno());
                 NotasF cardNotas = new NotasF();
                 cardNotas.setNombreCurso("Curso: " + c.getNombre_curso());
                 cardNotas.limpiarTabla();
@@ -164,7 +164,7 @@ public class AlumnoUIF extends JFrame {
 
         if (horariosAlumno != null) {
             horariosAlumno.forEach(h -> {
-                Horarios cardHorario = new Horarios(
+                HorariosF cardHorario = new HorariosF(
                     h.getAula(),
                     h.getHora_fin(),
                     h.getHora_inicio(),

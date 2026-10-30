@@ -4,16 +4,26 @@
  */
 package org.mackas;
 
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle;
 import org.mackas.model.Alumno;
 import org.mackas.model.Docente;
 import org.mackas.model.Usuario;
 import org.mackas.service.impl.MatriculaServiceImpl;
 import org.mackas.service.impl.UserServiceImpl;
 import org.mackas.service.interf.UserService;
-import org.mackas.ui.alumno.AlumnoUI;
+
 import org.mackas.ui.alumno.AlumnoUIF;
+import org.mackas.ui.alumno.MatriculaUI;
 import org.mackas.ui.alumno.Matriculas;
 import org.mackas.ui.docente.DocenteUIF;
 
@@ -25,109 +35,118 @@ public class Login extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
 
-    /**
-     * Creates new form Login
-     */
     UserService userService = new UserServiceImpl();
     private MatriculaServiceImpl matriculaService = new MatriculaServiceImpl();
 
     public Login() {
         initComponents();
+        setLocationRelativeTo(null); // Centrar la ventana en la pantalla
+        setTitle("Sistema Académico - Iniciar Sesión");
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        txtCodigo = new javax.swing.JTextField();
-        txtPass = new javax.swing.JTextField();
-        btnEntrar = new javax.swing.JButton();
+        jPanel1 = new JPanel();
+        jLabel1 = new JLabel();
+        jLabel2 = new JLabel();
+        jLabel3 = new JLabel();
+        txtCodigo = new JTextField();
+        txtPass = new JPasswordField(); // Cambiado a JPasswordField para mayor seguridad
+        btnEntrar = new JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        // Estilo de fondo moderno (Blanco limpio tipo tarjeta corporativa)
+        jPanel1.setBackground(new Color(255, 255, 255));
 
-        jLabel1.setText("Iniciar sesion");
+        jLabel1.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        jLabel1.setForeground(new Color(30, 41, 59));
+        jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
+        jLabel1.setText("¡Bienvenido!");
 
-        jLabel2.setText("Codigo Usuario");
+        jLabel2.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        jLabel2.setForeground(new Color(100, 116, 139));
+        jLabel2.setText("Código de Usuario:");
 
+        jLabel3.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        jLabel3.setForeground(new Color(100, 116, 139));
         jLabel3.setText("Contraseña:");
 
-        txtCodigo.addActionListener(this::txtCodigoActionPerformed);
+        txtCodigo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        txtCodigo.setBorder(javax.swing.BorderFactory.createCompoundBorder(
+                javax.swing.BorderFactory.createLineBorder(new Color(226, 232, 240)),
+                javax.swing.BorderFactory.createEmptyBorder(5, 8, 5, 8)
+        ));
 
-        txtPass.addActionListener(this::txtPassActionPerformed);
+        txtPass.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        txtPass.setBorder(javax.swing.BorderFactory.createCompoundBorder(
+                javax.swing.BorderFactory.createLineBorder(new Color(226, 232, 240)),
+                javax.swing.BorderFactory.createEmptyBorder(5, 8, 5, 8)
+        ));
 
-        btnEntrar.setText("Entrar");
+        // Botón con el color institucional elegante (Azul/Morado)
+        btnEntrar.setBackground(new Color(79, 70, 229));
+        btnEntrar.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        btnEntrar.setForeground(Color.WHITE);
+        btnEntrar.setText("Iniciar Sesión");
+        btnEntrar.setFocusPainted(false);
+        btnEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEntrar.addActionListener(this::btnEntrarActionPerformed);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2))
-                .addGap(36, 36, 36)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
-                    .addComponent(txtPass))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(168, Short.MAX_VALUE)
-                .addComponent(btnEntrar)
-                .addGap(156, 156, 156))
+                jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                                        .addComponent(jLabel2)
+                                        .addComponent(txtCodigo)
+                                        .addComponent(jLabel3)
+                                        .addComponent(txtPass)
+                                        .addComponent(btnEntrar, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE))
+                                .addContainerGap(40, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jLabel1)
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addComponent(btnEntrar)
-                .addContainerGap(61, Short.MAX_VALUE))
+                jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(jLabel1)
+                                .addGap(30, 30, 30)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(35, 35, 35)
+                                .addComponent(btnEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(40, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCodigoActionPerformed
-
-    private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPassActionPerformed
-
-    private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-// 1. Obtener y limpiar los textos para evitar espacios en blanco accidentales
+    private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {
+        // 1. Obtener y limpiar los textos
         String codigo = txtCodigo.getText().trim();
-        String password = txtPass.getText().trim();
+        // Nota: En JPasswordField se usa .getPassword() para extraer la cadena de manera segura
+        String password = new String(txtPass.getPassword()).trim();
 
         // 2. Validar campos vacíos
         if (codigo.isEmpty() || password.isEmpty()) {
@@ -140,7 +159,7 @@ public class Login extends javax.swing.JFrame {
             return;
         }
 
-        // 3. Intentar iniciar sesión
+        // 3. Intentar iniciar sesión (Tu lógica original intacta)
         Usuario user = userService.login(codigo, password);
 
         // 4. Validar si el usuario existe
@@ -155,14 +174,17 @@ public class Login extends javax.swing.JFrame {
         }
 
         // 5. Redireccionar según el rol del usuario
+        // 5. Redireccionar según el rol del usuario
         if (user instanceof Alumno) {
             Alumno alumno = (Alumno) user;
 
-            if (matriculaService.isMatricula(alumno.getIdAlumno())) {
-                Matriculas mtc = new Matriculas(alumno);
-                mtc.setVisible(true); // Asegúrate de hacerlo visible si es un JFrame
+            
+            if (!matriculaService.isMatricula(alumno.getIdAlumno())) {
+                // Si NO tiene matrícula, lo mandamos a matricularse
+                MatriculaUI mtc = new MatriculaUI(alumno);
+                mtc.setVisible(true);
             } else {
-                // Nota: Aquí pasas un nuevo Alumno() vacío, revisa si debías pasar el 'alumno' logueado
+                // Si YA tiene matrícula, entra a su panel principal del alumno
                 AlumnoUIF alumniUIF = new AlumnoUIF(alumno);
                 alumniUIF.setVisible(true);
             }
@@ -173,19 +195,11 @@ public class Login extends javax.swing.JFrame {
             docenteUIF.setVisible(true);
         }
 
-        // Opcional: Cerrar la ventana de login actual
-        // this.dispose();
-    }//GEN-LAST:event_btnEntrarActionPerformed
+        // Cerramos la ventana de login al ingresar con éxito
+        this.dispose();
+    }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -196,19 +210,17 @@ public class Login extends javax.swing.JFrame {
         } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new Login().setVisible(true));
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEntrar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtPass;
-    // End of variables declaration//GEN-END:variables
+    // Variables declaration - do not modify
+    private JButton btnEntrar;
+    private JLabel jLabel1;
+    private JLabel jLabel2;
+    private JLabel jLabel3;
+    private JPanel jPanel1;
+    private JTextField txtCodigo;
+    private JPasswordField txtPass; // Actualizado a JPasswordField
+    // End of variables declaration
 }

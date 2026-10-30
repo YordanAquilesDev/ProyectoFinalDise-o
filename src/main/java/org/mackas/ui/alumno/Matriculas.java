@@ -175,7 +175,7 @@ public class Matriculas extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.out.println("Iniciando UI Alumno");
         Matricula mt = matService.setMatricula(mt1);
-        AlumnoUI alumniUI = new AlumnoUI(new Alumno());
+        AlumnoUIF alumniUI = new AlumnoUIF(new Alumno());
         System.out.println(alumniUI);
         alumniUI.setVisible(true);
         // logica pata mostarc si es un exito o o

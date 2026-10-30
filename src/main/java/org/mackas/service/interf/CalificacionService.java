@@ -13,5 +13,5 @@ import org.mackas.util.CrudRepository;
  * @author Administrador
  */
 public interface CalificacionService extends CrudRepository<Calificacion,Integer>{
-      List<Calificacion> findByIdCurso(int idCurso);
+      List<Calificacion> findByIdCursoAlumno(int idCurso,int idAlumno);
 }

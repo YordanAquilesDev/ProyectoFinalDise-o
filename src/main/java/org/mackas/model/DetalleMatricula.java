@@ -22,6 +22,9 @@ public class DetalleMatricula {
         this.estado="PROCESO";
     }
 
+    public DetalleMatricula() {
+     }
+
     public int getId_detalle_matricula() {
         return id_detalle_matricula;
     }

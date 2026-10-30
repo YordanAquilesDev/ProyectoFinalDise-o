@@ -24,7 +24,11 @@ DELIMITER ;
 
 DELIMITER //
 
-CREATE PROCEDURE sp_listar_calificacion_curso(IN p_id_curso INT)
+DELIMITER //
+CREATE PROCEDURE sp_listar_calificacion_curso(
+    IN p_id_curso INT,
+    IN p_id_alumno INT
+)
 BEGIN
     SELECT 
         c.id_calificacion,
@@ -35,12 +39,15 @@ BEGIN
         c.fecha_registro
     FROM calificacion c
     JOIN detalle_matricula dt ON c.id_detalle_matricula = dt.id_detalle_matricula
+    JOIN matricula m ON dt.id_matricula = m.id_matricula       
     JOIN seccion sc ON dt.id_seccion = sc.id_seccion
-    JOIN curso cu ON sc.id_curso = cu.id_curso -- Corrección aquí (sc.id_curso en lugar de sc-id_curso)
-    WHERE cu.id_curso = p_id_curso;
+    JOIN curso cu ON sc.id_curso = cu.id_curso
+    WHERE cu.id_curso = p_id_curso 
+      AND m.id_alumno = p_id_alumno;                          
 END //
 
 DELIMITER ;
+
 
 DELIMITER //
 CREATE PROCEDURE sp_listar_horarios_alumno(IN p_id_alumno INT)
@@ -195,4 +202,65 @@ join usuario u on a.id_usuario=u.id_usuario
 where u.id_usuario=p_id_usuario;
 END //
 DELIMITER ;
+
+DELIMITER //
+
+-- 2. Creamos la nueva versión con 4 argumentos
+CREATE PROCEDURE sp_calificar_alumno(    
+    IN p_id_detalle_matricula INT,
+    IN p_nombre_evaluacion VARCHAR(50),
+    IN p_nota DECIMAL(4,2),
+    IN p_ponderado DECIMAL(5,2)
+)
+BEGIN
+    INSERT INTO calificacion (
+        id_detalle_matricula, 
+        nombre_evaluacion, 
+        ponderado, 
+        nota
+    ) 
+    VALUES (
+        p_id_detalle_matricula, 
+        p_nombre_evaluacion, 
+        p_ponderado, 
+        p_nota
+    );
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+-- 2. Creamos la nueva versión con 4 argumentos
+CREATE PROCEDURE sp_matricula_alumno(    
+ in p_id_alumno int
+)
+BEGIN
+   select *
+   from matricula 
+   where m.id_alumno=p_id_alumno
+END //
+
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_matricular_alumno(    
+    IN p_id_alumno INT,
+    IN p_id_periodo INT,
+    IN p_monto_total DECIMAL(10,2) -- Cambiado a DECIMAL para coincidir con tu tabla
+)
+BEGIN
+    -- 1. Insertamos la matrícula
+    INSERT INTO matricula (id_alumno, id_periodo, fecha_matricula, monto_total, estado) 
+    VALUES (p_id_alumno, p_id_periodo, NOW(), p_monto_total, 'REGISTRADA');
+    
+    -- 2. Retornamos inmediatamente el ID generado para que Java lo lea con executeQuery()
+    SELECT LAST_INSERT_ID() AS id_matricula;
+END //
+
+DELIMITER ;
+
+
+
+
 

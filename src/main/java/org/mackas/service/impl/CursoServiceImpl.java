@@ -14,26 +14,11 @@ import org.mackas.service.interf.CursoService;
  * @author Administrador
  */
 public class CursoServiceImpl implements CursoService {
- private CursoRepositoryImpl repo;
+ private CursoRepositoryImpl repo= new CursoRepositoryImpl(); ;
     @Override
    public List<Curso> findByIdAlumno(int idAlumno) {
-    // Retorna una lista inmutable con 3 cursos de prueba
-    return List.of(
-        new Curso(1, 101, "MAT101", "Matemática I", 4, 1),
-        new Curso(2, 101, "PROG101", "Programación I", 5, 1),
-        new Curso(3, 102, "BD201", "Bases de Datos I", 4, 2),
-        new Curso(3, 102, "BD201", "Bases de Datos I", 4, 2),
-        new Curso(3, 102, "BD201", "Bases de Datos I", 4, 2),
-        new Curso(3, 102, "BD201", "Bases de Datos I", 4, 2),
-        new Curso(3, 102, "BD201", "Bases de Datos I", 4, 2),
-        new Curso(3, 102, "BD201", "Bases de Datos I", 4, 2),
-        new Curso(3, 102, "BD201", "Bases de Datos I", 4, 2),
-        new Curso(3, 102, "BD201", "Bases de Datos I", 4, 2),
-        new Curso(3, 102, "BD201", "Bases de Datos I", 4, 2),
-        new Curso(3, 102, "BD201", "Bases de Datos I", 4, 2)
-        
-    );
-    // return repo.finByIdAlumno(idAlumno);
+  
+     return repo.finByIdAlumno(idAlumno);
 }
 
     @Override
