@@ -19,8 +19,6 @@ public class MatriculaServiceImpl implements IMatriculaDao {
 
     @Override
     public Matricula setMatricula(Matricula mt) {
-        // much mas logicxa 
-
         return repo.setMatricula(mt);
     }
 
@@ -33,5 +31,11 @@ public class MatriculaServiceImpl implements IMatriculaDao {
     public DetalleMatricula search(int idSeccion, int idAlumno) {
         return repo.search(idSeccion, idAlumno);
     }
+
+    @Override
+    public Matricula search(int idAlumno){
+        return repo.search(id_alumno);
+    }
+
 
 }

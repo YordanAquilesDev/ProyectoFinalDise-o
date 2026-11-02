@@ -142,5 +142,30 @@ public class MatriculaRepositoryImpl implements IMatriculaDao {
 
         return detalle;
     }
+    
+    @Override
+    public Matricula search(int idAlumno) {
+    String sql = "{call sp_matricula_alumno(?)}";
+    Matricula matricula = null;
+
+    try (CallableStatement cst = mysql.prepareCall(sql)) {
+        cst.setInt(1, idAlumno);
+
+        try (ResultSet rs = cst.executeQuery()) {
+            if (rs.next()) {
+                matricula = new Matricula();
+                matricula.setIdMatricula(rs.getInt("id_matricula"));
+                matricula.setIdAlumno(rs.getInt("id_alumno"));
+                // Asigna los demás campos según tu modelo Matricula...
+            }
+        }
+    } catch (SQLException e) {
+        System.err.println("Error al buscar matrícula por alumno: " + e.getMessage());
+        e.printStackTrace();
+    }
+
+    return matricula;
+}
+
 
 }

@@ -297,3 +297,27 @@ END //
 
 DELIMITER ;
 
+
+DELIMITER //
+
+CREATE PROCEDURE sp_pensiones_pendientes_alumno(
+    IN p_id_alumno INT
+)
+BEGIN
+    SELECT 
+        id_pension,
+        id_alumno,
+        id_matricula,
+        numero_cuota,
+        monto,
+        monto_mora,
+        fecha_vencimiento,
+        fecha_pago,
+        estado
+    FROM pension
+    WHERE id_alumno = p_id_alumno 
+      AND estado = 'PENDIENTE'
+    ORDER BY numero_cuota ASC;
+END //
+
+DELIMITER ;

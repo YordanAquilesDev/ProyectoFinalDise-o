@@ -15,4 +15,5 @@ public interface IMatriculaDao {
     Matricula setMatricula(Matricula mt);    
       boolean isMatricula(int idAlumno);
        public DetalleMatricula search(int idSeccion, int idAlumno);
+       public Matricula search(int idAlumno);
 }

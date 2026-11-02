@@ -18,7 +18,7 @@ import org.mackas.service.interf.IPensionDao;
 public class test {
     public static void main(String[] args) {
         PagoEstrategy metodoPago= new PagoBCP();
-             IPensionDao pensionDao= new PensionServiceImpl();
+        IPensionDao pensionDao= new PensionServiceImpl();
         ProcesarPagoEstrategy proPago= new ProcesarPagoEstrategy(pensionDao);
         proPago.procesarYGuardarPago(new Pension());
     
