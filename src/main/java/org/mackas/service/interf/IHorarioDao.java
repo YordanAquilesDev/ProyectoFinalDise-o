@@ -5,13 +5,13 @@
 package org.mackas.service.interf;
 
 import java.util.List;
-import org.mackas.model.PeriodoAcademico;
+import org.mackas.model.Horario;
+import org.mackas.util.CrudRepository;
 
 /**
  *
  * @author Administrador
  */
-public interface PeriodoAcademicoService {
-    List<PeriodoAcademico> findAll();
-    
+public interface IHorarioDao extends CrudRepository<Horario,Integer> {
+    List<Horario>  findByIdAlumno(int idAlumno);
 }

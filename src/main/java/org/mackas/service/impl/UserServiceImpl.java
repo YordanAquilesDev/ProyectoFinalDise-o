@@ -5,7 +5,7 @@
 package org.mackas.service.impl;
 
 import org.mackas.model.Usuario;
-import org.mackas.service.interf.UserService;
+import org.mackas.service.interf.IUsusarioDao;
 import org.mackas.util.ConexionMySQL;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -15,7 +15,7 @@ import org.mackas.model.Alumno;
 import org.mackas.model.Docente;
 import org.mackas.repository.impl.UserRepositoryImpl;
 
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements IUsusarioDao {
  private UserRepositoryImpl repo= new UserRepositoryImpl();
     @Override
     public Usuario login(String codigo, String password) {

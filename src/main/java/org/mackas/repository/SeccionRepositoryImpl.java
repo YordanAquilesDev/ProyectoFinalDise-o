@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package org.mackas.repository.impl;
+package org.mackas.repository;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -12,14 +12,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import org.mackas.model.Seccion;
-import org.mackas.repository.interf.SeccionRepository;
+import org.mackas.service.interf.ISeccionDao;
 import org.mackas.util.ConexionMySQL;
 
 /**
  *
  * @author Administrador
  */
-public class SeccionRepositoryImpl implements SeccionRepository {
+public class SeccionRepositoryImpl implements ISeccionDao {
 
     private Connection mysql = ConexionMySQL.getInstance().getConexion();
 

@@ -6,13 +6,13 @@ package org.mackas.service.impl;
 
 import org.mackas.model.Matricula;
 import org.mackas.repository.impl.MatriculaRepositoryImpl;
-import org.mackas.service.interf.MatriculaService;
+import org.mackas.service.interf.IMatriculaDao;
 
 /**
  *
  * @author Administrador
  */
-public class MatriculaServiceImpl implements MatriculaService{
+public class MatriculaServiceImpl implements IMatriculaDao{
 private MatriculaRepositoryImpl repo= new MatriculaRepositoryImpl();
     @Override
     public Matricula setMatricula(Matricula mt) {

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package org.mackas.repository.impl;
+package org.mackas.repository;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import org.mackas.model.Alumno;
 import org.mackas.model.Docente;
 import org.mackas.model.Usuario;
-import org.mackas.repository.interf.UserRepository;
+import org.mackas.service.interf.IUsusarioDao;
 import org.mackas.service.impl.AlumnoServiceImpl;
 import org.mackas.service.impl.DocenteServiceImpl;
 import org.mackas.util.ConexionMySQL;
@@ -20,7 +20,7 @@ import org.mackas.util.ConexionMySQL;
  *
  * @author Administrador
  */
-public class UserRepositoryImpl implements UserRepository{
+public class UserRepositoryImpl implements IUsusarioDao{
 
     private Connection mysql = ConexionMySQL.getInstance().getConexion();
     private AlumnoServiceImpl aluService= new AlumnoServiceImpl();

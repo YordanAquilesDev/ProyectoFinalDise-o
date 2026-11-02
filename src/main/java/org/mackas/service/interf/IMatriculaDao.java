@@ -4,15 +4,14 @@
  */
 package org.mackas.service.interf;
 
-import java.util.List;
-import org.mackas.model.Seccion;
+import org.mackas.model.Matricula;
 
 /**
  *
  * @author Administrador
  */
-public interface SeccionService {
-    List<Seccion> findByIdPeriodo(int idPeriodo);
-    List<Seccion> findByIdDocente(int idDocente);
-    
+public interface IMatriculaDao {
+    Matricula setMatricula(Matricula mt);
+     
+      boolean isMatricula(int idAlumno);
 }

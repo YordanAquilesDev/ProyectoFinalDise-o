@@ -2,14 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package org.mackas.repository.interf;
+package org.mackas.service.interf;
 
-import org.mackas.model.Usuario;
+import java.util.List;
+import org.mackas.model.PeriodoAcademico;
 
 /**
  *
  * @author Administrador
  */
-public interface UserRepository {
-     Usuario login(String codigo,String password);
+public interface IPeriodoAcademicoDao {
+    List<PeriodoAcademico> findAll();
+    
 }

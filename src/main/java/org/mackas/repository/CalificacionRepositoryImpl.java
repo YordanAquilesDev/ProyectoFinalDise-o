@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package org.mackas.repository.impl;
+package org.mackas.repository;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -11,26 +11,26 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import org.mackas.model.Calificacion;
-import org.mackas.repository.interf.CalificacionRepository;
+import org.mackas.service.interf.ICalificacionDao;
 import org.mackas.util.ConexionMySQL;
 
 /**
  *
  * @author Administrador
  */
-public class CalificacionRepositoryImpl implements CalificacionRepository {
+public class CalificacionRepositoryImpl implements ICalificacionDao {
 
     private Connection mysql = ConexionMySQL.getInstance().getConexion();
 
     @Override
     public List<Calificacion> findByIdCursoAlumno(int idCurso, int idAlumno) {
         List<Calificacion> lista = new ArrayList<>();
-        String sql = "{CALL sp_listar_calificacion_curso(?, ?)}"; // 👈 Dos signos de interrogación
+        String sql = "{CALL sp_listar_calificacion_curso(?, ?)}"; 
 
         try (CallableStatement stmt = mysql.prepareCall(sql)) {
             // Asignamos ambos parámetros de entrada del procedimiento
             stmt.setInt(1, idCurso);
-            stmt.setInt(2, idAlumno); // 👈 Enviamos el ID del alumno
+            stmt.setInt(2, idAlumno); 
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -80,22 +80,5 @@ public class CalificacionRepositoryImpl implements CalificacionRepository {
 
         return null; // Retorna null si falló
     }
-
-    @Override
-    public boolean delete(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Calificacion findById(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public List<Calificacion> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-
 
 }

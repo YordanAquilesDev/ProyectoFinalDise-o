@@ -20,7 +20,7 @@ import org.mackas.model.Docente;
 import org.mackas.model.Usuario;
 import org.mackas.service.impl.MatriculaServiceImpl;
 import org.mackas.service.impl.UserServiceImpl;
-import org.mackas.service.interf.UserService;
+import org.mackas.service.interf.IUsusarioDao;
 
 import org.mackas.ui.alumno.AlumnoUIF;
 import org.mackas.ui.alumno.MatriculaUI;
@@ -35,7 +35,7 @@ public class Login extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
 
-    UserService userService = new UserServiceImpl();
+    IUsusarioDao userService = new UserServiceImpl();
     private MatriculaServiceImpl matriculaService = new MatriculaServiceImpl();
 
     public Login() {

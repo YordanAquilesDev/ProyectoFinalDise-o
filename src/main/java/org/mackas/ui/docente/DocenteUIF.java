@@ -15,13 +15,13 @@ import org.mackas.model.Docente;
 import org.mackas.model.Seccion;
 import org.mackas.service.impl.AlumnoServiceImpl;
 import org.mackas.service.impl.SeccionServiceImpl;
-import org.mackas.service.interf.AlumnoService;
-import org.mackas.service.interf.SeccionService;
+import org.mackas.service.interf.IAlumnoDao;
+import org.mackas.service.interf.ISeccionDao;
 
 public class DocenteUIF extends JFrame {
 
-    private SeccionService secService = new SeccionServiceImpl();
-    private AlumnoService aluService = new AlumnoServiceImpl();
+    private ISeccionDao secService = new SeccionServiceImpl();
+    private IAlumnoDao aluService = new AlumnoServiceImpl();
 
     private Docente docente;
     private List<Seccion> seccionDocente;

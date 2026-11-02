@@ -1,16 +1,16 @@
-package org.mackas.repository.impl;
+package org.mackas.repository;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.mackas.model.Docente;
-import org.mackas.repository.interf.DocenteRepository;
+import org.mackas.service.interf.IDocenteDao;
 
 import java.util.List;
 import org.mackas.util.ConexionMySQL;
 
-public class DocenteRepositoryImpl implements DocenteRepository {
+public class DocenteRepositoryImpl implements IDocenteDao {
 
     private Connection mysql = ConexionMySQL.getInstance().getConexion();
     
@@ -41,25 +41,4 @@ public class DocenteRepositoryImpl implements DocenteRepository {
         return docente;
     }
 
-    @Override
-    public Docente save(Docente beans) {
-        return null;
-    }
-
-    @Override
-    public boolean delete(Integer integer) {
-        return false;
-    }
-
-    @Override
-    public List<Docente> findAll() {
-        return List.of();
-    }
-
-
-
-    @Override
-    public Docente findById(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }

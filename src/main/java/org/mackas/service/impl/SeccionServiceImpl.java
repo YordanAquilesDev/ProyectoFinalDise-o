@@ -9,13 +9,13 @@ import java.util.List;
 import org.mackas.model.Seccion;
 import org.mackas.repository.impl.SeccionRepositoryImpl;
 import org.mackas.repository.interf.SeccionRepository;
-import org.mackas.service.interf.SeccionService;
+import org.mackas.service.interf.ISeccionDao;
 
 /**
  *
  * @author Administrador
  */
-public class SeccionServiceImpl implements SeccionService {
+public class SeccionServiceImpl implements ISeccionDao {
  private SeccionRepository repo= new SeccionRepositoryImpl();
     @Override
     public List<Seccion> findByIdPeriodo(int idPeriodo) {

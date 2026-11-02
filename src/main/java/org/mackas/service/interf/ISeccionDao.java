@@ -5,14 +5,14 @@
 package org.mackas.service.interf;
 
 import java.util.List;
-import org.mackas.model.Curso;
-import org.mackas.util.CrudRepository;
+import org.mackas.model.Seccion;
 
 /**
  *
  * @author Administrador
  */
-public interface CursoService extends CrudRepository<Curso,Integer> {
-     List<Curso> findByIdAlumno(int idAlumno);
+public interface ISeccionDao {
+    List<Seccion> findByIdPeriodo(int idPeriodo);
+    List<Seccion> findByIdDocente(int idDocente);
     
 }

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package org.mackas.repository.impl;
+package org.mackas.repository;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -11,14 +11,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import org.mackas.model.Curso;
-import org.mackas.repository.interf.CursoRepository;
+import org.mackas.service.interf.ICursoDao;
 import org.mackas.util.ConexionMySQL;
 
 /**
  *
  * @author Administrador
  */
-public class CursoRepositoryImpl implements CursoRepository {
+public class CursoRepositoryImpl implements ICursoDao {
 
     private final Connection mysql = ConexionMySQL.getInstance().getConexion();
 
@@ -51,27 +51,6 @@ public class CursoRepositoryImpl implements CursoRepository {
         }
 
         return cursos;
-    }
-
-    @Override
-    public Curso save(Curso beans) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public boolean delete(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public List<Curso> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-  
-    @Override
-    public Curso findById(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

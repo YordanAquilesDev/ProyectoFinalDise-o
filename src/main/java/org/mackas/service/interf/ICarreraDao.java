@@ -4,12 +4,13 @@
  */
 package org.mackas.service.interf;
 
-import org.mackas.model.Usuario;
+import org.mackas.model.Carrera;
+import org.mackas.util.CrudRepository;
 
 /**
  *
  * @author Administrador
  */
-public interface UserService {
-   Usuario login(String codigo,String password);
+public interface ICarreraDao extends CrudRepository<Carrera,Integer> {
+    
 }

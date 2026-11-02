@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package org.mackas.repository.impl;
+package org.mackas.repository;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -11,14 +11,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import org.mackas.model.Horario;
-import org.mackas.repository.interf.HorarioRepository;
+import org.mackas.service.interf.IHorarioDao;
 import org.mackas.util.ConexionMySQL;
 
 /**
  *
  * @author Administrador
  */
-public class HorarioRepositoryImpl implements HorarioRepository {
+public class HorarioRepositoryImpl implements IHorarioDao {
 
     private Connection mysql = ConexionMySQL.getInstance().getConexion();
 
@@ -53,27 +53,6 @@ public class HorarioRepositoryImpl implements HorarioRepository {
         }
 
         return listaHorarios;
-    }
-
-    @Override
-    public Horario save(Horario beans) {
-
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public boolean delete(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Horario findById(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public List<Horario> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 

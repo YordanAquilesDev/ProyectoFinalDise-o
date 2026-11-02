@@ -4,14 +4,15 @@
  */
 package org.mackas.service.interf;
 
-import org.mackas.model.Matricula;
+import java.util.List;
+import org.mackas.model.Curso;
+import org.mackas.util.CrudRepository;
 
 /**
  *
  * @author Administrador
  */
-public interface MatriculaService {
-    Matricula setMatricula(Matricula mt);
-     
-      boolean isMatricula(int idAlumno);
+public interface ICursoDao extends CrudRepository<Curso,Integer> {
+     List<Curso> findByIdAlumno(int idAlumno);
+    
 }
