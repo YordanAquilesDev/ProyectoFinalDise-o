@@ -4,8 +4,9 @@
  */
 package org.mackas.service.interf;
 
+import java.util.List;
 import org.mackas.model.Pension;
-import org.mackas.model.patron.PagoEstrategy;
+
 
 /**
  *
@@ -13,4 +14,5 @@ import org.mackas.model.patron.PagoEstrategy;
  */
 public interface IPensionDao {
     boolean save(Pension p);
+     List<Pension> findByIdAlumno(int idAlumno);
 }

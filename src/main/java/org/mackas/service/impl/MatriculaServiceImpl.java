@@ -34,7 +34,7 @@ public class MatriculaServiceImpl implements IMatriculaDao {
 
     @Override
     public Matricula search(int idAlumno){
-        return repo.search(id_alumno);
+        return repo.search(idAlumno);
     }
 
 

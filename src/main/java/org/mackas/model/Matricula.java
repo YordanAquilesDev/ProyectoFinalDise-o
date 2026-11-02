@@ -11,6 +11,10 @@ public class Matricula {
     double monto_total;
     String estado;
     List<DetalleMatricula> detalle_matricula= new ArrayList<>();
+
+    public Matricula() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     public void addSecction(DetalleMatricula dt){
         detalle_matricula.add(dt);

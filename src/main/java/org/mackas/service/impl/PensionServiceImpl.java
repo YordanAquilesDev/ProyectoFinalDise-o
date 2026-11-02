@@ -4,7 +4,9 @@
  */
 package org.mackas.service.impl;
 
+import java.util.List;
 import org.mackas.model.Pension;
+import org.mackas.repository.PensionRepositoryImpl;
 import org.mackas.service.interf.IPensionDao;
 
 /**
@@ -14,13 +16,16 @@ import org.mackas.service.interf.IPensionDao;
 // creo no sera nesesario el ProcesarPagoEstrategy mejor que lo mande directo al repo
 public class PensionServiceImpl implements IPensionDao {
 
+    private IPensionDao repo = new PensionRepositoryImpl();
+
     @Override
     public boolean save(Pension p) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    List<Pension> findByIdMatricula(int idMatricula){
-
+    @Override
+    public List<Pension> findByIdAlumno(int idAlumno) {
+        return repo.findByIdAlumno(idAlumno);
     }
-    
+
 }

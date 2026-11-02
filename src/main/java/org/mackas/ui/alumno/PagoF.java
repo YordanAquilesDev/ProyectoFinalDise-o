@@ -3,9 +3,6 @@ package org.mackas.ui.alumno;
 import org.mackas.model.Alumno;
 import org.mackas.model.Pension;
 import org.mackas.model.patron.PagoEstrategy;
-import org.mackas.service.impl.PagoBCP;
-import org.mackas.service.impl.PagoBBVA;
-import org.mackas.service.impl.PagoVisa;
 import org.mackas.service.impl.ProcesarPagoEstrategy;
 import org.mackas.service.interf.IPensionDao;
 
@@ -15,6 +12,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.mackas.model.patron.PagoBBVA;
+import org.mackas.model.patron.PagoBCP;
+import org.mackas.model.patron.PagoVisa;
 
 public class PagoF extends JPanel {
     private Alumno alumno;
@@ -50,7 +50,7 @@ public class PagoF extends JPanel {
         
         // Obtenemos la lista de pensiones usando el DAO (puedes adaptarlo a tu método de matrícula o alumno)
         // Ejemplo: List<Pension> lista = pensionDao.findByIdMatricula(...);
-        List<Pension> listaPensiones = pensionDao.listarPensionesPendientes(alumno.getIdAlumno()); // O tu método correspondiente
+        List<Pension> listaPensiones = pensionDao.findByIdAlumno(alumno.getIdAlumno()); // O tu método correspondiente
 
         if (listaPensiones.isEmpty()) {
             contenedorTarjetas.add(new JLabel("No hay pensiones pendientes para este alumno."));

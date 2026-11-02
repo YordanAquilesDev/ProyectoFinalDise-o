@@ -153,10 +153,7 @@ public class MatriculaRepositoryImpl implements IMatriculaDao {
 
         try (ResultSet rs = cst.executeQuery()) {
             if (rs.next()) {
-                matricula = new Matricula();
-                matricula.setIdMatricula(rs.getInt("id_matricula"));
-                matricula.setIdAlumno(rs.getInt("id_alumno"));
-                // Asigna los demás campos según tu modelo Matricula...
+                matricula= new Matricula();
             }
         }
     } catch (SQLException e) {
