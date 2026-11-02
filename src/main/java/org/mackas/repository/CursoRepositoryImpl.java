@@ -23,7 +23,7 @@ public class CursoRepositoryImpl implements ICursoDao {
     private final Connection mysql = ConexionMySQL.getInstance().getConexion();
 
     @Override
-    public List<Curso> finByIdAlumno(int idAlumno) {
+    public List<Curso> findByIdAlumno(int idAlumno) {
         List<Curso> cursos = new ArrayList<>();
         String sql = "{CALL sp_listar_cursos_alumno(?)}";
 

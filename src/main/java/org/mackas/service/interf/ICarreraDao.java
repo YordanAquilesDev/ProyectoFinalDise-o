@@ -5,12 +5,11 @@
 package org.mackas.service.interf;
 
 import org.mackas.model.Carrera;
-import org.mackas.util.CrudRepository;
 
 /**
  *
  * @author Administrador
  */
-public interface ICarreraDao extends CrudRepository<Carrera,Integer> {
-    
+public interface ICarreraDao  {
+      public Carrera findById(Integer id);
 }

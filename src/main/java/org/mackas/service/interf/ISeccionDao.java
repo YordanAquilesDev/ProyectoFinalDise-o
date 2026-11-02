@@ -14,5 +14,6 @@ import org.mackas.model.Seccion;
 public interface ISeccionDao {
     List<Seccion> findByIdPeriodo(int idPeriodo);
     List<Seccion> findByIdDocente(int idDocente);
+      public List<Seccion> findByIdAlumno(int idEstudiante);
     
 }

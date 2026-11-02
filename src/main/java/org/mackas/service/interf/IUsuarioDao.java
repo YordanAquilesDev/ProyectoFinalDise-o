@@ -10,6 +10,6 @@ import org.mackas.model.Usuario;
  *
  * @author Administrador
  */
-public interface IUsusarioDao {
+public interface IUsuarioDao {
    Usuario login(String codigo,String password);
 }

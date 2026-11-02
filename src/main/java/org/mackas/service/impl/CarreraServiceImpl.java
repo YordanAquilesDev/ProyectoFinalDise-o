@@ -6,7 +6,7 @@ package org.mackas.service.impl;
 
 import java.util.List;
 import org.mackas.model.Carrera;
-import org.mackas.repository.impl.CarreraRepositoryImpl;
+import org.mackas.repository.CarreraRepositoryImpl;
 import org.mackas.service.interf.ICarreraDao;
 
 /**
@@ -15,7 +15,7 @@ import org.mackas.service.interf.ICarreraDao;
  */
 public class CarreraServiceImpl implements ICarreraDao {
 
-    private CarreraRepositoryImpl repo= new CarreraRepositoryImpl();
+    private ICarreraDao repo= new CarreraRepositoryImpl();
    
     @Override
     public Carrera findById(Integer id) {

@@ -4,6 +4,7 @@
  */
 package org.mackas.service.interf;
 
+import org.mackas.model.DetalleMatricula;
 import org.mackas.model.Matricula;
 
 /**
@@ -11,7 +12,7 @@ import org.mackas.model.Matricula;
  * @author Administrador
  */
 public interface IMatriculaDao {
-    Matricula setMatricula(Matricula mt);
-     
+    Matricula setMatricula(Matricula mt);    
       boolean isMatricula(int idAlumno);
+       public DetalleMatricula search(int idSeccion, int idAlumno);
 }

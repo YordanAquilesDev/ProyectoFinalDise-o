@@ -9,7 +9,6 @@
 USE DB_universidad;
 
 DELIMITER //
-
 CREATE PROCEDURE sp_login(
     IN p_username VARCHAR(50),
     IN p_password VARCHAR(255)
@@ -26,5 +25,4 @@ BEGIN
       AND password_hash = p_password 
       AND estado = TRUE;
 END //
-
 DELIMITER ;

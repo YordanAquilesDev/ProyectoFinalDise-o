@@ -6,12 +6,12 @@ package org.mackas.service.interf;
 
 import java.util.List;
 import org.mackas.model.Horario;
-import org.mackas.util.CrudRepository;
+
 
 /**
  *
  * @author Administrador
  */
-public interface IHorarioDao extends CrudRepository<Horario,Integer> {
+public interface IHorarioDao  {
     List<Horario>  findByIdAlumno(int idAlumno);
 }

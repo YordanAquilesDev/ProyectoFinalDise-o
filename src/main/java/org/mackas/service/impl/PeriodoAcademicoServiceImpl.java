@@ -8,7 +8,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import org.mackas.model.PeriodoAcademico;
-import org.mackas.repository.impl.PeriodoAcademicoRepositoryImpl;
+import org.mackas.repository.PeriodoAcademicoRepositoryImpl;
 import org.mackas.service.interf.IPeriodoAcademicoDao;
 
 /**
@@ -16,7 +16,7 @@ import org.mackas.service.interf.IPeriodoAcademicoDao;
  * @author Administrador
  */
 public class PeriodoAcademicoServiceImpl implements IPeriodoAcademicoDao {
-private PeriodoAcademicoRepositoryImpl repo= new PeriodoAcademicoRepositoryImpl();
+private IPeriodoAcademicoDao repo= new PeriodoAcademicoRepositoryImpl();
     @Override
     public List<PeriodoAcademico> findAll() {     
         return repo.findAll();

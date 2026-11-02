@@ -7,7 +7,7 @@ package org.mackas.service.impl;
 import java.sql.Date;
 import java.util.List;
 import org.mackas.model.Calificacion;
-import org.mackas.repository.impl.CalificacionRepositoryImpl;
+import org.mackas.repository.CalificacionRepositoryImpl;
 import org.mackas.service.interf.ICalificacionDao;
 
 /**
@@ -15,7 +15,7 @@ import org.mackas.service.interf.ICalificacionDao;
  * @author Administrador
  */
 public class CalificacionServiceImpl implements ICalificacionDao {
-private CalificacionRepositoryImpl repo= new CalificacionRepositoryImpl();
+private ICalificacionDao repo= new CalificacionRepositoryImpl();
 
     @Override
     public List<Calificacion> findByIdCursoAlumno(int idCurso,int idAlumno) {

@@ -4,28 +4,34 @@
  */
 package org.mackas.service.impl;
 
+import org.mackas.model.DetalleMatricula;
 import org.mackas.model.Matricula;
-import org.mackas.repository.impl.MatriculaRepositoryImpl;
+import org.mackas.repository.MatriculaRepositoryImpl;
 import org.mackas.service.interf.IMatriculaDao;
 
 /**
  *
  * @author Administrador
  */
-public class MatriculaServiceImpl implements IMatriculaDao{
-private MatriculaRepositoryImpl repo= new MatriculaRepositoryImpl();
+public class MatriculaServiceImpl implements IMatriculaDao {
+
+    private IMatriculaDao repo = new MatriculaRepositoryImpl();
+
     @Override
     public Matricula setMatricula(Matricula mt) {
         // much mas logicxa 
-        
+
         return repo.setMatricula(mt);
-     }
+    }
 
     @Override
     public boolean isMatricula(int idAlumno) {
         return repo.isMatricula(idAlumno);
-       }
-    
-    
-    
+    }
+
+    @Override
+    public DetalleMatricula search(int idSeccion, int idAlumno) {
+        return repo.search(idSeccion, idAlumno);
+    }
+
 }

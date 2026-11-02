@@ -14,18 +14,19 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout;
+import javax.swing.JFrame;
 import javax.swing.LayoutStyle;
 import org.mackas.model.Alumno;
 import org.mackas.model.Docente;
 import org.mackas.model.Usuario;
 import org.mackas.service.impl.MatriculaServiceImpl;
 import org.mackas.service.impl.UserServiceImpl;
-import org.mackas.service.interf.IUsusarioDao;
 
 import org.mackas.ui.alumno.AlumnoUIF;
 import org.mackas.ui.alumno.MatriculaUI;
 import org.mackas.ui.alumno.Matriculas;
 import org.mackas.ui.docente.DocenteUIF;
+import org.mackas.service.interf.IUsuarioDao;
 
 /**
  *
@@ -35,7 +36,7 @@ public class Login extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
 
-    IUsusarioDao userService = new UserServiceImpl();
+    IUsuarioDao userService = new UserServiceImpl();
     private MatriculaServiceImpl matriculaService = new MatriculaServiceImpl();
 
     public Login() {
@@ -182,10 +183,12 @@ public class Login extends javax.swing.JFrame {
             if (!matriculaService.isMatricula(alumno.getIdAlumno())) {
                 // Si NO tiene matrícula, lo mandamos a matricularse
                 MatriculaUI mtc = new MatriculaUI(alumno);
+                mtc.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 mtc.setVisible(true);
             } else {
                 // Si YA tiene matrícula, entra a su panel principal del alumno
                 AlumnoUIF alumniUIF = new AlumnoUIF(alumno);
+                alumniUIF.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 alumniUIF.setVisible(true);
             }
 

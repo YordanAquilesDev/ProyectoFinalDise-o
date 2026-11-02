@@ -7,7 +7,7 @@ package org.mackas.service.impl;
 import java.sql.Time;
 import java.util.List;
 import org.mackas.model.Horario;
-import org.mackas.repository.impl.HorarioRepositoryImpl;
+import org.mackas.repository.HorarioRepositoryImpl;
 import org.mackas.service.interf.IHorarioDao;
 
 /**
@@ -15,7 +15,7 @@ import org.mackas.service.interf.IHorarioDao;
  * @author Administrador
  */
 public class HorarioServiceImpl implements IHorarioDao {
- private HorarioRepositoryImpl repo= new HorarioRepositoryImpl();
+ private IHorarioDao repo= new HorarioRepositoryImpl();
     @Override
     public List<Horario> findByIdAlumno(int idAlumno) {
         return repo.findByIdAlumno(idAlumno);

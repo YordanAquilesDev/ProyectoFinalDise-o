@@ -19,9 +19,9 @@ import javax.swing.LayoutStyle;
 import org.mackas.model.Alumno;
 import org.mackas.model.Calificacion;
 import org.mackas.model.DetalleMatricula;
-import org.mackas.repository.impl.MatriculaRepositoryImpl;
-import org.mackas.repository.interf.MatriculaRepository;
+import org.mackas.repository.MatriculaRepositoryImpl;
 import org.mackas.service.impl.CalificacionServiceImpl;
+import org.mackas.service.interf.IMatriculaDao;
 
 public class AlumnosF extends JPanel {
 
@@ -30,10 +30,10 @@ public class AlumnosF extends JPanel {
     private JLabel txtDni;
     private JLabel txtEmail;
     private JLabel txtCodigo;
-    private JButton btnCalificar; // 🎯 Nuevo botón
+    private JButton btnCalificar; 
     
     private CalificacionServiceImpl caliService = new CalificacionServiceImpl();
-    private MatriculaRepository matrRepository = new MatriculaRepositoryImpl();
+    private IMatriculaDao matrRepository = new MatriculaRepositoryImpl();
 
     int idSeccion = 0;
 

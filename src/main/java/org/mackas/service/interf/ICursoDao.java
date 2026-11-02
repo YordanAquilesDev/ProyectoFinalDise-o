@@ -6,13 +6,13 @@ package org.mackas.service.interf;
 
 import java.util.List;
 import org.mackas.model.Curso;
-import org.mackas.util.CrudRepository;
+
 
 /**
  *
  * @author Administrador
  */
-public interface ICursoDao extends CrudRepository<Curso,Integer> {
+public interface ICursoDao {
      List<Curso> findByIdAlumno(int idAlumno);
     
 }

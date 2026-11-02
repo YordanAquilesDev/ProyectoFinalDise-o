@@ -6,12 +6,12 @@ package org.mackas.service.interf;
 
 import java.util.List;
 import org.mackas.model.Calificacion;
-import org.mackas.util.CrudRepository;
 
 /**
  *
  * @author Administrador
  */
-public interface ICalificacionDao extends CrudRepository<Calificacion,Integer>{
+public interface ICalificacionDao {
       List<Calificacion> findByIdCursoAlumno(int idCurso,int idAlumno);
+      Calificacion save(Calificacion c);
 }

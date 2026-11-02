@@ -11,16 +11,16 @@ import java.sql.SQLException;
 import org.mackas.model.Alumno;
 import org.mackas.model.Docente;
 import org.mackas.model.Usuario;
-import org.mackas.service.interf.IUsusarioDao;
 import org.mackas.service.impl.AlumnoServiceImpl;
 import org.mackas.service.impl.DocenteServiceImpl;
 import org.mackas.util.ConexionMySQL;
+import org.mackas.service.interf.IUsuarioDao;
 
 /**
  *
  * @author Administrador
  */
-public class UserRepositoryImpl implements IUsusarioDao{
+public class UserRepositoryImpl implements IUsuarioDao{
 
     private Connection mysql = ConexionMySQL.getInstance().getConexion();
     private AlumnoServiceImpl aluService= new AlumnoServiceImpl();
