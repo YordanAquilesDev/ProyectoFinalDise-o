@@ -269,3 +269,31 @@ BEGIN
 END //
 DELIMITER 
 
+DELIMITER //
+
+CREATE PROCEDURE sp_procesar_pago_pension (
+    IN p_id_pension INT,
+    IN p_monto_pagado DECIMAL(10,2),
+    IN p_monto_mora DECIMAL(10,2)
+)
+BEGIN
+    -- Validar que la pensión exista y esté pendiente
+    DECLARE v_estado VARCHAR(20);
+    SELECT estado INTO v_estado FROM pension WHERE id_pension = p_id_pension;
+
+    IF v_estado = 'PENDIENTE' THEN
+        -- Actualizar la pensión a PAGADO y registrar fecha actual
+        UPDATE pension 
+        SET estado = 'PAGADO',
+            monto_mora = p_monto_mora,
+            fecha_pago = NOW()
+        WHERE id_pension = p_id_pension;
+        
+        SELECT 'SUCCESS' AS resultado, 'Pago registrado correctamente.' AS mensaje;
+    ELSE
+        SELECT 'ERROR' AS resultado, 'La pensión ya fue pagada o no existe.' AS mensaje;
+    END IF;
+END //
+
+DELIMITER ;
+
