@@ -14,7 +14,9 @@ public class PagoVisa implements PagoEstrategy{
 
     @Override
     public boolean procesarPago(Pension pension) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+      System.out.println("se pago con visa");
+        return true;
     }
 
 }

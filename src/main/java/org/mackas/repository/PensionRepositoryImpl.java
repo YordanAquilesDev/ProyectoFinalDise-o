@@ -8,6 +8,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.mackas.model.Pension;
@@ -25,7 +26,31 @@ public class PensionRepositoryImpl implements IPensionDao {
 
     @Override
     public boolean save(Pension p) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "{CALL sp_pagar_pension_alumno(?, ?, ?)}";
+
+        // Asume que tienes una clase para obtener la conexión (ej. Conexion.getConexion())
+        try (Connection cn = mysql; CallableStatement cstmt = cn.prepareCall(sql)) {
+
+            // Asignamos los parámetros que espera el Stored Procedure
+            cstmt.setInt(1, p.getIdAlumno());
+            cstmt.setInt(2, p.getIdPension());
+
+            // Convertimos LocalDateTime a Timestamp para que MySQL lo entienda perfectamente
+            if (p.getFechaPago() != null) {
+                cstmt.setTimestamp(3, java.sql.Timestamp.valueOf(p.getFechaPago()));
+            } else {
+                cstmt.setTimestamp(3, java.sql.Timestamp.valueOf(LocalDateTime.now()));
+            }
+
+            // Ejecutamos la actualización (retorna true si afecta filas)
+            int filasAfectadas = cstmt.executeUpdate();
+            return filasAfectadas > 0;
+
+        } catch (Exception e) {
+            System.err.println("Error al guardar/actualizar el pago de pensión: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override

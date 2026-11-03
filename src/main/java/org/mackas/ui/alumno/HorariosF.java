@@ -20,21 +20,18 @@ public class HorariosF extends JPanel {
     public HorariosF(String aula, Time hora_fin, Time hora_inicio, int id_horario, int id_seccion, String semana) {
         initComponents();
         
-        // Asignación de valores con formato más limpio y legible
         txtSemanaNr.setText(semana != null ? semana.toUpperCase() : "DÍA");
         txtAula.setText("🏫 Aula: " + aula);
-        txtIdSeccion.setText("Sección: " + id_seccion);
+        txtIdSeccion.setText("Sec. " + id_seccion);
         
-        // Formatear horas en un solo texto limpio (Ej: 08:00:00 - 10:00:00)
         String inicioStr = (hora_inicio != null) ? hora_inicio.toString().substring(0, 5) : "--:--";
         String finStr = (hora_fin != null) ? hora_fin.toString().substring(0, 5) : "--:--";
         txtHorario.setText("🕒 " + inicioStr + " hrs  -  " + finStr + " hrs");
 
-        // Tamaño optimizado para listar en JScrollPane vertical
-        Dimension dimensionFija = new Dimension(480, 85);
+        Dimension dimensionFija = new Dimension(480, 90);
         setPreferredSize(dimensionFija);
         setMinimumSize(dimensionFija);
-        setMaximumSize(new Dimension(Integer.MAX_VALUE, 85));
+        setMaximumSize(new Dimension(Integer.MAX_VALUE, 90));
     }
 
     private void initComponents() {
@@ -44,24 +41,22 @@ public class HorariosF extends JPanel {
         txtIdSeccion = new JLabel();
 
         setBackground(Color.WHITE);
-        // Borde elegante con una ligera sombra visual y padding interno
         setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(226, 232, 240), 1),
-            BorderFactory.createEmptyBorder(12, 16, 12, 16)
+            BorderFactory.createLineBorder(new Color(226, 232, 240), 1, true),
+            BorderFactory.createEmptyBorder(14, 18, 14, 18)
         ));
 
-        // Estilos tipográficos modernos
         txtSemanaNr.setFont(new Font("Segoe UI", Font.BOLD, 15));
-        txtSemanaNr.setForeground(new Color(30, 41, 59)); // Azul oscuro elegante
+        txtSemanaNr.setForeground(new Color(15, 23, 42));
 
-        txtAula.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        txtAula.setForeground(new Color(234, 88, 12)); // Naranja vibrante para el aula
+        txtAula.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        txtAula.setForeground(new Color(225, 29, 72)); // Rosa/Rojo moderno para destacar ubicación
 
         txtHorario.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        txtHorario.setForeground(new Color(71, 85, 105)); // Gris profesional
+        txtHorario.setForeground(new Color(71, 85, 105));
 
         txtIdSeccion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        txtIdSeccion.setForeground(new Color(148, 163, 184)); // Gris sutil
+        txtIdSeccion.setForeground(new Color(148, 163, 184));
 
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
@@ -72,7 +67,7 @@ public class HorariosF extends JPanel {
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtSemanaNr)
-                        .addGap(18, 18, 18)
+                        .addGap(15, 15, 15)
                         .addComponent(txtIdSeccion)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtAula))
@@ -84,7 +79,6 @@ public class HorariosF extends JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSemanaNr)
                     .addComponent(txtIdSeccion)

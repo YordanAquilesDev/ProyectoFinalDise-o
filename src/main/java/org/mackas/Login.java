@@ -24,7 +24,7 @@ import org.mackas.service.impl.UserServiceImpl;
 
 import org.mackas.ui.alumno.AlumnoUIF;
 import org.mackas.ui.alumno.MatriculaUI;
-import org.mackas.ui.alumno.Matriculas;
+
 import org.mackas.ui.docente.DocenteUIF;
 import org.mackas.service.interf.IUsuarioDao;
 

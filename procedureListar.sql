@@ -321,3 +321,21 @@ BEGIN
 END //
 
 DELIMITER ;
+
+
+DELIMITER //
+
+CREATE PROCEDURE sp_pagar_pension_alumno(
+    IN p_id_alumno INT,
+    IN p_id_pension INT,
+    IN p_fecha_pago DATETIME
+)
+BEGIN
+    UPDATE pension
+    SET estado = 'PAGADO',
+        fecha_pago = p_fecha_pago
+    WHERE id_alumno = p_id_alumno
+      AND id_pension = p_id_pension;
+END //
+
+DELIMITER ;

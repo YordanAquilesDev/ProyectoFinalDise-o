@@ -19,7 +19,6 @@ public class SeccionesF extends JPanel {
     private JLabel txtAula;
     private JLabel txtCupoMax;
 
-    // Interfaz funcional para manejar el evento de clic en la tarjeta
     public interface OnSeccionClickListener {
         void onSeccionClick(Seccion seccion);
     }
@@ -31,31 +30,37 @@ public class SeccionesF extends JPanel {
         this.clickListener = listener;
         initComponents();
         
-        // Asignamos los valores de la sección a los textos
         txtCodigoSeccion.setText("Sección: " + seccion.getCodigo_seccion());
-        txtAula.setText("Aula: " + seccion.getAula());
-        txtCupoMax.setText("Cupos: " + seccion.getCupo_max());
+        txtAula.setText("🏫 Aula: " + seccion.getAula());
+        txtCupoMax.setText("👥 Cupos: " + seccion.getCupo_max());
 
-        // Diseño visual de la tarjeta
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(226, 232, 240), 1),
-            BorderFactory.createEmptyBorder(12, 15, 12, 15)
+            BorderFactory.createLineBorder(new Color(226, 232, 240), 1, true),
+            BorderFactory.createEmptyBorder(15, 20, 15, 20)
         ));
         
-        Dimension dim = new Dimension(450, 90);
+        Dimension dim = new Dimension(480, 95);
         setPreferredSize(dim);
         setMinimumSize(dim);
-        setMaximumSize(new Dimension(Integer.MAX_VALUE, 90));
+        setMaximumSize(new Dimension(Integer.MAX_VALUE, 95));
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        // Evento de clic para desplegar los alumnos
+        // Efecto Hover y Clic
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (clickListener != null) {
                     clickListener.onSeccionClick(seccion);
                 }
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setBackground(new Color(241, 245, 249)); // Slate-100 al pasar mouse
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setBackground(Color.WHITE);
             }
         });
     }
@@ -66,7 +71,7 @@ public class SeccionesF extends JPanel {
         txtCupoMax = new JLabel();
 
         txtCodigoSeccion.setFont(new Font("Segoe UI", Font.BOLD, 15));
-        txtCodigoSeccion.setForeground(new Color(30, 41, 59));
+        txtCodigoSeccion.setForeground(new Color(15, 23, 42));
 
         txtAula.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         txtAula.setForeground(new Color(100, 116, 139));
@@ -84,9 +89,9 @@ public class SeccionesF extends JPanel {
                     .addComponent(txtCodigoSeccion)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtAula)
-                        .addGap(40, 40, 40)
+                        .addGap(30, 30, 30)
                         .addComponent(txtCupoMax)))
-                .addContainerGap(250, Short.MAX_VALUE))
+                .addContainerGap(200, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -97,7 +102,7 @@ public class SeccionesF extends JPanel {
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(txtAula)
                     .addComponent(txtCupoMax))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
 }
