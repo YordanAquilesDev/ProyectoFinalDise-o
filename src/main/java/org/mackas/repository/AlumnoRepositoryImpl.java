@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import org.mackas.model.Alumno;
 import org.mackas.service.interf.IAlumnoDao;
+import org.mackas.model.builder.AlumnoBuilder;
 
 import java.util.List;
 import org.mackas.util.ConexionMySQL;
@@ -17,34 +18,34 @@ public class AlumnoRepositoryImpl implements IAlumnoDao {
     private Connection mysql = ConexionMySQL.getInstance().getConexion();
 
     @Override
-    public Alumno findByIdUser(int  idUser) {
-       Alumno alumno = null;
+    public Alumno findByIdUser(int idUser) {
+        Alumno alumnoResponse = null;
         String sql = "{CALL sp_alumno_usuario(?)}";
-
         try (CallableStatement stmt = mysql.prepareCall(sql)) {
             stmt.setInt(1, idUser);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    alumno = new Alumno();
-                    alumno.setIdAlumno(rs.getInt("id_alumno"));
-                    //  alumno.setIdUsuario(rs.getInt("id_usuario"));
-                    alumno.setIdCarrera(rs.getInt("id_carrera"));
-                    alumno.setCodigo(rs.getString("codigo"));
-                    alumno.setNombres(rs.getString("nombres"));
-                    alumno.setApellidos(rs.getString("apellidos"));
-                    alumno.setDni(rs.getString("dni"));
-                    alumno.setEmail(rs.getString("email"));
-                    alumno.setTelefono(rs.getString("telefono"));
-                    alumno.setFechaNacimiento(rs.getDate("fecha_nacimiento"));
+                    alumnoResponse = new AlumnoBuilder()
+                            .setIdAlumno(rs.getInt("id_alumno"))
+                            .setIdCarrera(rs.getInt("id_carrera"))
+                            .setCodigo(rs.getString("codigo"))
+                            .setNombres(rs.getString("nombres"))
+                            .setApellidos(rs.getString("apellidos"))
+                            .setDni(rs.getString("dni"))
+                            .setEmail(rs.getString("email"))
+                            .setTelefono(rs.getString("telefono"))
+                            .setFechaNacimiento(rs.getDate("fecha_nacimiento"))
+                            .build();
+
                 }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return alumnoResponse;
         }
-        return alumno;
     }
 
-   @Override
+    @Override
     public List<Alumno> findByIdSeccion(int idSeccion) {
         List<Alumno> listaAlumnos = new ArrayList<>();
         // Llamada al Stored Procedure usando la sintaxis de JDBC
@@ -58,7 +59,7 @@ public class AlumnoRepositoryImpl implements IAlumnoDao {
                 // Recorremos cada registro devuelto por el procedimiento
                 while (rs.next()) {
                     Alumno alumno = new Alumno();
-                    
+
                     // Mapeamos los campos del ResultSet con los atributos del modelo Alumno
                     alumno.setIdAlumno(rs.getInt("id_alumno"));
                     alumno.setIdCarrera(rs.getInt("id_carrera"));
@@ -67,8 +68,8 @@ public class AlumnoRepositoryImpl implements IAlumnoDao {
                     alumno.setDni(rs.getString("dni"));
                     alumno.setEmail(rs.getString("email"));
                     alumno.setTelefono(rs.getString("telefono"));
-                    alumno.setFechaNacimiento(rs.getDate("fecha_nacimiento"));                    
-                    // Nota: Si en tu procedure o tabla también devuelves el código institucional, 
+                    alumno.setFechaNacimiento(rs.getDate("fecha_nacimiento"));
+                    // Nota: Si en tu procedure o tabla también devuelves el código institucional,
                     // asegúrate de agregarlo al SELECT del procedure y mapearlo aquí:
                     // alumno.setCodigo(rs.getString("codigo"));
 
@@ -77,7 +78,8 @@ public class AlumnoRepositoryImpl implements IAlumnoDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Aquí puedes manejar la excepción según tu arquitectura (lanzar una RuntimeException, etc.)
+            // Aquí puedes manejar la excepción según tu arquitectura (lanzar una
+            // RuntimeException, etc.)
         }
 
         return listaAlumnos;

@@ -5,7 +5,7 @@
 package org.mackas.service.impl;
 
 import org.mackas.model.Pension;
-import org.mackas.model.patron.PagoEstrategy;
+import org.mackas.service.estrategy.PagoEstrategy;
 import org.mackas.service.interf.IPensionDao;
 
 /**

@@ -9,7 +9,6 @@ public class Alumno extends Usuario {
     private String codigo; // Código institucional del alumno (Ej: ALU2026001)
     private Date fechaNacimiento;
 
-    // Constructor vacío
     public Alumno() {
         super();
     }

@@ -2,7 +2,10 @@ package org.mackas.ui.alumno;
 
 import org.mackas.model.Alumno;
 import org.mackas.model.Pension;
-import org.mackas.model.patron.PagoEstrategy;
+import org.mackas.service.estrategy.PagoBBVA;
+import org.mackas.service.estrategy.PagoBCP;
+import org.mackas.service.estrategy.PagoEstrategy;
+import org.mackas.service.estrategy.PagoVisa;
 import org.mackas.service.impl.ProcesarPagoEstrategy;
 import org.mackas.service.interf.IPensionDao;
 
@@ -10,9 +13,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import org.mackas.model.patron.PagoBBVA;
-import org.mackas.model.patron.PagoBCP;
-import org.mackas.model.patron.PagoVisa;
 
 public class PagoF extends JPanel {
     private Alumno alumno;

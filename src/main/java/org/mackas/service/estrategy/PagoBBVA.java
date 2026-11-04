@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package org.mackas.model.patron;
+package org.mackas.service.estrategy;
 
 import org.mackas.model.Pension;
 
@@ -10,13 +10,13 @@ import org.mackas.model.Pension;
  *
  * @author LAB-USR-LNORTE
  */
-public class PagoVisa implements PagoEstrategy{
+public class PagoBBVA implements PagoEstrategy {
+ 
 
     @Override
     public boolean procesarPago(Pension pension) {
-
-      System.out.println("se pago con visa");
+        System.out.println("se pago con bbva");
         return true;
     }
-
+    
 }

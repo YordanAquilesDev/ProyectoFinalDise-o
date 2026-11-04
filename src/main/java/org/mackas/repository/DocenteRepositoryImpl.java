@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.mackas.model.Docente;
+import org.mackas.model.builder.DocenteBuilder;
 import org.mackas.service.interf.IDocenteDao;
 
 import java.util.List;
@@ -23,16 +24,17 @@ public class DocenteRepositoryImpl implements IDocenteDao {
             stmt.setInt(1, idUser);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    docente = new Docente();
-                    docente.setIdDocente(rs.getInt("id_docente"));
-                    docente.setIdUsuario(rs.getInt("id_usuario"));
-                    docente.setCodigo(rs.getString("codigo"));
-                    docente.setNombres(rs.getString("nombres"));
-                    docente.setApellidos(rs.getString("apellidos"));
-                    docente.setDni(rs.getString("dni"));
-                    docente.setEmail(rs.getString("email"));
-                    docente.setTelefono(rs.getString("telefono"));
-                    docente.setEspecialidad(rs.getString("especialidad"));
+                    docente = new DocenteBuilder()
+                    .setIdDocente(rs.getInt("id_docente"))
+                    .setIdUsuario(rs.getInt("id_usuario"))
+                    .setCodigo(rs.getString("codigo"))
+                    .setNombres(rs.getString("nombres"))
+                    .setApellidos(rs.getString("apellidos"))
+                    .setDni(rs.getString("dni"))
+                    .setEmail(rs.getString("email"))
+                    .setTelefono(rs.getString("telefono"))
+                    .setEspecialidad(rs.getString("especialidad"))
+                    .build();
                 }
             }
         } catch (SQLException e) {
