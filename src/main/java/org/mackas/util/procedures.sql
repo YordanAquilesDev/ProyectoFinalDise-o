@@ -1,14 +1,3 @@
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Other/SQLTemplate.sql to edit this template
- */
-/**
- * Author:  Administrador
- * Created: 22 oct. 2026
- */
-
-
-
 DELIMITER //
 CREATE PROCEDURE sp_listar_cursos_alumno(IN p_id_alumno INT)
 BEGIN
@@ -19,7 +8,6 @@ BEGIN
         c.nombre AS nombre_curso,
         c.creditos,
         c.ciclo_nivel
-
     FROM curso c
     JOIN seccion s ON c.id_curso = s.id_curso
     JOIN detalle_matricula dm ON s.id_seccion = dm.id_seccion
@@ -27,11 +15,8 @@ BEGIN
     JOIN periodo_academico p ON s.id_periodo = p.id_periodo
     WHERE m.id_alumno = p_id_alumno;
 END //
-
 DELIMITER ;
 
-
-DELIMITER //
 
 DELIMITER //
 CREATE PROCEDURE sp_listar_calificacion_curso(
@@ -52,9 +37,8 @@ BEGIN
     JOIN seccion sc ON dt.id_seccion = sc.id_seccion
     JOIN curso cu ON sc.id_curso = cu.id_curso
     WHERE cu.id_curso = p_id_curso 
-      AND m.id_alumno = p_id_alumno;                          
+      AND m.id_alumno = p_id_alumno;                       
 END //
-
 DELIMITER ;
 
 
@@ -70,43 +54,26 @@ BEGIN
         h.aula
     FROM horario h
     JOIN detalle_matricula dt ON h.id_seccion = dt.id_seccion
-    join Matricula m on dt.id_matricula= m.id_matricula   
-    WHERE m.id_alumno=p_id_alumno;
+    JOIN matricula m ON dt.id_matricula = m.id_matricula   
+    WHERE m.id_alumno = p_id_alumno;
 END //
 DELIMITER ;
-
-
-DELIMITER //
-CREATE PROCEDURE sp_matricular_alumno(
-    in p_id_alumno int,
-    in p_id_periodo int,
-    in p_monto_total int
-)
-BEGIN
-    insert into matricula  (id_alumno,id_periodo,fecha_matricula,monto_total,estado) values
-    (p_id_alumno,p_id_periodo,now(),p_monto_total,'REGISTRADA');
-END //
-DELIMITER ;
-
-
 
 
 DELIMITER //
 CREATE PROCEDURE sp_detalle_matricula_alumno(
-    in p_id_matricula int,
-    in p_id_seccion int
+    IN p_id_matricula INT,
+    IN p_id_seccion INT
 )
 BEGIN
-
-    insert into detalle_matricula (id_matricula,id_seccion,promedio_final,estado_curso) values
-    (p_id_matricula,p_id_seccion,null,'CURSANDO');
+    INSERT INTO detalle_matricula (id_matricula, id_seccion, promedio_final, estado_curso) 
+    VALUES (p_id_matricula, p_id_seccion, NULL, 'CURSANDO');
 END //
 DELIMITER ;
 
+
 DELIMITER //
-CREATE PROCEDURE sp_listar_secciones_periodo(
-    in p_id_periodo int
-)
+CREATE PROCEDURE sp_listar_secciones_periodo(IN p_id_periodo INT)
 BEGIN
     SELECT 
         s.id_seccion,
@@ -120,32 +87,29 @@ BEGIN
 END //
 DELIMITER ;
 
+
 DELIMITER //
-CREATE PROCEDURE sp_listar_alumnos_seccion(
-    in p_id_seccion int
-)
+CREATE PROCEDURE sp_listar_alumnos_seccion(IN p_id_seccion INT)
 BEGIN
-select 
-a.id_alumno, 
-a.id_carrera,
-a.nombres, 
-a.apellidos, 
-a.dni, 
-a.email, 
-a.telefono,
-a.fecha_nacimiento
-from alumno a
-join matricula m on a.id_alumno = m.id_alumno
-join detalle_matricula dm on m.id_matricula = dm.id_matricula
-where dm.id_seccion = p_id_seccion;
-end //
+    SELECT 
+        a.id_alumno, 
+        a.id_carrera,
+        a.nombres, 
+        a.apellidos, 
+        a.dni, 
+        a.email, 
+        a.telefono,
+        a.fecha_nacimiento
+    FROM alumno a
+    JOIN matricula m ON a.id_alumno = m.id_alumno
+    JOIN detalle_matricula dm ON m.id_matricula = dm.id_matricula
+    WHERE dm.id_seccion = p_id_seccion;
+END //
 DELIMITER ;
-call sp_listar_alumnos_seccion(1); -- funciona correctamente
-
 
 
 DELIMITER //
-create procedure sp_listar_secciones_docente(in p_id_docente int)
+CREATE PROCEDURE sp_listar_secciones_docente(IN p_id_docente INT)
 BEGIN
     SELECT 
         s.id_seccion,
@@ -159,29 +123,27 @@ BEGIN
 END //
 DELIMITER ;
 
-call sp_listar_secciones_docente(1);-- funciona correctamente
 
 DELIMITER //
-create procedure sp_alumno_usuario(in p_id_usuario int)
+CREATE PROCEDURE sp_alumno_usuario(IN p_id_usuario INT)
 BEGIN
-   select 
-a.id_alumno, 
-a.id_carrera,
-a.nombres, 
-a.apellidos, 
-a.dni, 
-a.email, 
-a.telefono,
-a.fecha_nacimiento
-from alumno a
-join usuario u on a.id_usuario=u.id_usuario
-where u.id_usuario=p_id_usuario;
+    SELECT 
+        a.id_alumno, 
+        a.id_carrera,
+        a.nombres, 
+        a.apellidos, 
+        a.dni, 
+        a.email, 
+        a.telefono,
+        a.fecha_nacimiento
+    FROM alumno a
+    JOIN usuario u ON a.id_usuario = u.id_usuario
+    WHERE u.id_usuario = p_id_usuario;
 END //
 DELIMITER ;
 
 
 DELIMITER //
-
 CREATE PROCEDURE sp_login(
     IN p_username VARCHAR(50),
     IN p_password VARCHAR(255)
@@ -200,21 +162,19 @@ BEGIN
 END //
 DELIMITER ;
 
-DELIMITER //
-create procedure sp_docente_usuario(in p_id_usuario int)
-BEGIN
-   select 
-   d.*
 
-from docente a
-join usuario u on a.id_usuario=u.id_usuario
-where u.id_usuario=p_id_usuario;
+DELIMITER //
+CREATE PROCEDURE sp_docente_usuario(IN p_id_usuario INT)
+BEGIN
+    SELECT d.*
+    FROM docente d
+    JOIN usuario u ON d.id_usuario = u.id_usuario
+    WHERE u.id_usuario = p_id_usuario;
 END //
 DELIMITER ;
 
-DELIMITER //
 
--- 2. Creamos la nueva versión con 4 argumentos
+DELIMITER //
 CREATE PROCEDURE sp_calificar_alumno(    
     IN p_id_detalle_matricula INT,
     IN p_nombre_evaluacion VARCHAR(50),
@@ -235,45 +195,100 @@ BEGIN
         p_nota
     );
 END //
-
 DELIMITER ;
+
 
 DELIMITER //
-
--- 2. Creamos la nueva versión con 4 argumentos
-CREATE PROCEDURE sp_matricula_alumno(    
- in p_id_alumno int
-)
+CREATE PROCEDURE sp_matricula_alumno(IN p_id_alumno INT)
 BEGIN
-   select *
-   from matricula 
-   where m.id_alumno=p_id_alumno
+    SELECT *
+    FROM matricula m
+    WHERE m.id_alumno = p_id_alumno;
 END //
-
 DELIMITER ;
+
 
 DELIMITER //
 CREATE PROCEDURE sp_matricular_alumno(    
     IN p_id_alumno INT,
     IN p_id_periodo INT,
-    IN p_monto_total DECIMAL(10,2) -- Cambiado a DECIMAL para coincidir con tu tabla
+    IN p_monto_total DECIMAL(10,2)
 )
 BEGIN
-    -- 1. Insertamos la matrícula
     INSERT INTO matricula (id_alumno, id_periodo, fecha_matricula, monto_total, estado) 
     VALUES (p_id_alumno, p_id_periodo, NOW(), p_monto_total, 'REGISTRADA');
     
-    -- 2. Retornamos inmediatamente el ID generado para que Java lo lea con executeQuery()
+    -- Retorna el ID generado para que Java lo lea
     SELECT LAST_INSERT_ID() AS id_matricula;
 END //
-
 DELIMITER ;
+
 
 DELIMITER //
 CREATE PROCEDURE sp_listar_periodo_academico()
 BEGIN
-    SELECT 
-      *
-      from periodo_academico;
+    SELECT * FROM periodo_academico;
 END //
-DELIMITER 
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE sp_procesar_pago_pension (
+    IN p_id_pension INT,
+    IN p_monto_pagado DECIMAL(10,2),
+    IN p_monto_mora DECIMAL(10,2)
+)
+BEGIN
+    DECLARE v_estado VARCHAR(20);
+    SELECT estado INTO v_estado FROM pension WHERE id_pension = p_id_pension;
+
+    IF v_estado = 'PENDIENTE' THEN
+        UPDATE pension 
+        SET estado = 'PAGADO',
+            monto_mora = p_monto_mora,
+            fecha_pago = NOW()
+        WHERE id_pension = p_id_pension;
+        
+        SELECT 'SUCCESS' AS resultado, 'Pago registrado correctamente.' AS mensaje;
+    ELSE
+        SELECT 'ERROR' AS resultado, 'La pensión ya fue pagada o no existe.' AS mensaje;
+    END IF;
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE sp_pensiones_pendientes_alumno(IN p_id_alumno INT)
+BEGIN
+    SELECT 
+        id_pension,
+        id_alumno,
+        id_matricula,
+        numero_cuota,
+        monto,
+        monto_mora,
+        fecha_vencimiento,
+        fecha_pago,
+        estado
+    FROM pension
+    WHERE id_alumno = p_id_alumno 
+      AND estado = 'PENDIENTE'
+    ORDER BY numero_cuota ASC;
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE sp_pagar_pension_alumno(
+    IN p_id_alumno INT,
+    IN p_id_pension INT,
+    IN p_fecha_pago DATETIME
+)
+BEGIN
+    UPDATE pension
+    SET estado = 'PAGADO',
+        fecha_pago = p_fecha_pago
+    WHERE id_alumno = p_id_alumno
+      AND id_pension = p_id_pension;
+END //
+DELIMITER ;

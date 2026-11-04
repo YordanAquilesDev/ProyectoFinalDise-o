@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import org.mackas.model.DetalleMatricula;
 import org.mackas.model.Matricula;
 import org.mackas.service.interf.IMatriculaDao;
-import org.mackas.util.ConexionMySQL;
+import org.mackas.util.singlenton.ConexionMySQL;
 
 /**
  *

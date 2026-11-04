@@ -8,10 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import org.mackas.model.Alumno;
 import org.mackas.service.interf.IAlumnoDao;
+import org.mackas.util.singlenton.ConexionMySQL;
 import org.mackas.model.builder.AlumnoBuilder;
 
 import java.util.List;
-import org.mackas.util.ConexionMySQL;
 
 public class AlumnoRepositoryImpl implements IAlumnoDao {
 

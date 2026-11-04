@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.mackas.model.Horario;
 import org.mackas.service.interf.IHorarioDao;
-import org.mackas.util.ConexionMySQL;
+import org.mackas.util.singlenton.ConexionMySQL;
 
 /**
  *

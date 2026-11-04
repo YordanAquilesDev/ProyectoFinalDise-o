@@ -14,7 +14,7 @@ import java.util.List;
 import org.mackas.model.Pension;
 
 import org.mackas.service.interf.IPensionDao;
-import org.mackas.util.ConexionMySQL;
+import org.mackas.util.singlenton.ConexionMySQL;
 
 /**
  *

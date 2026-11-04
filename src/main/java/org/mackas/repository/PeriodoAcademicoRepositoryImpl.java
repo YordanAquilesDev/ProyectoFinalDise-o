@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.mackas.model.PeriodoAcademico;
 import org.mackas.service.interf.IPeriodoAcademicoDao;
-import org.mackas.util.ConexionMySQL;
+import org.mackas.util.singlenton.ConexionMySQL;
 
 /**
  *

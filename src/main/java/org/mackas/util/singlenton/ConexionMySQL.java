@@ -1,4 +1,4 @@
-package org.mackas.util;
+package org.mackas.util.singlenton;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

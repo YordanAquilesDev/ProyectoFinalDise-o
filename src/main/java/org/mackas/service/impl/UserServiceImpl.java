@@ -5,7 +5,7 @@
 package org.mackas.service.impl;
 
 import org.mackas.model.Usuario;
-import org.mackas.util.ConexionMySQL;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,6 +15,7 @@ import org.mackas.model.Docente;
 import org.mackas.repository.UserRepositoryImpl;
 import org.mackas.repository.UserRepositoryImpl;
 import org.mackas.service.interf.IUsuarioDao;
+import org.mackas.util.singlenton.ConexionMySQL;
 
 public class UserServiceImpl implements IUsuarioDao {
  private IUsuarioDao repo= new UserRepositoryImpl();

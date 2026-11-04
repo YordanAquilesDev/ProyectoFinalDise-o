@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import org.mackas.model.Docente;
 import org.mackas.model.builder.DocenteBuilder;
 import org.mackas.service.interf.IDocenteDao;
+import org.mackas.util.singlenton.ConexionMySQL;
 
 import java.util.List;
-import org.mackas.util.ConexionMySQL;
 
 public class DocenteRepositoryImpl implements IDocenteDao {
 

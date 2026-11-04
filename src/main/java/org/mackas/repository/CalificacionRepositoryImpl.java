@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.mackas.model.Calificacion;
 import org.mackas.service.interf.ICalificacionDao;
-import org.mackas.util.ConexionMySQL;
+import org.mackas.util.singlenton.ConexionMySQL;
 
 /**
  *

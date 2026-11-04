@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.mackas.model.Seccion;
 import org.mackas.service.interf.ISeccionDao;
-import org.mackas.util.ConexionMySQL;
+import org.mackas.util.singlenton.ConexionMySQL;
 
 /**
  *

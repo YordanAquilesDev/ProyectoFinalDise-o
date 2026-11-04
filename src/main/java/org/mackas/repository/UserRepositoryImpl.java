@@ -13,8 +13,8 @@ import org.mackas.model.Docente;
 import org.mackas.model.Usuario;
 import org.mackas.service.impl.AlumnoServiceImpl;
 import org.mackas.service.impl.DocenteServiceImpl;
-import org.mackas.util.ConexionMySQL;
 import org.mackas.service.interf.IUsuarioDao;
+import org.mackas.util.singlenton.ConexionMySQL;
 
 /**
  *
