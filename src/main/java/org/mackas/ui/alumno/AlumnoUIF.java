@@ -24,8 +24,12 @@ import org.mackas.service.impl.CalificacionServiceImpl;
 import org.mackas.service.impl.CarreraServiceImpl;
 import org.mackas.service.impl.CursoServiceImpl;
 import org.mackas.service.impl.HorarioServiceImpl;
+import org.mackas.service.impl.MatriculaServiceImpl;
 import org.mackas.service.impl.PensionServiceImpl;
+import org.mackas.service.impl.UserServiceImpl;
 import org.mackas.service.interf.IPensionDao;
+import org.mackas.service.interf.IUsuarioDao;
+import org.mackas.repository.UserRepositoryImpl;;
 
 public class AlumnoUIF extends JFrame {
 
@@ -265,7 +269,8 @@ public class AlumnoUIF extends JFrame {
     }
 
     private void salir(){
-        Login irALogin = new Login();
+        IUsuarioDao userService=new UserServiceImpl(new UserRepositoryImpl());
+         Login irALogin=new Login( userService, new MatriculaServiceImpl());
         irALogin.setVisible(true);
         this.dispose();
     }

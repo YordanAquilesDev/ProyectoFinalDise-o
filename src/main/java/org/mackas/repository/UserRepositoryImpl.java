@@ -13,6 +13,8 @@ import org.mackas.model.Docente;
 import org.mackas.model.Usuario;
 import org.mackas.service.impl.AlumnoServiceImpl;
 import org.mackas.service.impl.DocenteServiceImpl;
+import org.mackas.service.interf.IAlumnoDao;
+import org.mackas.service.interf.IDocenteDao;
 import org.mackas.service.interf.IUsuarioDao;
 import org.mackas.util.singlenton.ConexionMySQL;
 
@@ -22,9 +24,14 @@ import org.mackas.util.singlenton.ConexionMySQL;
  */
 public class UserRepositoryImpl implements IUsuarioDao{
 
-    private Connection mysql = ConexionMySQL.getInstance().getConexion();
-    private AlumnoServiceImpl aluService= new AlumnoServiceImpl();
-    private DocenteServiceImpl doceService= new DocenteServiceImpl();
+    private Connection mysql;
+    private IAlumnoDao aluService;
+    private IDocenteDao doceService;
+    public UserRepositoryImpl(Connection conx,IAlumnoDao aluService, IDocenteDao doceService){
+        this.aluService=aluService;
+        this.doceService=doceService;
+        this.mysql=conx;
+    }
 
     @Override
     public Usuario login(String codigo, String password) {

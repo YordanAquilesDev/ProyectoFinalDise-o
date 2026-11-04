@@ -19,7 +19,9 @@ import org.mackas.model.Alumno;
 import org.mackas.model.Docente;
 import org.mackas.model.Seccion;
 import org.mackas.service.impl.AlumnoServiceImpl;
+import org.mackas.service.impl.MatriculaServiceImpl;
 import org.mackas.service.impl.SeccionServiceImpl;
+import org.mackas.service.impl.UserServiceImpl;
 import org.mackas.service.interf.IAlumnoDao;
 import org.mackas.service.interf.ISeccionDao;
 
@@ -178,7 +180,7 @@ public class DocenteUIF extends JFrame {
     }
 
     private void salir() {
-        Login irALogin = new Login();
+          Login irALogin=new Login( new UserServiceImpl(), new MatriculaServiceImpl());
         irALogin.setVisible(true);
         this.dispose();
     }

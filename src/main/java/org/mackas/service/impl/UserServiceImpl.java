@@ -18,7 +18,11 @@ import org.mackas.service.interf.IUsuarioDao;
 import org.mackas.util.singlenton.ConexionMySQL;
 
 public class UserServiceImpl implements IUsuarioDao {
- private IUsuarioDao repo= new UserRepositoryImpl();
+ private IUsuarioDao repo;
+ public UserServiceImpl(IUsuarioDao repoDao){
+    this.repo=repoDao;
+
+ }
     @Override
     public Usuario login(String codigo, String password) {
         return repo.login(codigo, password);
