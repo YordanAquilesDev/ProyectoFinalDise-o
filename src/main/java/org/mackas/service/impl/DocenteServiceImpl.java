@@ -9,7 +9,10 @@ import org.mackas.repository.DocenteRepositoryImpl;
 public class DocenteServiceImpl
 implements IDocenteDao
 {
-     private IDocenteDao repo= new DocenteRepositoryImpl();
+     private IDocenteDao repo;
+     public DocenteServiceImpl(IDocenteDao repo){
+         this.repo=repo;
+     }
   
     @Override
     public Docente findByIdUser(int idUser) {

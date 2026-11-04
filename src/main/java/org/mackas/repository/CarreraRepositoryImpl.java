@@ -17,7 +17,10 @@ import org.mackas.util.singlenton.ConexionMySQL;
  * @author LAB-USR-LNORTE
  */
 public class CarreraRepositoryImpl implements ICarreraDao{
-    private Connection mysql = ConexionMySQL.getInstance().getConexion();
+    private Connection mysql ;
+    public CarreraRepositoryImpl(Connection conx){
+        mysql=conx;
+    }
 
     @Override
     public Carrera findById(Integer id) {

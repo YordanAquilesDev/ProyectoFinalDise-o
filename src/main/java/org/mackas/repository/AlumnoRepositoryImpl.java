@@ -15,10 +15,14 @@ import java.util.List;
 
 public class AlumnoRepositoryImpl implements IAlumnoDao {
 
-    private Connection mysql = ConexionMySQL.getInstance().getConexion();
+    private Connection mysql;
+
+    public AlumnoRepositoryImpl(Connection conx){
+        mysql=conx;
+    }
 
     @Override
-    public Alumno findByIdUser(int idUser) {
+    public Alumno findByIdUser(int idUser) throws SQLException {
         Alumno alumnoResponse = null;
         String sql = "{CALL sp_alumno_usuario(?)}";
         try (CallableStatement stmt = mysql.prepareCall(sql)) {
@@ -28,7 +32,7 @@ public class AlumnoRepositoryImpl implements IAlumnoDao {
                     alumnoResponse = new AlumnoBuilder()
                             .setIdAlumno(rs.getInt("id_alumno"))
                             .setIdCarrera(rs.getInt("id_carrera"))
-                            .setCodigo(rs.getString("codigo"))
+                            //.setCodigo(rs.getString("codigo"))
                             .setNombres(rs.getString("nombres"))
                             .setApellidos(rs.getString("apellidos"))
                             .setDni(rs.getString("dni"))

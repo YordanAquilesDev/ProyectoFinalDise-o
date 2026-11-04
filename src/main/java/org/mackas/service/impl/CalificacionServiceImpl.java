@@ -15,7 +15,10 @@ import org.mackas.service.interf.ICalificacionDao;
  * @author Administrador
  */
 public class CalificacionServiceImpl implements ICalificacionDao {
-private ICalificacionDao repo= new CalificacionRepositoryImpl();
+private ICalificacionDao repo;
+public CalificacionServiceImpl(ICalificacionDao repo){
+    this.repo=repo;
+}
 
     @Override
     public List<Calificacion> findByIdCursoAlumno(int idCurso,int idAlumno) {

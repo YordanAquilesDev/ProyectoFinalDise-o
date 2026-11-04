@@ -20,7 +20,10 @@ import org.mackas.util.singlenton.ConexionMySQL;
  */
 public class CalificacionRepositoryImpl implements ICalificacionDao {
 
-    private Connection mysql = ConexionMySQL.getInstance().getConexion();
+    private Connection mysql;
+    public CalificacionRepositoryImpl(Connection conx){
+        mysql=conx;
+    }
 
     @Override
     public List<Calificacion> findByIdCursoAlumno(int idCurso, int idAlumno) {

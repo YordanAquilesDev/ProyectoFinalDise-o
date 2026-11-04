@@ -19,12 +19,13 @@ import javax.swing.LayoutStyle;
 import org.mackas.model.Alumno;
 import org.mackas.model.Docente;
 import org.mackas.model.Usuario;
+import org.mackas.service.factory.ServiceFactory;
+import org.mackas.service.impl.SeccionServiceImpl;
+import org.mackas.service.interf.*;
 import org.mackas.ui.alumno.AlumnoUIF;
 import org.mackas.ui.alumno.MatriculaUI;
 
 import org.mackas.ui.docente.DocenteUIF;
-import org.mackas.service.interf.IMatriculaDao;
-import org.mackas.service.interf.IUsuarioDao;
 
 /**
  *
@@ -177,20 +178,28 @@ public class Login extends javax.swing.JFrame {
 
             
             if (!matriculaService.isMatricula(alumno.getIdAlumno())) {
-                // Si NO tiene matrícula, lo mandamos a matricularse
-                MatriculaUI mtc = new MatriculaUI(alumno);
+
+                IMatriculaDao matService=ServiceFactory.MatriculaServiceFactory();
+                IPeriodoAcademicoDao perAcService=ServiceFactory.PeriodoAcademicoServiceFactory();
+                ISeccionDao secService= ServiceFactory.SeccionServiceFactory();
+                MatriculaUI mtc = new MatriculaUI(alumno,matService,perAcService,secService);
                 mtc.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 mtc.setVisible(true);
             } else {
-                // Si YA tiene matrícula, entra a su panel principal del alumno
-                AlumnoUIF alumniUIF = new AlumnoUIF(alumno);
+
+                ICursoDao cursoService= ServiceFactory.CursoServiceFactory();
+                ICalificacionDao caliService=ServiceFactory.CalificacionServiceFactory();
+                IHorarioDao horaService=ServiceFactory.HorarioServiceFactory();
+                ICarreraDao carrService= ServiceFactory.CarreaServiceFactory();
+                AlumnoUIF alumniUIF  = new AlumnoUIF(alumno,cursoService,caliService,horaService,carrService);
                 alumniUIF.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 alumniUIF.setVisible(true);
             }
 
         } else if (user instanceof Docente) {
             Docente docenteUser = (Docente) user;
-            DocenteUIF docenteUIF = new DocenteUIF(docenteUser);
+            ISeccionDao seccionService= ServiceFactory.SeccionServiceFactory();
+            DocenteUIF docenteUIF = new DocenteUIF(docenteUser, seccionService);
             docenteUIF.setVisible(true);
         }
 

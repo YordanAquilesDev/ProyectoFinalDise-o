@@ -15,7 +15,10 @@ import org.mackas.service.interf.IMatriculaDao;
  */
 public class MatriculaServiceImpl implements IMatriculaDao {
 
-    private IMatriculaDao repo = new MatriculaRepositoryImpl();
+    private IMatriculaDao repo;
+    public MatriculaServiceImpl(IMatriculaDao repo){
+        this.repo=repo;
+    }
 
     @Override
     public Matricula setMatricula(Matricula mt) {

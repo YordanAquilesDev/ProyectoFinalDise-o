@@ -20,6 +20,7 @@ import org.mackas.model.Calificacion;
 import org.mackas.model.Carrera;
 import org.mackas.model.Curso;
 import org.mackas.model.Horario;
+import org.mackas.service.factory.ServiceFactory;
 import org.mackas.service.impl.CalificacionServiceImpl;
 import org.mackas.service.impl.CarreraServiceImpl;
 import org.mackas.service.impl.CursoServiceImpl;
@@ -27,16 +28,15 @@ import org.mackas.service.impl.HorarioServiceImpl;
 import org.mackas.service.impl.MatriculaServiceImpl;
 import org.mackas.service.impl.PensionServiceImpl;
 import org.mackas.service.impl.UserServiceImpl;
-import org.mackas.service.interf.IPensionDao;
-import org.mackas.service.interf.IUsuarioDao;
+import org.mackas.service.interf.*;
 import org.mackas.repository.UserRepositoryImpl;;
 
 public class AlumnoUIF extends JFrame {
 
-    private CursoServiceImpl cursoService = new CursoServiceImpl();
-    private CalificacionServiceImpl caliService = new CalificacionServiceImpl();
-    private HorarioServiceImpl horaService = new HorarioServiceImpl();
-    private CarreraServiceImpl carrService = new CarreraServiceImpl();
+    private ICursoDao cursoService;
+    private ICalificacionDao caliService ;
+    private IHorarioDao horaService ;
+    private ICarreraDao carrService ;
 
     private final Alumno alumno;
     List<Curso> cursosAlumno;
@@ -46,7 +46,15 @@ public class AlumnoUIF extends JFrame {
     private JScrollPane scrollPane;
     private JLabel lblHeaderTitulo;
 
-    public AlumnoUIF(Alumno alumno) {
+    public AlumnoUIF(Alumno alumno,
+                     ICursoDao cursoService,
+                     ICalificacionDao caliService,
+                     IHorarioDao horaService,
+                     ICarreraDao carrService) {
+        this.cursoService=cursoService;
+        this.caliService=caliService;
+        this.horaService=horaService;
+        this.carrService=carrService;
         this.alumno = alumno;
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setTitle("Portal del Alumno - " + (alumno != null ? alumno.getNombres() : ""));
@@ -260,7 +268,7 @@ public class AlumnoUIF extends JFrame {
         jpContenedor.removeAll(); 
         jpContenedor.setLayout(new BorderLayout()); 
         
-        IPensionDao pensionService = new PensionServiceImpl();
+        IPensionDao pensionService = ServiceFactory.PensionServiceFactory();
         PagoF pantallaPagos = new PagoF(alumno, pensionService);
         
         jpContenedor.add(pantallaPagos, BorderLayout.CENTER); 
@@ -269,8 +277,9 @@ public class AlumnoUIF extends JFrame {
     }
 
     private void salir(){
-        IUsuarioDao userService=new UserServiceImpl(new UserRepositoryImpl());
-         Login irALogin=new Login( userService, new MatriculaServiceImpl());
+        IUsuarioDao userService= ServiceFactory.UserServiceFactory();
+        IMatriculaDao matriculaService=ServiceFactory.MatriculaServiceFactory();
+        Login irALogin = new Login(userService, matriculaService);
         irALogin.setVisible(true);
         this.dispose();
     }

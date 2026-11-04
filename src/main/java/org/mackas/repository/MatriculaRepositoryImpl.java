@@ -13,13 +13,18 @@ import org.mackas.model.Matricula;
 import org.mackas.service.interf.IMatriculaDao;
 import org.mackas.util.singlenton.ConexionMySQL;
 
+import javax.swing.*;
+
 /**
  *
  * @author Administrador
  */
 public class MatriculaRepositoryImpl implements IMatriculaDao {
 
-    private Connection mysql = ConexionMySQL.getInstance().getConexion();
+    private Connection mysql;
+    public MatriculaRepositoryImpl(Connection conx){
+        mysql=conx;
+    }
 
     @Override
     public boolean isMatricula(int idAlumno) {
@@ -32,9 +37,6 @@ public class MatriculaRepositoryImpl implements IMatriculaDao {
             try (ResultSet rs = cst.executeQuery()) {
                 if (rs.next()) {
                     tieneMatricula = true;
-                    System.out.println("✅ El alumno ID " + idAlumno + " SÍ tiene matrícula encontrada (ID Matricula: " + rs.getInt("id_matricula") + ")");
-                } else {
-                    System.out.println("❌ El alumno ID " + idAlumno + " NO tiene matrículas registradas.");
                 }
             }
         } catch (SQLException e) {
@@ -48,24 +50,16 @@ public class MatriculaRepositoryImpl implements IMatriculaDao {
     @Override
     public Matricula setMatricula(Matricula mt) {
         String sqlMatricula = "{CALL sp_matricular_alumno(?, ?, ?)}";
-        String sqlDetalle = "{CALL sp_detalle_matricula_alumno(?, ?)}";
+
 
         int idMatriculaGenerada = 0;
 
         try {
-            // Desactivamos el auto-commit para manejar la Transacción segura
             mysql.setAutoCommit(false);
-
-            // ==========================================
-            // PASO 1: Insertar la Cabecera y leer su ID retornado
-            // ==========================================
             try (CallableStatement stmtMat = mysql.prepareCall(sqlMatricula)) {
-
                 stmtMat.setInt(1, mt.getId_alumno());
                 stmtMat.setInt(2, mt.getId_periodo());
                 stmtMat.setDouble(3, mt.getMonto_total());
-
-                // Usamos executeQuery porque nuestro SP ahora devuelve un SELECT con el ID
                 try (ResultSet rs = stmtMat.executeQuery()) {
                     if (rs.next()) {
                         idMatriculaGenerada = rs.getInt("id_matricula");
@@ -73,16 +67,13 @@ public class MatriculaRepositoryImpl implements IMatriculaDao {
                 }
             }
 
-            // Validamos si se obtuvo el ID correctamente
             if (idMatriculaGenerada == 0) {
                 mysql.rollback();
-                System.err.println("Error: No se pudo obtener el ID de la matrícula generada.");
+                JOptionPane.showMessageDialog(null, "Error al procesar la operación: " , "Error", JOptionPane.ERROR_MESSAGE);
                 return null;
             }
 
-            // ==========================================
-            // PASO 2: Guardar los detalles en bucle (Lote)
-            // ==========================================
+            String sqlDetalle = "{CALL sp_detalle_matricula_alumno(?, ?)}";
             try (CallableStatement stmtDet = mysql.prepareCall(sqlDetalle)) {
                 for (DetalleMatricula det : mt.getDetalle_matricula()) {
                     stmtDet.setInt(1, idMatriculaGenerada);

@@ -20,7 +20,10 @@ import org.mackas.util.singlenton.ConexionMySQL;
  */
 public class CursoRepositoryImpl implements ICursoDao {
 
-    private final Connection mysql = ConexionMySQL.getInstance().getConexion();
+    private final Connection mysql;
+    public CursoRepositoryImpl(Connection conx){
+        mysql=conx;
+    }
 
     @Override
     public List<Curso> findByIdAlumno(int idAlumno) {

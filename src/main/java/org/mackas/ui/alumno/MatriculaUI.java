@@ -1,6 +1,8 @@
 package org.mackas.ui.alumno;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -16,25 +18,23 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import org.mackas.model.Alumno;
 import org.mackas.model.DetalleMatricula;
 import org.mackas.model.Matricula;
 import org.mackas.model.PeriodoAcademico;
 import org.mackas.model.Seccion;
-import org.mackas.service.impl.MatriculaServiceImpl;
-import org.mackas.service.impl.PeriodoAcademicoServiceImpl;
-import org.mackas.service.impl.SeccionServiceImpl;
+import org.mackas.service.factory.ServiceFactory;
+import org.mackas.service.interf.*;
 
 public class MatriculaUI extends JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MatriculaUI.class.getName());
-    
-    private MatriculaServiceImpl matService = new MatriculaServiceImpl();
-    private PeriodoAcademicoServiceImpl perAcService = new PeriodoAcademicoServiceImpl();
-    private SeccionServiceImpl secService = new SeccionServiceImpl();
-    
+
+    private IMatriculaDao matService;
+    private IPeriodoAcademicoDao perAcService;
+    private ISeccionDao secService;
+
     private DefaultTableModel model;
     private Alumno alumno;
     private Matricula mt1;
@@ -53,16 +53,22 @@ public class MatriculaUI extends JFrame {
     private JLabel lblMontoTotal;
     private JButton btnMatricularse;
 
-    public MatriculaUI(Alumno a) {
+    public MatriculaUI(Alumno a,
+                       IMatriculaDao matService,
+                       IPeriodoAcademicoDao perAcService,
+                       ISeccionDao secService) {
+        this.matService = matService;
+        this.perAcService = perAcService;
+        this.secService = secService;
         this.alumno = a;
         initComponents();
-        
-        // Configuración de la ventana
+
+        // Configuración de la ventana flexible
         setTitle("Sistema Académico - Registro de Matrícula");
-        setSize(800, 520);
+        setSize(900, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(false);
+        setResizable(true); // Permitir redimensionar
 
         // Inicializar modelo de tabla y datos
         model = (DefaultTableModel) tblSeccion.getModel();
@@ -73,9 +79,8 @@ public class MatriculaUI extends JFrame {
         List<PeriodoAcademico> listaPeriodos = perAcService.findAll();
         DefaultComboBoxModel<PeriodoAcademico> comboBoxModel = new DefaultComboBoxModel<>(listaPeriodos.toArray(new PeriodoAcademico[0]));
         cmbPeriodo.setModel(comboBoxModel);
-        
-        // Si hay periodos, cargamos inicialmente las secciones del primero
-        if (listaPeriodos.size() > 0) {
+
+        if (!listaPeriodos.isEmpty()) {
             cargarSeccionesPorPeriodo(listaPeriodos.get(0));
         }
     }
@@ -91,156 +96,147 @@ public class MatriculaUI extends JFrame {
     }
 
     private void initComponents() {
+        // Ventana principal con BorderLayout general
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
         panelPrincipal = new JPanel();
-        lblTitulo = new JLabel();
-        lblPeriodo = new JLabel();
-        cmbPeriodo = new JComboBox<>();
-        lblSeccion = new JLabel();
-        cmbSeccion = new JComboBox<>();
-        btnAgregarSecc = new JButton();
-        jScrollPane1 = new JScrollPane();
-        tblSeccion = new JTable();
-        btnQuitarSecc = new JButton();
-        lblMontoTotal = new JLabel();
-        btnMatricularse = new JButton();
+        panelPrincipal.setBackground(new Color(248, 250, 252)); // Fondo SaaS suave
+        panelPrincipal.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        panelPrincipal.setBackground(new Color(248, 250, 252)); // Fondo gris claro muy moderno tipo SaaS
+        // Usamos GridBagLayout para que todo se expanda de forma fluida
+        panelPrincipal.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
 
-        // Título Principal
-        lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        // 1. Título Principal
+        lblTitulo = new JLabel("Proceso de Matrícula Estudiantil");
+        lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
         lblTitulo.setForeground(new Color(30, 41, 59));
-        lblTitulo.setText("Proceso de Matrícula Estudiantil");
 
-        // Etiquetas
+        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 4;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(0, 0, 20, 0);
+        panelPrincipal.add(lblTitulo, gbc);
+
+        // 2. Panel Superior de Selección (Periodo, Sección, Botón Agregar)
+        JPanel panelFiltros = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
+        panelFiltros.setBackground(new Color(248, 250, 252));
+
+        lblPeriodo = new JLabel("Periodo Académico:");
         lblPeriodo.setFont(new Font("Segoe UI", Font.BOLD, 13));
         lblPeriodo.setForeground(new Color(100, 116, 139));
-        lblPeriodo.setText("Periodo Académico:");
 
-        lblSeccion.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        lblSeccion.setForeground(new Color(100, 116, 139));
-        lblSeccion.setText("Sección / Curso:");
-
-        // ComboBoxes
+        cmbPeriodo = new JComboBox<>();
         cmbPeriodo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        cmbPeriodo.setPreferredSize(new java.awt.Dimension(160, 34));
         cmbPeriodo.addActionListener(this::cmbPeriodoActionPerformed);
 
-        cmbSeccion.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        lblSeccion = new JLabel("Sección / Curso:");
+        lblSeccion.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        lblSeccion.setForeground(new Color(100, 116, 139));
 
-        // Botón Agregar Sección (Estilo Verde Esmeralda)
+        cmbSeccion = new JComboBox<>();
+        cmbSeccion.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        cmbSeccion.setPreferredSize(new java.awt.Dimension(180, 34));
+
+        btnAgregarSecc = new JButton("+ Agregar Curso");
         btnAgregarSecc.setBackground(new Color(16, 185, 129));
         btnAgregarSecc.setFont(new Font("Segoe UI", Font.BOLD, 12));
         btnAgregarSecc.setForeground(Color.WHITE);
-        btnAgregarSecc.setText("+ Agregar Curso");
         btnAgregarSecc.setFocusPainted(false);
         btnAgregarSecc.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregarSecc.setPreferredSize(new java.awt.Dimension(140, 34));
         btnAgregarSecc.addActionListener(this::btnAgregarSeccActionPerformed);
 
-        // Tabla
+        panelFiltros.add(lblPeriodo);
+        panelFiltros.add(cmbPeriodo);
+        panelFiltros.add(lblSeccion);
+        panelFiltros.add(cmbSeccion);
+        panelFiltros.add(btnAgregarSecc);
+
+        gbc.gridx = 0; gbc.gridy = 1; gbc.gridwidth = 4;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 0, 20, 0);
+        panelPrincipal.add(panelFiltros, gbc);
+
+        // 3. Tabla de Cursos Seleccionados (Ocupará todo el espacio flexible)
+        tblSeccion = new JTable();
         tblSeccion.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         tblSeccion.setModel(new DefaultTableModel(
-            new Object [][] {},
-            new String [] {
-                "ID Matrícula", "ID Sección", "Promedio", "Estado"
-            }
+                new Object [][] {},
+                new String [] {
+                        "ID Matrícula", "ID Sección", "Promedio", "Estado"
+                }
         ));
-        tblSeccion.setRowHeight(24);
-        jScrollPane1.setViewportView(tblSeccion);
+        tblSeccion.setRowHeight(26);
 
-        // Botón Quitar Sección (Estilo Neutro/Rojo sutil)
+        jScrollPane1 = new JScrollPane(tblSeccion);
+
+        gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 3; gbc.gridheight = 2;
+        gbc.weightx = 1.0; gbc.weighty = 1.0; // ¡Clave para que la tabla se expanda en alto y ancho!
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.insets = new Insets(0, 0, 20, 15);
+        panelPrincipal.add(jScrollPane1, gbc);
+
+        // 4. Panel Lateral (Botón Quitar y Monto Total)
+        JPanel panelLateral = new JPanel(new GridBagLayout());
+        panelLateral.setBackground(new Color(248, 250, 252));
+        GridBagConstraints gbcLat = new GridBagConstraints();
+
+        btnQuitarSecc = new JButton("Quitar Selección");
         btnQuitarSecc.setBackground(new Color(239, 68, 68));
         btnQuitarSecc.setFont(new Font("Segoe UI", Font.BOLD, 12));
         btnQuitarSecc.setForeground(Color.WHITE);
-        btnQuitarSecc.setText("Quitar Selección");
         btnQuitarSecc.setFocusPainted(false);
         btnQuitarSecc.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnQuitarSecc.setPreferredSize(new java.awt.Dimension(150, 34));
         btnQuitarSecc.addActionListener(e -> {
             int selectedRow = tblSeccion.getSelectedRow();
             if (selectedRow >= 0) {
                 model.removeRow(selectedRow);
-                // Opcional: remover también de tu lista interna mt1 si llevas el control
             } else {
                 JOptionPane.showMessageDialog(this, "Seleccione un curso de la tabla para quitar.", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         });
 
-        // Monto Total
+        lblMontoTotal = new JLabel("Monto Total: S/. 200.00");
         lblMontoTotal.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblMontoTotal.setForeground(new Color(30, 41, 59));
-        lblMontoTotal.setText("Monto Total: S/. 0.00");
 
-        // Botón Matricularse (Estilo Principal Azul/Morado)
+        gbcLat.gridx = 0; gbcLat.gridy = 0; gbcLat.anchor = GridBagConstraints.NORTH;
+        gbcLat.fill = GridBagConstraints.HORIZONTAL;
+        gbcLat.insets = new Insets(0, 0, 15, 0);
+        panelLateral.add(btnQuitarSecc, gbcLat);
+
+        gbcLat.gridy = 1;
+        panelLateral.add(lblMontoTotal, gbcLat);
+
+        gbc.gridx = 3; gbc.gridy = 2; gbc.gridwidth = 1; gbc.gridheight = 1;
+        gbc.weightx = 0.0; gbc.weighty = 0.0;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.insets = new Insets(0, 0, 0, 0);
+        panelPrincipal.add(panelLateral, gbc);
+
+        // 5. Botón Inferior: Confirmar Matrícula (Alineado a la derecha)
+        btnMatricularse = new JButton("Confirmar Matrícula");
         btnMatricularse.setBackground(new Color(79, 70, 229));
         btnMatricularse.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnMatricularse.setForeground(Color.WHITE);
-        btnMatricularse.setText("Confirmar Matrícula");
         btnMatricularse.setFocusPainted(false);
         btnMatricularse.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMatricularse.setPreferredSize(new java.awt.Dimension(190, 42));
         btnMatricularse.addActionListener(this::btnMatricularseActionPerformed);
 
-        // Layout estructurado mediante GroupLayout
-        javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
-        panelPrincipal.setLayout(panelPrincipalLayout);
-        panelPrincipalLayout.setHorizontalGroup(
-            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblTitulo)
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addComponent(lblPeriodo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(lblSeccion)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmbSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnAgregarSecc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnQuitarSecc, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                            .addComponent(lblMontoTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(btnMatricularse, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
-        );
-        panelPrincipalLayout.setVerticalGroup(
-            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(lblTitulo)
-                .addGap(25, 25, 25)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPeriodo)
-                    .addComponent(cmbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblSeccion)
-                    .addComponent(cmbSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregarSecc, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addComponent(btnQuitarSecc, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblMontoTotal))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(btnMatricularse, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
-        );
+        gbc.gridx = 3; gbc.gridy = 3; gbc.gridwidth = 1; gbc.gridheight = 1;
+        gbc.weightx = 0.0; gbc.weighty = 0.0;
+        gbc.anchor = GridBagConstraints.SOUTHEAST;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.insets = new Insets(10, 0, 0, 0);
+        panelPrincipal.add(btnMatricularse, gbc);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
+        add(panelPrincipal, BorderLayout.CENTER);
         pack();
     }
 
@@ -258,26 +254,18 @@ public class MatriculaUI extends JFrame {
             return;
         }
 
-        // Validación opcional si mt1 es null por seguridad
         if (mt1 == null) {
             PeriodoAcademico periodo = (PeriodoAcademico) cmbPeriodo.getSelectedItem();
             mt1 = new Matricula(alumno.getIdAlumno(), periodo.getId_periodo(), 0.0);
         }
 
-        // Agregar el detalle al objeto Matricula
         mt1.addSecction(new DetalleMatricula(0, sec.getId_seccion()));
 
-        // Añadir la fila a la tabla visual
-        int idMatriculaTemp = 0; 
-        int idSeccion = sec.getId_seccion();
-        double promedioInicial = 0.0;
-        String estadoInicial = "Registrado";
-
         model.addRow(new Object[]{
-            idMatriculaTemp,
-            idSeccion,
-            promedioInicial,
-            estadoInicial
+                0,
+                sec.getId_seccion(),
+                0.0,
+                "Registrado"
         });
     }
 
@@ -289,14 +277,18 @@ public class MatriculaUI extends JFrame {
 
         try {
             Matricula mt = matService.setMatricula(mt1);
-            
+
             if (mt != null) {
                 JOptionPane.showMessageDialog(this, "¡Matrícula registrada con éxito!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                
-                // Redirección al panel del Alumno
-                AlumnoUIF alumniUI = new AlumnoUIF(alumno);
+
+                ICursoDao cursoService = ServiceFactory.CursoServiceFactory();
+                ICalificacionDao caliService = ServiceFactory.CalificacionServiceFactory();
+                IHorarioDao horaService = ServiceFactory.HorarioServiceFactory();
+                ICarreraDao carrService = ServiceFactory.CarreaServiceFactory();
+
+                AlumnoUIF alumniUI = new AlumnoUIF(alumno, cursoService, caliService, horaService, carrService);
                 alumniUI.setVisible(true);
-                this.dispose(); // Cierra la ventana de matrícula actual
+                this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "No se pudo procesar la matrícula.", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -305,5 +297,4 @@ public class MatriculaUI extends JFrame {
             e.printStackTrace();
         }
     }
-
 }

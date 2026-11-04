@@ -20,7 +20,10 @@ import org.mackas.util.singlenton.ConexionMySQL;
  */
 public class PeriodoAcademicoRepositoryImpl implements IPeriodoAcademicoDao {
 
-    private Connection mysql = ConexionMySQL.getInstance().getConexion();
+    private Connection mysql;
+    public PeriodoAcademicoRepositoryImpl(Connection conx){
+        mysql=conx;
+    }
 
     @Override
     public List<PeriodoAcademico> findAll() {

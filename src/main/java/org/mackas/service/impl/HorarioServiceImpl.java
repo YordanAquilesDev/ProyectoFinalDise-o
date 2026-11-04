@@ -15,7 +15,10 @@ import org.mackas.service.interf.IHorarioDao;
  * @author Administrador
  */
 public class HorarioServiceImpl implements IHorarioDao {
- private IHorarioDao repo= new HorarioRepositoryImpl();
+ private IHorarioDao repo;
+ public HorarioServiceImpl(IHorarioDao repo){
+     this.repo=repo;
+ }
     @Override
     public List<Horario> findByIdAlumno(int idAlumno) {
         return repo.findByIdAlumno(idAlumno);

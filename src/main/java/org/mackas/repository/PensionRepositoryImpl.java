@@ -22,7 +22,10 @@ import org.mackas.util.singlenton.ConexionMySQL;
  */
 public class PensionRepositoryImpl implements IPensionDao {
 
-    private Connection mysql = ConexionMySQL.getInstance().getConexion();
+    private Connection mysql;
+    public PensionRepositoryImpl(Connection conx){
+        mysql=conx;
+    }
 
     @Override
     public boolean save(Pension p) {

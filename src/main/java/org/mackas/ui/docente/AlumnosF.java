@@ -21,6 +21,7 @@ import org.mackas.model.Calificacion;
 import org.mackas.model.DetalleMatricula;
 import org.mackas.repository.MatriculaRepositoryImpl;
 import org.mackas.service.impl.CalificacionServiceImpl;
+import org.mackas.service.interf.ICalificacionDao;
 import org.mackas.service.interf.IMatriculaDao;
 
 public class AlumnosF extends JPanel {
@@ -32,14 +33,16 @@ public class AlumnosF extends JPanel {
     private JLabel txtCodigo;
     private JButton btnCalificar; 
     
-    private CalificacionServiceImpl caliService = new CalificacionServiceImpl();
-    private IMatriculaDao matrRepository = new MatriculaRepositoryImpl();
+    private ICalificacionDao caliService ;
+    private IMatriculaDao matrService ;
 
     int idSeccion = 0;
 
-    public AlumnosF(Alumno alumno, int idSeccion) {
+    public AlumnosF(Alumno alumno, int idSeccion,ICalificacionDao caliService,IMatriculaDao matriService) {
         this.alumno = alumno;
         this.idSeccion = idSeccion;
+        this.caliService=caliService;
+        this.matrService=matriService;
         initComponents();
 
         txtNombreCompleto.setText(alumno.getNombres() + " " + alumno.getApellidos());
@@ -121,7 +124,7 @@ public class AlumnosF extends JPanel {
                 double nota = Double.parseDouble(txtNota.getText().trim());
                 double ponderado = Double.parseDouble(txtPond.getText().trim());
 
-                DetalleMatricula detaM = matrRepository.search(idSeccion, a.getIdAlumno());
+                DetalleMatricula detaM = matrService.search(idSeccion, a.getIdAlumno());
                 if (detaM == null) {
                     JOptionPane.showMessageDialog(dialog, "El alumno no cuenta con un detalle de matrícula en esta sección.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;

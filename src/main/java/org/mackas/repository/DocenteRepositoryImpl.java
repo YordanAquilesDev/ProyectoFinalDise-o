@@ -13,7 +13,10 @@ import java.util.List;
 
 public class DocenteRepositoryImpl implements IDocenteDao {
 
-    private Connection mysql = ConexionMySQL.getInstance().getConexion();
+    private Connection mysql;
+    public DocenteRepositoryImpl(Connection conx){
+        mysql=conx;
+    }
     
     @Override
     public Docente findByIdUser(int idUser) {
@@ -27,7 +30,7 @@ public class DocenteRepositoryImpl implements IDocenteDao {
                     docente = new DocenteBuilder()
                     .setIdDocente(rs.getInt("id_docente"))
                     .setIdUsuario(rs.getInt("id_usuario"))
-                    .setCodigo(rs.getString("codigo"))
+                   // .setCodigo(rs.getString("codigo"))
                     .setNombres(rs.getString("nombres"))
                     .setApellidos(rs.getString("apellidos"))
                     .setDni(rs.getString("dni"))

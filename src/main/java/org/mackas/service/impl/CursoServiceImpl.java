@@ -7,6 +7,7 @@ package org.mackas.service.impl;
 import java.util.List;
 import org.mackas.model.Curso;
 import org.mackas.repository.CursoRepositoryImpl;
+import org.mackas.service.interf.ICarreraDao;
 import org.mackas.service.interf.ICursoDao;
 
 /**
@@ -15,7 +16,10 @@ import org.mackas.service.interf.ICursoDao;
  */
 public class CursoServiceImpl implements ICursoDao {
 
-    private ICursoDao repo = new CursoRepositoryImpl();   
+    private ICursoDao repo;
+    public CursoServiceImpl(ICursoDao repo){
+        this.repo=repo;
+    }
     @Override
     public List<Curso> findByIdAlumno(int idAlumno) {
         return repo.findByIdAlumno(idAlumno);

@@ -21,7 +21,11 @@ import org.mackas.util.singlenton.ConexionMySQL;
  */
 public class SeccionRepositoryImpl implements ISeccionDao {
 
-    private Connection mysql = ConexionMySQL.getInstance().getConexion();
+    private Connection mysql;
+    public SeccionRepositoryImpl(Connection conx){
+        mysql=conx;
+    }
+
 
     @Override
     public List<Seccion> findByIdPeriodo(int idPeriodo) {

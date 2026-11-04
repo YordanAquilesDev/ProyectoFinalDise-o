@@ -8,6 +8,7 @@ import java.util.List;
 import org.mackas.model.Seccion;
 import org.mackas.repository.SeccionRepositoryImpl;
 
+import org.mackas.service.interf.IPeriodoAcademicoDao;
 import org.mackas.service.interf.ISeccionDao;
 
 /**
@@ -16,7 +17,10 @@ import org.mackas.service.interf.ISeccionDao;
  */
 public class SeccionServiceImpl implements ISeccionDao {
 
-    private ISeccionDao repo = new SeccionRepositoryImpl();
+    private ISeccionDao repo ;
+    public SeccionServiceImpl(ISeccionDao repo){
+        this.repo = repo;
+    }
 
     @Override
     public List<Seccion> findByIdPeriodo(int idPeriodo) {

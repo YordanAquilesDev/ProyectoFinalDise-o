@@ -15,7 +15,10 @@ import org.mackas.service.interf.ICarreraDao;
  */
 public class CarreraServiceImpl implements ICarreraDao {
 
-    private ICarreraDao repo= new CarreraRepositoryImpl();
+    private ICarreraDao repo;
+    public CarreraServiceImpl(ICarreraDao repo){
+        this.repo=repo;
+    }
    
     @Override
     public Carrera findById(Integer id) {

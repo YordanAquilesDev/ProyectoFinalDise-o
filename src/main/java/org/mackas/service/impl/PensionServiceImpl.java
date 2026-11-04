@@ -15,8 +15,11 @@ import org.mackas.service.interf.IPensionDao;
  */
 // creo no sera nesesario el ProcesarPagoEstrategy mejor que lo mande directo al repo
 public class PensionServiceImpl implements IPensionDao {
+    private IPensionDao repo ;
+    public PensionServiceImpl(IPensionDao repo){
+        this.repo = repo;
+    }
 
-    private IPensionDao repo = new PensionRepositoryImpl();
 
     @Override
     public boolean save(Pension p) {
