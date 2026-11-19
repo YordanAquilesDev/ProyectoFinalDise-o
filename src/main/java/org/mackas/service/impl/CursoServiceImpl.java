@@ -6,39 +6,23 @@ package org.mackas.service.impl;
 
 import java.util.List;
 import org.mackas.model.Curso;
-import org.mackas.repository.impl.CursoRepositoryImpl;
-import org.mackas.service.interf.CursoService;
+import org.mackas.repository.CursoRepositoryImpl;
+import org.mackas.service.interf.ICarreraDao;
+import org.mackas.service.interf.ICursoDao;
 
 /**
  *
  * @author Administrador
  */
-public class CursoServiceImpl implements CursoService {
- private CursoRepositoryImpl repo= new CursoRepositoryImpl(); ;
-    @Override
-   public List<Curso> findByIdAlumno(int idAlumno) {
-     return repo.finByIdAlumno(idAlumno);
-}
+public class CursoServiceImpl implements ICursoDao {
 
+    private ICursoDao repo;
+    public CursoServiceImpl(ICursoDao repo){
+        this.repo=repo;
+    }
     @Override
-    public Curso save(Curso beans) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<Curso> findByIdAlumno(int idAlumno) {
+        return repo.findByIdAlumno(idAlumno);
     }
 
-    @Override
-    public boolean delete(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public List<Curso> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-   
-    @Override
-    public Curso findById(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
 }

@@ -4,26 +4,36 @@
  */
 package org.mackas.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.mackas.model.Seccion;
-import org.mackas.repository.impl.SeccionRepositoryImpl;
-import org.mackas.repository.interf.SeccionRepository;
-import org.mackas.service.interf.SeccionService;
+import org.mackas.repository.SeccionRepositoryImpl;
+
+import org.mackas.service.interf.IPeriodoAcademicoDao;
+import org.mackas.service.interf.ISeccionDao;
 
 /**
  *
  * @author Administrador
  */
-public class SeccionServiceImpl implements SeccionService {
- private SeccionRepository repo= new SeccionRepositoryImpl();
+public class SeccionServiceImpl implements ISeccionDao {
+
+    private ISeccionDao repo ;
+    public SeccionServiceImpl(ISeccionDao repo){
+        this.repo = repo;
+    }
+
     @Override
     public List<Seccion> findByIdPeriodo(int idPeriodo) {
-      return repo.findByIdPeriodo(idPeriodo);
+        return repo.findByIdPeriodo(idPeriodo);
     }
 
     @Override
     public List<Seccion> findByIdDocente(int idDocente) {
-       return repo.findByIdDocente(idDocente);
+        return repo.findByIdDocente(idDocente);
+    }
+
+    @Override
+    public List<Seccion> findByIdAlumno(int idEstudiante) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

@@ -14,17 +14,17 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout;
+import javax.swing.JFrame;
 import javax.swing.LayoutStyle;
 import org.mackas.model.Alumno;
 import org.mackas.model.Docente;
 import org.mackas.model.Usuario;
-import org.mackas.service.impl.MatriculaServiceImpl;
-import org.mackas.service.impl.UserServiceImpl;
-import org.mackas.service.interf.UserService;
-
+import org.mackas.service.factory.ServiceFactory;
+import org.mackas.service.impl.SeccionServiceImpl;
+import org.mackas.service.interf.*;
 import org.mackas.ui.alumno.AlumnoUIF;
 import org.mackas.ui.alumno.MatriculaUI;
-import org.mackas.ui.alumno.Matriculas;
+
 import org.mackas.ui.docente.DocenteUIF;
 
 /**
@@ -35,10 +35,11 @@ public class Login extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
 
-    UserService userService = new UserServiceImpl();
-    private MatriculaServiceImpl matriculaService = new MatriculaServiceImpl();
-
-    public Login() {
+    private IUsuarioDao userService ;
+    private IMatriculaDao matriculaService ;
+    public Login(IUsuarioDao userService,IMatriculaDao matriculaService) {
+        this.matriculaService= matriculaService;
+        this.userService=userService;
         initComponents();
         setLocationRelativeTo(null); // Centrar la ventana en la pantalla
         setTitle("Sistema Académico - Iniciar Sesión");
@@ -46,7 +47,6 @@ public class Login extends javax.swing.JFrame {
 
     @SuppressWarnings("unchecked")
     private void initComponents() {
-
         jPanel1 = new JPanel();
         jLabel1 = new JLabel();
         jLabel2 = new JLabel();
@@ -159,9 +159,8 @@ public class Login extends javax.swing.JFrame {
             return;
         }
 
-        // 3. Intentar iniciar sesión (Tu lógica original intacta)
+        // 3. Intentar iniciar sesión
         Usuario user = userService.login(codigo, password);
-
         // 4. Validar si el usuario existe
         if (user == null) {
             JOptionPane.showMessageDialog(
@@ -174,24 +173,33 @@ public class Login extends javax.swing.JFrame {
         }
 
         // 5. Redireccionar según el rol del usuario
-        // 5. Redireccionar según el rol del usuario
         if (user instanceof Alumno) {
             Alumno alumno = (Alumno) user;
 
             
             if (!matriculaService.isMatricula(alumno.getIdAlumno())) {
-                // Si NO tiene matrícula, lo mandamos a matricularse
-                MatriculaUI mtc = new MatriculaUI(alumno);
+
+                IMatriculaDao matService=ServiceFactory.MatriculaServiceFactory();
+                IPeriodoAcademicoDao perAcService=ServiceFactory.PeriodoAcademicoServiceFactory();
+                ISeccionDao secService= ServiceFactory.SeccionServiceFactory();
+                MatriculaUI mtc = new MatriculaUI(alumno,matService,perAcService,secService);
+                mtc.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 mtc.setVisible(true);
             } else {
-                // Si YA tiene matrícula, entra a su panel principal del alumno
-                AlumnoUIF alumniUIF = new AlumnoUIF(alumno);
+
+                ICursoDao cursoService= ServiceFactory.CursoServiceFactory();
+                ICalificacionDao caliService=ServiceFactory.CalificacionServiceFactory();
+                IHorarioDao horaService=ServiceFactory.HorarioServiceFactory();
+                ICarreraDao carrService= ServiceFactory.CarreaServiceFactory();
+                AlumnoUIF alumniUIF  = new AlumnoUIF(alumno,cursoService,caliService,horaService,carrService);
+                alumniUIF.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 alumniUIF.setVisible(true);
             }
 
         } else if (user instanceof Docente) {
             Docente docenteUser = (Docente) user;
-            DocenteUIF docenteUIF = new DocenteUIF(docenteUser);
+            ISeccionDao seccionService= ServiceFactory.SeccionServiceFactory();
+            DocenteUIF docenteUIF = new DocenteUIF(docenteUser, seccionService);
             docenteUIF.setVisible(true);
         }
 
@@ -199,20 +207,7 @@ public class Login extends javax.swing.JFrame {
         this.dispose();
     }
 
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-        java.awt.EventQueue.invokeLater(() -> new Login().setVisible(true));
-    }
+    
 
     // Variables declaration - do not modify
     private JButton btnEntrar;

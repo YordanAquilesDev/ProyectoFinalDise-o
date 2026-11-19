@@ -1,0 +1,59 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package org.mackas.repository;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import org.mackas.model.Curso;
+import org.mackas.service.interf.ICursoDao;
+import org.mackas.util.singlenton.ConexionMySQL;
+
+/**
+ *
+ * @author Administrador
+ */
+public class CursoRepositoryImpl implements ICursoDao {
+
+    private final Connection mysql;
+    public CursoRepositoryImpl(Connection conx){
+        mysql=conx;
+    }
+
+    @Override
+    public List<Curso> findByIdAlumno(int idAlumno) {
+        List<Curso> cursos = new ArrayList<>();
+        String sql = "{CALL sp_listar_cursos_alumno(?)}";
+
+        try (CallableStatement stmt = mysql.prepareCall(sql)) {
+            // Asignar el parámetro de entrada del procedimiento
+            stmt.setInt(1, idAlumno);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                // Recorrer los resultados y construir los objetos Curso
+                while (rs.next()) {
+                    Curso curso = new Curso(
+                            rs.getInt("id_curso"),
+                            rs.getInt("id_carrera"),
+                            rs.getString("codigo_curso"),
+                            rs.getString("nombre_curso"),
+                            rs.getInt("creditos"),
+                            rs.getInt("ciclo_nivel")
+                    );
+                    cursos.add(curso);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al listar cursos por alumno: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return cursos;
+    }
+
+}

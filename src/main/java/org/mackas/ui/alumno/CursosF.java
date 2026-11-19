@@ -21,20 +21,17 @@ public class CursosF extends JPanel {
     public CursosF(int idCurso, String nombre, int creditos, String carrera, String modalidad, int ciclo) {
         initComponents();
 
-        txtIdCurso.setText("ID: " + idCurso);
+        txtIdCurso.setText("CÓDIGO: #" + idCurso);
         txtNombre.setText(nombre);
-        txtCreditos.setText(creditos + " Créditos");
-        System.out.println(carrera);
-        System.out.println(carrera);
-        System.out.println(carrera);
+        txtCreditos.setText("⚡ " + creditos + " Créditos");
         txtCarrera.setText(carrera);
-        txtModalidad.setText("Modalidad: " + modalidad);
+        txtModalidad.setText("• " + modalidad);
         txtCiclo.setText("Ciclo " + ciclo);
 
-        Dimension dimensionFija = new Dimension(500, 110);
+        Dimension dimensionFija = new Dimension(500, 115);
         setPreferredSize(dimensionFija);
         setMinimumSize(dimensionFija);
-        setMaximumSize(new Dimension(Integer.MAX_VALUE, 110));
+        setMaximumSize(new Dimension(Integer.MAX_VALUE, 115));
     }
 
     private void initComponents() {
@@ -46,28 +43,29 @@ public class CursosF extends JPanel {
         txtCarrera = new JLabel();
 
         setBackground(Color.WHITE);
+        // Borde fino con sutil separación interna
         setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(226, 232, 240), 1),
-                BorderFactory.createEmptyBorder(12, 15, 12, 15)
+                BorderFactory.createLineBorder(new Color(226, 232, 240), 1, true),
+                BorderFactory.createEmptyBorder(15, 18, 15, 18)
         ));
 
         txtNombre.setFont(new Font("Segoe UI", Font.BOLD, 15));
-        txtNombre.setForeground(new Color(30, 41, 59));
+        txtNombre.setForeground(new Color(15, 23, 42));
 
         txtModalidad.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         txtModalidad.setForeground(new Color(100, 116, 139));
 
         txtIdCurso.setFont(new Font("Segoe UI", Font.BOLD, 11));
-        txtIdCurso.setForeground(new Color(79, 70, 229)); // Acento indigo/azul
+        txtIdCurso.setForeground(new Color(79, 70, 229)); // Indigo moderno
 
         txtCreditos.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         txtCreditos.setForeground(new Color(100, 116, 139));
 
         txtCiclo.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        txtCiclo.setForeground(new Color(16, 185, 129)); // Verde sutil
+        txtCiclo.setForeground(new Color(16, 185, 129)); // Verde esmeralda
 
         txtCarrera.setFont(new Font("Segoe UI", Font.ITALIC, 12));
-        txtCarrera.setForeground(new Color(100, 116, 139));
+        txtCarrera.setForeground(new Color(148, 163, 184));
 
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
@@ -83,7 +81,7 @@ public class CursosF extends JPanel {
                                         .addComponent(txtNombre, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addComponent(txtModalidad)
-                                                .addGap(30, 30, 30)
+                                                .addGap(18, 18, 18)
                                                 .addComponent(txtCreditos)
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(txtCiclo)))

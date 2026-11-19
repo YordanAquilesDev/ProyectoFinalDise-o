@@ -2,144 +2,170 @@ package org.mackas.ui.docente;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.List;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import org.mackas.Login;
 import org.mackas.model.Alumno;
 import org.mackas.model.Docente;
 import org.mackas.model.Seccion;
+import org.mackas.service.factory.ServiceFactory;
 import org.mackas.service.impl.AlumnoServiceImpl;
+import org.mackas.service.impl.MatriculaServiceImpl;
 import org.mackas.service.impl.SeccionServiceImpl;
-import org.mackas.service.interf.AlumnoService;
-import org.mackas.service.interf.SeccionService;
+import org.mackas.service.impl.UserServiceImpl;
+import org.mackas.service.interf.*;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import org.mackas.Login;
+import org.mackas.model.Docente;
+import org.mackas.service.impl.AlumnoServiceImpl;
+import org.mackas.service.impl.MatriculaServiceImpl;
+import org.mackas.service.impl.UserServiceImpl;
+import org.mackas.service.interf.IAlumnoDao;
+import org.mackas.service.interf.ISeccionDao;
 
 public class DocenteUIF extends JFrame {
 
-    private SeccionService secService = new SeccionServiceImpl();
-    private AlumnoService aluService = new AlumnoServiceImpl();
-
+    private ISeccionDao seccionService;
     private Docente docente;
-    private List<Seccion> seccionDocente;
-
     private JPanel jpContenedor;
-    private JScrollPane scrollPane;
+    private JLabel lblHeaderTitulo;
+    private SeccionF seccionPantalla; // Instancia de nuestra pantalla autónoma de secciones
 
-    public DocenteUIF(Docente docente) {
+    public DocenteUIF(Docente docente, ISeccionDao seccionService) {
+        this.seccionService = seccionService;// Instanciamos el servicio de alumnos
         this.docente = docente;
+
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setTitle("Portal del Docente - " + (docente != null ? docente.getNombres() : ""));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        docente.setIdDocente(1);
-        if (docente != null) {
-            this.seccionDocente = secService.findByIdDocente(docente.getIdDocente());
+
+        if (this.docente != null && this.docente.getIdDocente() == 0) {
+            this.docente.setIdDocente(1); // Valor por defecto para pruebas si es necesario
         }
 
         initComponentsPersonalizado();
-
-        // Al abrir la ventana, cargamos por defecto sus secciones
-        listarSecciones();
+        cargarVistaSecciones(); // Carga inicial por defecto
     }
 
     private void initComponentsPersonalizado() {
-        getContentPane().setBackground(new Color(245, 247, 250));
+        getContentPane().setBackground(new Color(248, 250, 252));
         setLayout(new BorderLayout());
 
-        // Barra de Menú Moderna
+        // --- Barra de Menú Moderna ---
         JMenuBar menuPrincipal = new JMenuBar();
-        menuPrincipal.setBackground(new Color(30, 41, 59));
-        menuPrincipal.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+        menuPrincipal.setBackground(new Color(15, 23, 42)); // Slate-900
+        menuPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
 
-        JMenu mnSecciones = crearEstiloMenu("📚 Mis Secciones");
-        JMenu mnCerrarSesion = crearEstiloMenu("🚪 Salir");
+        JMenu mnSecciones = crearEstiloMenu("📚  Mis Secciones");
+        JMenu mnSalir = crearEstiloMenu("🚪  Salir");
 
-        // Evento para volver a ver las secciones principales
+        // Al hacer clic en "Mis Secciones", ordenamos a SeccionF que vuelva a mostrar sus tarjetas de secciones
         mnSecciones.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                listarSecciones();
+                cargarVistaSecciones();
             }
         });
 
-        mnCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+        mnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                dispose(); // Cierra esta ventana
-                // Aquí podrías abrir tu Login si lo deseas
+                salir();
             }
         });
 
         menuPrincipal.add(mnSecciones);
-        menuPrincipal.add(mnCerrarSesion);
+        menuPrincipal.add(Box.createHorizontalGlue()); // Empuja salir hacia la derecha
+        menuPrincipal.add(mnSalir);
         setJMenuBar(menuPrincipal);
 
-        // Contenedor principal de tarjetas
-        jpContenedor = new JPanel();
-        jpContenedor.setLayout(new GridLayout(0, 2, 20, 20)); // Cuadrícula de 2 columnas
-        jpContenedor.setBackground(new Color(245, 247, 250));
-        jpContenedor.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
+        // --- Panel Superior de Título dinámico ---
+        JPanel panelTop = new JPanel(new FlowLayout(FlowLayout.LEFT, 25, 20));
+        panelTop.setBackground(new Color(248, 250, 252));
+        lblHeaderTitulo = new JLabel("Secciones Asignadas");
+        lblHeaderTitulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        lblHeaderTitulo.setForeground(new Color(30, 41, 59));
+        panelTop.add(lblHeaderTitulo);
+        add(panelTop, BorderLayout.NORTH);
 
-        // ScrollPane para evitar que se desborde el contenido
-        scrollPane = new JScrollPane(jpContenedor);
-        scrollPane.setBorder(null);
-        scrollPane.getViewport().setBackground(new Color(245, 247, 250));
+        // --- Contenedor Central Dinámico ---
+        jpContenedor = new JPanel(new BorderLayout());
+        jpContenedor.setBackground(new Color(248, 250, 252));
+        jpContenedor.setBorder(BorderFactory.createEmptyBorder(0, 25, 25, 25));
 
-        add(scrollPane, BorderLayout.CENTER);
-        pack();
+        add(jpContenedor, BorderLayout.CENTER);
     }
 
     private JMenu crearEstiloMenu(String texto) {
         JMenu menu = new JMenu(texto);
-        menu.setForeground(Color.WHITE);
-        menu.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
+        menu.setForeground(new Color(226, 232, 240));
+        menu.setFont(new Font("Segoe UI", Font.BOLD, 13));
         menu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        menu.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
+        menu.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
+        menu.setOpaque(true);
+        menu.setBackground(new Color(15, 23, 42));
+
+        // Efecto Hover suave
+        menu.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menu.setBackground(new Color(30, 41, 59));
+            }
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menu.setBackground(new Color(15, 23, 42));
+            }
+        });
         return menu;
     }
 
-    // Método para listar las secciones del docente en pantalla
-    public void listarSecciones() {
-        System.out.println("Mostrando las secciones");
+    /**
+     * Carga la pantalla SeccionF dentro del contenedor principal,
+     * delegando toda la lógica de secciones y alumnos de forma totalmente autónoma.
+     */
+    public void cargarVistaSecciones() {
+        lblHeaderTitulo.setText("📚 Mis Secciones Asignadas");
         jpContenedor.removeAll();
-        jpContenedor.setLayout(new GridLayout(0, 2, 20, 20));
-        System.out.println(seccionDocente);
-        if (seccionDocente != null) {
-            for (Seccion sec : seccionDocente) {
-                System.out.println(sec);
-                // Instanciamos la tarjeta de sección y le pasamos el listener de clic
-                SeccionesF seccionCard = new SeccionesF(sec, clickedSeccion -> {
-                    // Al hacer clic en una sección, mostramos los alumnos matriculados en ella
-                    mostrarAlumnosPorSeccion(clickedSeccion.getId_seccion(), clickedSeccion.getCodigo_seccion());
-                });
+        IAlumnoDao alumnoService= ServiceFactory.AlumnoServiceFactory();
+        // 1. Instanciamos SeccionF pasándole sus dependencias
+        seccionPantalla = new SeccionF(docente, seccionService, alumnoService);
 
-                jpContenedor.add(seccionCard);
-            }
-        }
+        // 2. Envolvemos la pantalla en un JScrollPane general para asegurar el scroll correcto
+        JScrollPane scrollPane = new JScrollPane(seccionPantalla);
+        scrollPane.setBorder(null);
+        scrollPane.getViewport().setBackground(new Color(248, 250, 252));
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
+        jpContenedor.add(scrollPane, BorderLayout.CENTER);
         jpContenedor.revalidate();
         jpContenedor.repaint();
     }
 
-    // Método para que el docente vea los alumnos de una sección específica
-    public void mostrarAlumnosPorSeccion(int idSeccion, String codigoSeccion) {
-        List<Alumno> alumnosSeccion = aluService.findByIdSeccion(idSeccion);
-
-        jpContenedor.removeAll();
-        jpContenedor.setLayout(new GridLayout(0, 2, 20, 20));
-
-        if (alumnosSeccion != null && !alumnosSeccion.isEmpty()) {
-            for (Alumno alu : alumnosSeccion) {
-                AlumnosF alumnoCard = new AlumnosF(alu,idSeccion);
-                jpContenedor.add(alumnoCard);
-            }
-        } else {
-            System.out.println("No hay alumnos en la sección: " + codigoSeccion);
-        }
-
-        jpContenedor.revalidate();
-        jpContenedor.repaint();
+    private void salir() {
+        IUsuarioDao userService=ServiceFactory.UserServiceFactory();
+        IMatriculaDao matriculaService=ServiceFactory.MatriculaServiceFactory();
+        Login irALogin = new Login(userService, matriculaService);
+        irALogin.setVisible(true);
+        this.dispose();
     }
-    
 }

@@ -1,0 +1,53 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package org.mackas.repository;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import org.mackas.model.PeriodoAcademico;
+import org.mackas.service.interf.IPeriodoAcademicoDao;
+import org.mackas.util.singlenton.ConexionMySQL;
+
+/**
+ *
+ * @author Administrador
+ */
+public class PeriodoAcademicoRepositoryImpl implements IPeriodoAcademicoDao {
+
+    private Connection mysql;
+    public PeriodoAcademicoRepositoryImpl(Connection conx){
+        mysql=conx;
+    }
+
+    @Override
+    public List<PeriodoAcademico> findAll() {
+        List<PeriodoAcademico> lista = new ArrayList<>();
+        String sql = "{CALL sp_listar_periodo_academico()}";
+
+        try (CallableStatement stmt = mysql.prepareCall(sql); ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                PeriodoAcademico periodo = new PeriodoAcademico(
+                        rs.getInt("id_periodo"),
+                        rs.getString("nombre"),
+                        rs.getDate("fecha_inicio"),
+                        rs.getDate("fecha_fin"),
+                        rs.getBoolean("activo")
+                );
+                lista.add(periodo);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error al listar periodos académicos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return lista;
+    }
+}
