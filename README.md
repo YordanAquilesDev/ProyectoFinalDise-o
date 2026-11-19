@@ -62,28 +62,3 @@ Describe aquí los flujos más exigentes que resolvió tu sistema:
 4. **Reportes y Consultas Consolidadas:** Extracción de información cruzada para seguimiento estudiantil o administrativo.
 
 ---
-
-## Interfaz Visual del Sistema
-
-Puedes guardar tus capturas en una carpeta dentro del repositorio (por ejemplo `docs/img/`) y referenciarlas con rutas relativas:
-
-<p align="center">
-  <img src="./docs/img/login.png" alt="Pantalla de inicio de sesión del sistema" width="750" />
-</p>
-
-<p align="center">
-  <img src="./docs/img/matricula.png" alt="Módulo de gestión de matrícula universitaria" width="750" />
-</p>
-
-> Si aún no subes las imágenes, crea la carpeta (por ejemplo `docs/img/`) y reemplaza los nombres de archivo por los reales de tus capturas.
-
----
-
-## Estructura del Repositorio
-
-```text
-proyecto-gestion-universitaria/
-├── src/                # Código fuente en Java (modelos, DAO, servicios, vistas/controladores)
-├── sql/                # Scripts de creación de tablas, datos de prueba y procedimientos almacenados
-├── docs/               # Documentación y capturas de interfaz
-└── README.md
